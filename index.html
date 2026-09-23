@@ -5,11 +5,71 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Saof Dictionary</title>
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f1ff;color:#222}header{position:relative;padding:35px 20px;text-align:center;color:#fff;background:linear-gradient(135deg,#6c4cff,#8b6cff)}h1{margin:0;font-size:42px}.login-button{position:absolute;right:20px;top:20px;padding:10px 18px;border:0;border-radius:10px;background:#fff;color:#6c4cff;font-weight:bold}button{cursor:pointer;font:inherit}.search{text-align:center;padding:25px}.search input,input,textarea,select{width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:8px;font:inherit}.search input{width:min(80%,500px);border:2px solid #6c4cff}.panel,.dictionary{width:min(calc(100% - 40px),800px);margin:auto}.panel{display:none;margin-bottom:25px}.box,.card{padding:22px;border-radius:15px;background:#fff;box-shadow:0 4px 12px #00000014}.card{margin:15px 0}.word{font-size:28px;font-weight:bold;color:#6c4cff}.pronunciation{margin-top:6px;color:#777}.meaning{margin-top:12px;font-size:18px}.credits{margin-top:12px;color:#555;font-size:14px;font-style:italic}h2{color:#6c4cff}.primary{width:100%;padding:12px;border:0;border-radius:8px;background:#6c4cff;color:white;font-weight:bold}.secondary{padding:10px 15px;border:0;border-radius:8px;background:#eee;margin-top:10px}#birthday{display:none;margin:20px auto;width:min(calc(100% - 40px),800px);padding:24px;border:3px solid #f0b429;border-radius:18px;background:#ffd166;color:#704600;text-align:center;font-size:30px;font-weight:bold}.question{margin-bottom:25px}.game canvas{display:block;width:100%;height:auto;border:3px solid #29354a;border-radius:14px;image-rendering:auto;background:#61bbed}.game-note{text-align:center;color:#666}.movie-controls{display:flex;gap:10px}.movie-controls select{flex:1}#movieStatus{text-align:center;color:#555;min-height:20px}#login{display:none;position:fixed;inset:0;z-index:5;align-items:center;justify-content:center;padding:20px;background:#0008}.login-box{width:min(100%,400px);padding:30px;border-radius:18px;background:#fff;text-align:center}.error{min-height:20px;color:#c33}footer{text-align:center;padding:20px;color:#777}@media(max-width:600px){h1{font-size:32px}.panel,.dictionary{width:calc(100% - 24px)}.movie-controls{display:block}}
+*{box-sizing:border-box}
+:root {
+  --bg-color: #f4f1ff;
+  --text-color: #222;
+  --card-bg: #fff;
+  --header-bg: linear-gradient(135deg,#6c4cff,#8b6cff);
+  --input-bg: #fff;
+  --input-border: #ccc;
+  --secondary-bg: #eee;
+  --secondary-color: #222;
+  --footer-color: #777;
+}
+[data-theme="dark"] {
+  --bg-color: #121218;
+  --text-color: #f1f1f5;
+  --card-bg: #1e1e28;
+  --header-gradient: linear-gradient(135deg,#4a2ee0,#6847e0);
+  --input-bg: #2a2a3b;
+  --input-border: #444;
+  --secondary-bg: #2a2a3b;
+  --secondary-color: #f1f1f5;
+  --footer-color: #aaa;
+}
+body{margin:0;font-family:Arial,sans-serif;background:var(--bg-color);color:var(--text-color);transition:background 0.3s, color 0.3s}
+header{position:relative;padding:35px 20px;text-align:center;color:#fff;background:var(--header-gradient, linear-gradient(135deg,#6c4cff,#8b6cff))}
+h1{margin:0;font-size:42px}
+.header-buttons{position:absolute;right:20px;top:20px;display:flex;gap:10px}
+.login-button,.theme-toggle{padding:10px 18px;border:0;border-radius:10px;background:#fff;color:#6c4cff;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+button{cursor:pointer;font:inherit}
+.search{text-align:center;padding:25px}
+.search input,input,textarea,select{width:100%;padding:12px;margin:7px 0;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-color);border-radius:8px;font:inherit}
+.search input{width:min(80%,500px);border:2px solid #6c4cff}
+.panel,.dictionary{width:min(calc(100% - 40px),800px);margin:auto}
+.panel{display:none;margin-bottom:25px}
+.box,.card{padding:22px;border-radius:15px;background:var(--card-bg);box-shadow:0 4px 12px #00000014;transition:background 0.3s}
+.card{margin:15px 0}
+.word{font-size:28px;font-weight:bold;color:#6c4cff}
+.pronunciation{margin-top:6px;color:var(--footer-color)}
+.meaning{margin-top:12px;font-size:18px}
+.credits{margin-top:12px;color:var(--footer-color);font-size:14px;font-style:italic}
+h2{color:#6c4cff}
+.primary{width:100%;padding:12px;border:0;border-radius:8px;background:#6c4cff;color:white;font-weight:bold}
+.secondary{padding:10px 15px;border:0;border-radius:8px;background:var(--secondary-bg);color:var(--secondary-color);margin-top:10px}
+#birthday{display:none;margin:20px auto;width:min(calc(100% - 40px),800px);padding:24px;border:3px solid #f0b429;border-radius:18px;background:#ffd166;color:#704600;text-align:center;font-size:30px;font-weight:bold}
+.question{margin-bottom:25px}
+.game canvas{display:block;width:100%;height:auto;border:3px solid #29354a;border-radius:14px;image-rendering:auto;background:#61bbed}
+.game-note{text-align:center;color:var(--footer-color)}
+.movie-controls{display:flex;gap:10px}
+.movie-controls select{flex:1}
+#movieStatus{text-align:center;color:var(--footer-color);min-height:20px}
+#login{display:none;position:fixed;inset:0;z-index:5;align-items:center;justify-content:center;padding:20px;background:#0008}
+.login-box{width:min(100%,400px);padding:30px;border-radius:18px;background:var(--card-bg);text-align:center}
+.error{min-height:20px;color:#c33}
+footer{text-align:center;padding:20px;color:var(--footer-color)}
+@media(max-width:600px){h1{font-size:32px}.panel,.dictionary{width:calc(100% - 24px)}.movie-controls{display:block}.header-buttons{top:15px;right:15px;gap:5px}.login-button,.theme-toggle{padding:8px 12px;font-size:14px}}
 </style>
 </head>
 <body>
-<header><h1>Saof Dictionary</h1><button class="login-button" id="loginButton">Login</button></header>
+<header>
+  <h1>Saof Dictionary</h1>
+  <div class="header-buttons">
+    <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
+    <button class="login-button" id="loginButton">Login</button>
+  </div>
+</header>
 <div class="search"><input id="searchInput" placeholder="Search a word..."></div>
 <div id="birthday">🎉 Happy Birthday, Asher! 🎂</div>
 <section class="panel question" id="questionPanel"><div class="box"><h2>Ask about a word</h2><p>Send a question or word suggestion to the dictionary owner.</p><input id="questionName" placeholder="Your name (optional)"><textarea id="questionText" placeholder="Your question"></textarea><button class="primary" id="saveQuestion">Save Question</button><button class="primary" id="openMessages">Open Messages</button><div id="questionStatus"></div></div></section>
@@ -20,9 +80,30 @@
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';import{getAuth,setPersistence,inMemoryPersistence,signInWithEmailAndPassword,signOut,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';import{getFirestore,collection,addDoc,onSnapshot,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 const config={apiKey:'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',authDomain:'saof-dictionary.firebaseapp.com',projectId:'saof-dictionary',storageBucket:'saof-dictionary.firebasestorage.app',messagingSenderId:'1054693760278',appId:'1:1054693760278:web:5f8f9c090fbc737dfc4437'},OWNER='parkernanayakkara@icloud.com',ASHER='ashernanayakkara@icloud.com',app=initializeApp(config),auth=getAuth(app),db=getFirestore(app),$=id=>document.getElementById(id);await setPersistence(auth,inMemoryPersistence);const matches=(u,e)=>u?.email?.toLowerCase()===e;
-function addCard(d){const c=document.createElement('article');c.className='card live-card';[['word','',d.word],['pronunciation','Pronunciation: ',d.pronunciation],['meaning','Meaning: ',d.meaning],['credits','Credits: ',d.credits?.trim()||'No credits']].forEach(([cl,label,value])=>{const e=document.createElement('div');e.className=cl;e.textContent=label;const strong=document.createElement('strong');strong.textContent=value;e.append(strong);c.append(e)});$('dictionary').append(c)}onSnapshot(collection(db,'words'),snap=>{document.querySelectorAll('.live-card').forEach(e=>e.remove());snap.forEach(x=>{const d=x.data();if(d.word&&d.pronunciation&&d.meaning)addCard(d)})});
-$('searchInput').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#dictionary .card').forEach(c=>c.hidden=!c.textContent.toLowerCase().includes(q))});$('loginButton').onclick=()=>auth.currentUser?$('adminPanel').scrollIntoView({behavior:'smooth'}):$('login').style.display='flex';$('cancelLogin').onclick=()=>$('login').style.display='none';$('loginAction').onclick=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);$('login').style.display='none'}catch(e){$('loginError').textContent=`Login failed: ${e.code||'check your details'}`}};$('logout').onclick=()=>signOut(auth);
-$('addWord').onclick=async()=>{if(!matches(auth.currentUser,OWNER)){alert('Only the owner can add words.');return}const word=$('newWord').value.trim(),pronunciation=$('newPronunciation').value.trim(),meaning=$('newMeaning').value.trim();if(!word||!pronunciation||!meaning){alert('Fill in word, pronunciation and meaning.');return}await addDoc(collection(db,'words'),{word,pronunciation,meaning,credits:$('newCredits').value.trim()||'No credits',addedBy:auth.currentUser.email,createdAt:serverTimestamp()});['newWord','newPronunciation','newMeaning','newCredits'].forEach(id=>$(id).value='');alert('Word added for everyone!')};
+
+// Dark Mode Logic
+const themeToggle = $('themeToggle');
+const currentTheme = localStorage.getItem('saof_theme') || 'light';
+if(currentTheme === 'dark') {
+  document.documentElement.setAttribute('data-theme', 'dark');
+  themeToggle.textContent = '☀️ Light';
+}
+
+themeToggle.onclick = () => {
+  let theme = document.documentElement.getAttribute('data-theme');
+  if(theme === 'dark') {
+    document.documentElement.removeAttribute('data-theme');
+    localStorage.setItem('saof_theme', 'light');
+    themeToggle.textContent = '🌙 Dark';
+  } else {
+    document.documentElement.setAttribute('data-theme', 'dark');
+    localStorage.setItem('saof_theme', 'dark');
+    themeToggle.textContent = '☀️ Light';
+  }
+};
+
+function addCard(d){const c=document.createElement('article');c.className='card live-card';[['word','',d.word],['pronunciation','Pronunciation: ',d.pronunciation],['meaning','Meaning: ',d.meaning],['credits','Credits: ',d.credits?.trim()||'No credits']].forEach(([cl,label,value])=>{const e=document.createElement('div');e.className=cl;e.textContent=label;const strong=document.createElement('strong');strong.textContent=value;e.append(strong);c.append(e)});$('dictionary').append(c)}onSnapshot(collection(db,'words'),snap=>{document.querySelectorAll('.live-card').forEach(e=>e.remove());snap.forEach(x=>{const d=x.data();if(d.word&&d.pronunciation&&d.meaning)addCard(d)})});$('searchInput').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#dictionary .card').forEach(c=>c.hidden=!c.textContent.toLowerCase().includes(q))});$('loginButton').onclick=()=>auth.currentUser?$('adminPanel').scrollIntoView({behavior:'smooth'}):$('login').style.display='flex';$('cancelLogin').onclick=()=>$('login').style.display='none';$('loginAction').onclick=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);$('login').style.display='none'}catch(e){$('loginError').textContent=`Login failed: ${e.code||'check your details'}`}};$('logout').onclick=()=>signOut(auth);
+$('addWord').onclick=async()=>{if(!matches(auth.currentUser,OWNER)){alert('Only the owner can add words.');return}const word=$('newWord').value.trim(),pronunciation=$('newPronunciation').value.trim(),meaning=$('newMeaning').value.trim();if(!word||!pronunciation||!meaning){alert('Fill in word, pronunciation and meaning.');return}await addDoc(collection(db,'words'),{word,pronunciation,meaning,credits:$('newCredits').value.trim()\vert{}\vert{}'No credits',addedBy:auth.currentUser.email,createdAt:serverTimestamp()});['newWord','newPronunciation','newMeaning','newCredits'].forEach(id=>$(id).value='');alert('Word added for everyone!')};
 $('saveQuestion').onclick=async()=>{const text=$('questionText').value.trim();if(!text){$('questionStatus').textContent='Type a question first.';return}try{await addDoc(collection(db,'questions'),{name:$('questionName').value.trim()||'Anonymous visitor',question:text,status:'new',createdAt:serverTimestamp()});$('questionText').value='';$('questionName').value='';$('questionStatus').textContent='Question saved for the owner.'}catch(e){$('questionStatus').textContent=`Could not save question: ${e.code||'Firestore error'}`}};$('openMessages').onclick=()=>{const text=$('questionText').value.trim();location.href=`sms:?&body=${encodeURIComponent(`Saof Dictionary question:\n${text||'(type your question first)'}`)}`};
 // Enhanced original animation: cinematic camera movement, lighting, shadows, depth layers, particles, detailed dinosaur, party decorations, and three scenes.
 const canvas=$('canvas'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,rect=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(x,y,w,h)},dino={x:155,y:280,vy:0,jump:false},clouds=[{x:80,y:76,s:1.1},{x:650,y:112,s:.8}],balloons=[{x:620,y:210,c:'#ef476f'},{x:685,y:235,c:'#ffd166'},{x:750,y:190,c:'#06d6a0'}];let movie=false,start=0,raf,audio,timer,sceneIndex=0;
