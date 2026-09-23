@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>saof Dictionary</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f4f1ff;
+      color: #222;
+    }
+
+    header {
+      background: #6c4cff;
+      color: white;
+      text-align: center;
+      padding: 35px 20px;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 42px;
+    }
+
+    header p {
+      margin-top: 8px;
+      font-size: 18px;
+    }
+
+    .search-container {
+      text-align: center;
+      padding: 25px;
+    }
+
+    #search {
+      width: 80%;
+      max-width: 500px;
+      padding: 14px;
+      border: 2px solid #6c4cff;
+      border-radius: 12px;
+      font-size: 16px;
+      outline: none;
+    }
+
+    .dictionary {
+      max-width: 800px;
+      margin: auto;
+      padding: 10px 20px 40px;
+    }
+
+    .word-card {
+      background: white;
+      margin: 15px 0;
+      padding: 22px;
+      border-radius: 15px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+    .word {
+      font-size: 28px;
+      font-weight: bold;
+      color: #6c4cff;
+    }
+
+    .meaning {
+      font-size: 18px;
+      margin-top: 8px;
+    }
+
+    .example {
+      margin-top: 12px;
+      color: #666;
+      font-style: italic;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+  <header>
+    <h1>saof Dictionary</h1>
+    <p>A dictionary for made-up words and their meanings.</p>
+  </header>
+
+  <div class="search-container">
+    <input
+      type="text"
+      id="search"
+      placeholder="Search a word..."
+      onkeyup="searchWords()"
+    >
+  </div>
+
+  <main class="dictionary" id="dictionary">
+
+    <div class="word-card">
+      <div class="word">Recos</div>
+      <div class="meaning">Meaning: <strong>ball</strong></div>
+      <div class="example">Example: "Give me the Recos."</div>
+    </div>
+
+    <div class="word-card">
+      <div class="word">Saof</div>
+      <div class="meaning">Meaning: <strong>me / and</strong></div>
+      <div class="example">Example: "Saof wants to go."</div>
+    </div>
+
+    <div class="word-card">
+      <div class="word">Thu</div>
+      <div class="meaning">
+        Meaning: <strong>Depends on the context.</strong>
+      </div>
+      <div class="example">
+        Example: The meaning of "Thu" changes depending on how it is used.
+      </div>
+    </div>
+
+    <div class="word-card">
+      <div class="word">Thaoo</div>
+      <div class="meaning">Meaning: <strong>hello thaththa</strong></div>
+      <div class="example">Example: "Thaoo!"</div>
+    </div>
+
+    <div class="word-card">
+      <div class="word">Aooooo</div>
+      <div class="meaning">Meaning: <strong>hello amma</strong></div>
+      <div class="example">Example: "Aooooo!"</div>
+    </div>
+
+  </main>
+
+  <footer>
+    © 2026 saof Dictionary
+  </footer>
+
+  <script>
+    function searchWords() {
+      const search = document
+        .getElementById("search")
+        .value
+        .toLowerCase();
+
+      const cards = document.querySelectorAll(".word-card");
+
+      cards.forEach(card => {
+        const word = card
+          .querySelector(".word")
+          .textContent
+          .toLowerCase();
+
+        const meaning = card
+          .querySelector(".meaning")
+          .textContent
+          .toLowerCase();
+
+        if (word.includes(search) || meaning.includes(search)) {
+          card.style.display = "block";
+        } else {
+          card.style.display = "none";
+        }
+      });
+    }
+  </script>
+
+</body>
+</html>
