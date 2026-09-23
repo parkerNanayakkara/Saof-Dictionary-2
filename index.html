@@ -68,12 +68,25 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
     const firebaseConfig = { apiKey: "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4", authDomain: "saof-dictionary.firebaseapp.com", projectId: "saof-dictionary", storageBucket: "saof-dictionary.firebasestorage.app", messagingSenderId: "1054693760278", appId: "1:1054693760278:web:5f8f9c090fbc737dfc4437" };
     const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), $ = (id) => document.getElementById(id);
-    // Every Firebase Authentication user may read and add words.
     const isSignedIn = (user) => Boolean(user);
     const closeLogin = () => { $('login-page').style.display = 'none'; $('loginMessage').textContent = ''; };
     const openLogin = () => { $('login-page').style.display = 'flex'; $('loginEmail').focus(); };
+
+    function loginErrorMessage(error) {
+      const messages = {
+        'auth/invalid-credential': 'The email or password is incorrect.',
+        'auth/user-not-found': 'No Firebase account exists for this email.',
+        'auth/wrong-password': 'The password is incorrect.',
+        'auth/invalid-email': 'Enter a valid email address.',
+        'auth/user-disabled': 'This Firebase account has been disabled.',
+        'auth/operation-not-allowed': 'Email/password sign-in is disabled in Firebase Authentication.',
+        'auth/unauthorized-domain': 'This website is not authorized in Firebase. Add parkerNanayakkara.github.io under Authentication → Settings → Authorized domains.'
+      };
+      return messages[error.code] || `Login failed (${error.code || 'unknown error'}). Check Firebase Authentication. ` + (error.message || '');
+    }
     function createWordCard(word, pronunciation, meaning) {
       const card = document.createElement('article'); card.className = 'word-card firebase-word-card';
       const wordEl = document.createElement('div'); wordEl.className = 'word'; wordEl.textContent = word;
@@ -84,18 +97,34 @@
       card.append(wordEl, pronunciationEl, meaningEl); $('dictionary').append(card);
     }
     async function loadWords() {
-      try { const snapshot = await getDocs(collection(db, 'words')); document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove()); snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); }); searchWords(); }
-      catch (error) { console.error('Online words could not be loaded:', error); }
+      try {
+        const snapshot = await getDocs(collection(db, 'words'));
+        document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove());
+        snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); });
+        searchWords();
+      } catch (error) { console.error('Could not load words:', error); }
     }
     function searchWords() { const query = $('search').value.trim().toLowerCase(); let visible = 0; document.querySelectorAll('#dictionary .word-card').forEach((card) => { const matches = card.textContent.toLowerCase().includes(query); card.hidden = !matches; if (matches) visible++; }); $('noResults').style.display = visible ? 'none' : 'block'; }
     $('search').addEventListener('input', searchWords);
     $('loginButton').addEventListener('click', () => isSignedIn(auth.currentUser) ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin());
     $('closeButton').addEventListener('click', closeLogin);
-    $('loginAction').addEventListener('click', async () => { const email = $('loginEmail').value.trim(), password = $('loginPassword').value, message = $('loginMessage'); message.textContent = ''; if (!email || !password) { message.textContent = 'Please enter your email and password.'; return; } try { await signInWithEmailAndPassword(auth, email, password); closeLogin(); } catch (error) { console.error('Login error:', error); message.textContent = error.code === 'auth/too-many-requests' ? 'Too many attempts. Try again later.' : 'Incorrect email or password.'; } });
+    $('loginAction').addEventListener('click', async () => {
+      const email = $('loginEmail').value.trim(), password = $('loginPassword').value, message = $('loginMessage');
+      message.textContent = '';
+      if (!email || !password) { message.textContent = 'Please enter your email and password.'; return; }
+      try { await signInWithEmailAndPassword(auth, email, password); closeLogin(); }
+      catch (error) { console.error('Login error:', error); message.textContent = loginErrorMessage(error); }
+    });
     $('logoutButton').addEventListener('click', () => signOut(auth).catch(console.error));
-    $('addButton').addEventListener('click', async () => { if (!isSignedIn(auth.currentUser)) { alert('Please log in first.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(); if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp(), addedBy: auth.currentUser.email }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); await loadWords(); alert('Word added!'); } catch (error) { console.error('Could not add word:', error); alert('Could not add word. Check your Firestore rules.'); } });
-    onAuthStateChanged(auth, (user) => { const signedIn = isSignedIn(user); $('adminPanel').style.display = signedIn ? 'block' : 'none'; $('loginButton').textContent = signedIn ? 'Add Words' : 'Login'; });
-    loadWords();
+    $('addButton').addEventListener('click', async () => {
+      if (!isSignedIn(auth.currentUser)) { alert('Please log in first.'); return; }
+      const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim();
+      if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; }
+      try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp(), addedBy: auth.currentUser.email }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); await loadWords(); alert('Word added!'); }
+      catch (error) { console.error('Could not add word:', error); alert(error.code === 'permission-denied' ? 'Firestore denied this action. Update your Firestore rules to allow signed-in users.' : `Could not add word (${error.code || 'unknown error'}).`); }
+    });
+    onAuthStateChanged(auth, (user) => { const signedIn = isSignedIn(user); $('adminPanel').style.display = signedIn ? 'block' : 'none'; $('loginButton').textContent = signedIn ? 'Add Words' : 'Login'; if (signedIn) loadWords(); });
+    searchWords();
   </script>
 </body>
 </html>
