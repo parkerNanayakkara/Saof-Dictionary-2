@@ -14,33 +14,48 @@
     .login-button { position: absolute; top: 20px; right: 20px; padding: 10px 18px; border: 0; border-radius: 10px; background: #fff; color: #6c4cff; font-weight: bold; }
     .search-container { padding: 25px; text-align: center; }
     #search { width: min(80%,500px); padding: 14px; border: 2px solid #6c4cff; border-radius: 12px; font-size: 16px; }
-    .dictionary, .admin-panel, .game-box { width: min(calc(100% - 40px),800px); margin: auto; }
+    .dictionary, .admin-panel, .question-panel, .game-box { width: min(calc(100% - 40px),800px); margin: auto; }
     .dictionary { padding: 10px 0 40px; }
-    .word-card, .admin-box, .login-box, .game-box { padding: 22px; border-radius: 15px; background: #fff; box-shadow: 0 4px 12px rgb(0 0 0 / 8%); }
+    .word-card, .admin-box, .question-box, .login-box, .game-box { padding: 22px; border-radius: 15px; background: #fff; box-shadow: 0 4px 12px rgb(0 0 0 / 8%); }
     .word-card { margin: 15px 0; }
     .word { color: #6c4cff; font-size: 28px; font-weight: bold; }
     .pronunciation { margin-top: 6px; color: #777; }
     .meaning { margin-top: 12px; font-size: 18px; }
     .credits { margin-top: 12px; color: #555; font-size: 14px; font-style: italic; }
     .admin-panel, .game-box { display: none; margin-bottom: 25px; }
-    .admin-box h2, .game-box h2 { margin-top: 0; color: #6c4cff; }
-    .admin-box input, .login-box input { width: 100%; padding: 12px; margin: 7px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
-    .add-button, .login-action, .game-button { width: 100%; margin-top: 10px; padding: 12px 20px; border: 0; border-radius: 8px; background: #6c4cff; color: #fff; font-weight: bold; }
+    .question-panel { margin-bottom: 25px; }
+    .admin-box h2, .question-box h2, .game-box h2 { margin-top: 0; color: #6c4cff; }
+    input, textarea { width: 100%; padding: 12px; margin: 7px 0; border: 1px solid #ccc; border-radius: 8px; font: inherit; }
+    textarea { min-height: 100px; resize: vertical; }
+    .add-button, .question-button, .login-action, .game-button { width: 100%; margin-top: 10px; padding: 12px 20px; border: 0; border-radius: 8px; background: #6c4cff; color: #fff; font-weight: bold; }
     .logout-button, .close-button { margin-top: 10px; padding: 9px 15px; border: 0; border-radius: 8px; background: #eee; color: #333; }
-    #gameCanvas { display: block; width: 100%; height: auto; margin: 15px auto 0; border: 2px solid #6c4cff; border-radius: 10px; background: #87ceeb; touch-action: manipulation; }
+    .question-status, .login-message { min-height: 20px; margin-top: 10px; font-size: 14px; }
+    .question-status { color: #26733b; }
+    #gameCanvas { display: block; width: 100%; height: auto; margin: 15px auto 0; border: 2px solid #233047; border-radius: 14px; background: #61bbed; image-rendering: pixelated; touch-action: manipulation; }
     .game-help, footer { color: #777; text-align: center; }
     .no-results { display: none; padding: 20px; color: #777; text-align: center; }
     footer { padding: 20px; }
     #login-page { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; padding: 20px; background: rgb(0 0 0 / 50%); }
     .login-box { width: min(100%,400px); text-align: center; }
     .login-box h2 { color: #6c4cff; }
-    .login-message { min-height: 18px; margin-top: 10px; color: #d33; font-size: 14px; }
-    @media (max-width:600px) { h1 { font-size: 32px; } .login-button { top: 10px; right: 10px; padding: 8px 12px; } .dictionary,.admin-panel,.game-box { width: calc(100% - 24px); } }
+    .login-message { color: #d33; }
+    @media (max-width:600px) { h1 { font-size: 32px; } .login-button { top: 10px; right: 10px; padding: 8px 12px; } .dictionary,.admin-panel,.question-panel,.game-box { width: calc(100% - 24px); } }
   </style>
 </head>
 <body>
   <header><h1>Saof Dictionary</h1><button class="login-button" id="loginButton" type="button">Login</button></header>
   <div class="search-container"><input id="search" type="search" placeholder="Search a word..." autocomplete="off"></div>
+
+  <section class="question-panel">
+    <div class="question-box">
+      <h2>Ask about a word</h2>
+      <p>Not logged in? Send a question or word suggestion to the dictionary owner.</p>
+      <input id="questionName" type="text" placeholder="Your name (optional)" maxlength="100">
+      <textarea id="questionText" placeholder="What word would you like added, or what is your question?" maxlength="1000"></textarea>
+      <button class="question-button" id="questionButton" type="button">Send Question</button>
+      <div class="question-status" id="questionStatus" role="status"></div>
+    </div>
+  </section>
 
   <section class="admin-panel" id="adminPanel">
     <div class="admin-box">
@@ -56,7 +71,7 @@
 
   <section class="game-box" id="gameBox">
     <h2>T-Rex Runner</h2><p class="game-help">Press Space, tap the game, or click Jump.</p>
-    <canvas id="gameCanvas" width="760" height="260" aria-label="T-Rex runner game"></canvas>
+    <canvas id="gameCanvas" width="760" height="260" aria-label="Pixel art T-Rex runner game"></canvas>
     <button class="game-button" id="jumpButton" type="button">Jump / Start</button><p id="gameScore">Score: 0</p>
   </section>
 
@@ -86,7 +101,6 @@
     const OWNER_EMAIL = 'parkernanayakkara@icloud.com';
     const GAME_USER_EMAIL = 'ashernanayakkara@icloud.com';
     const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), $ = (id) => document.getElementById(id);
-    // Session-only auth: refreshing or reopening the page requires the user to sign in again.
     await setPersistence(auth, inMemoryPersistence);
     const emailIs = (user, email) => user?.email?.toLowerCase() === email.toLowerCase();
     const isOwner = (user) => emailIs(user, OWNER_EMAIL);
@@ -112,18 +126,34 @@
     $('closeButton').addEventListener('click', closeLogin);
     $('loginAction').addEventListener('click', async () => { const message = $('loginMessage'); message.textContent = ''; try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); closeLogin(); } catch (error) { message.textContent = error.code === 'auth/unauthorized-domain' ? 'Add parkerNanayakkara.github.io to Firebase Authorized domains.' : `Login failed: ${error.code || 'check your email and password'}.`; } });
     $('logoutButton').addEventListener('click', () => signOut(auth));
+
+    $('questionButton').addEventListener('click', async () => {
+      const question = $('questionText').value.trim(), name = $('questionName').value.trim() || 'Anonymous visitor', status = $('questionStatus');
+      status.textContent = '';
+      if (!question) { status.textContent = 'Please type a question first.'; status.style.color = '#b33'; return; }
+      try {
+        await addDoc(collection(db, 'questions'), { name, question, createdAt: serverTimestamp(), status: 'new' });
+        $('questionText').value = ''; $('questionName').value = '';
+        status.textContent = 'Question sent. Thank you!'; status.style.color = '#26733b';
+        const subject = encodeURIComponent('Saof Dictionary question');
+        const body = encodeURIComponent(`From: ${name}\n\n${question}`);
+        window.location.href = `mailto:${OWNER_EMAIL}?subject=${subject}&body=${body}`;
+      } catch (error) { console.error('Could not send question:', error); status.textContent = error.code === 'permission-denied' ? 'Questions are not enabled in Firestore yet.' : 'Could not send the question. Please try again.'; status.style.color = '#b33'; }
+    });
+
     $('addButton').addEventListener('click', async () => { if (!isOwner(auth.currentUser)) { alert('Only the site owner can add words.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(), credits = $('newCredits').value.trim() || 'No credits'; if (!word || !pronunciation || !meaning) { alert('Please fill in the word, pronunciation, and meaning.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, credits, addedBy: auth.currentUser.email, createdAt: serverTimestamp() }); ['newWord','newPronunciation','newMeaning','newCredits'].forEach((id) => $(id).value = ''); alert('Word added for everyone!'); } catch (error) { alert(`Could not add word: ${error.code || 'Firestore error'}`); } });
 
-    // Improved runner graphics: sky gradient, clouds, sun, mountains, detailed dinosaur, cacti, shadows, and parallax scenery.
-    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let running = false, over = false, score = 0, last = 0, timer = 0, animation; const player = { x: 70, y: 188, w: 38, h: 48, vy: 0, jumping: false }; let obstacles = [], clouds = [{x:80,y:45,s:1},{x:310,y:70,s:.8},{x:590,y:38,s:1.2}];
-    function drawDino() { ctx.fillStyle='#3e2a8a'; ctx.fillRect(player.x+8,player.y+12,22,30); ctx.fillRect(player.x+18,player.y+3,18,22); ctx.fillRect(player.x+30,player.y+10,13,8); ctx.fillRect(player.x+11,player.y+39,7,9); ctx.fillRect(player.x+27,player.y+39,7,9); ctx.fillStyle='#fff'; ctx.fillRect(player.x+30,player.y+8,4,4); ctx.fillStyle='#ffdf5d'; ctx.fillRect(player.x+38,player.y+13,5,3); }
-    function draw() { const sky=ctx.createLinearGradient(0,0,0,260); sky.addColorStop(0,'#79cfff'); sky.addColorStop(1,'#f0f5ff'); ctx.fillStyle=sky; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#ffe88a'; ctx.beginPath(); ctx.arc(650,48,25,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#fff'; clouds.forEach((c)=>{ctx.beginPath();ctx.arc(c.x,c.y,16*c.s,0,Math.PI*2);ctx.arc(c.x+20*c.s,c.y-8*c.s,22*c.s,0,Math.PI*2);ctx.arc(c.x+44*c.s,c.y,16*c.s,0,Math.PI*2);ctx.fill();}); ctx.fillStyle='#b6d8e9'; ctx.beginPath();ctx.moveTo(0,190);ctx.lineTo(130,105);ctx.lineTo(260,190);ctx.lineTo(410,90);ctx.lineTo(590,190);ctx.lineTo(700,120);ctx.lineTo(760,190);ctx.fill(); ctx.fillStyle='#7fbf70';ctx.fillRect(0,236,canvas.width,24); ctx.fillStyle='#4f9a4b'; ctx.fillRect(0,236,canvas.width,3); obstacles.forEach((o)=>{ctx.fillStyle='#277a45';ctx.fillRect(o.x+6,o.y-12,7,12);ctx.fillRect(o.x,o.y,19,38);ctx.fillRect(o.x-8,o.y+10,9,7);ctx.fillRect(o.x+18,o.y+18,9,7);}); ctx.fillStyle='#5c3ca8'; drawDino(); }
-    function reset() { cancelAnimationFrame(animation); running=false; over=false; score=0; timer=0; obstacles=[]; player.y=188; player.vy=0; player.jumping=false; $('gameScore').textContent='Score: 0 — press Jump to start'; draw(); }
-    function jump() { if (over || !running) { reset(); running=true; last=performance.now(); animation=requestAnimationFrame(loop); } if (!player.jumping) { player.vy=-13; player.jumping=true; } }
-    function loop(time) { const dt=Math.min((time-last)/16.67,2); last=time; player.vy+=.62*dt; player.y+=player.vy*dt; if(player.y>=188){player.y=188;player.vy=0;player.jumping=false;} timer+=dt; clouds.forEach((c)=>{c.x-=.15*dt;if(c.x<-70)c.x=760;}); if(timer>65){obstacles.push({x:canvas.width+10,y:210,w:27,h:38});timer=0;} obstacles.forEach((o)=>o.x-=6.5*dt); obstacles=obstacles.filter((o)=>o.x+27>0); if(obstacles.some((o)=>player.x+8<o.x+27&&player.x+player.w-3>o.x&&player.y+8<o.y+38&&player.y+player.h>o.y)){over=true;running=false;$('gameScore').textContent=`Game over! Score: ${Math.floor(score)} — press Jump to try again`;draw();return;} score+=dt*.1;$('gameScore').textContent=`Score: ${Math.floor(score)}`;draw();animation=requestAnimationFrame(loop); }
-    $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown', (event) => { if(event.code==='Space' && isGameUser(auth.currentUser)){event.preventDefault();jump();} }); reset();
-
-    onAuthStateChanged(auth, (user) => { const owner = isOwner(user), gameUser = isGameUser(user); $('adminPanel').style.display = owner ? 'block' : 'none'; $('loginButton').textContent = user ? (owner ? 'Add Words' : 'Logged In') : 'Login'; $('gameBox').style.display = gameUser ? 'block' : 'none'; if (!gameUser) reset(); });
+    // Pixel-art runner matching the supplied blue-sky, grey-dinosaur, cactus style.
+    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let running = false, over = false, score = 0, last = 0, timer = 0, animation; const player = { x: 78, y: 172, w: 58, h: 66, vy: 0, jumping: false }; let obstacles = [], clouds = [{x:70,y:48},{x:620,y:70}];
+    function pixelRect(x,y,w,h,color) { ctx.fillStyle=color; ctx.fillRect(Math.round(x),Math.round(y),w,h); }
+    function drawDino() { const x=player.x,y=player.y; pixelRect(x+15,y+12,31,42,'#6b7481'); pixelRect(x+28,y+2,48,35,'#6b7481'); pixelRect(x+65,y+11,18,18,'#6b7481'); pixelRect(x+9,y+24,16,31,'#6b7481'); pixelRect(x+23,y+50,18,14,'#6b7481'); pixelRect(x+48,y+50,18,14,'#6b7481'); pixelRect(x+29,y+37,31,12,'#6b7481'); pixelRect(x+27,y+20,11,15,'#293341'); pixelRect(x+70,y+17,7,7,'#1b2633'); pixelRect(x+5,y+22,9,9,'#293341'); pixelRect(x+13,y+51,10,9,'#293341'); }
+    function drawCactus(o) { const x=o.x,y=o.y; pixelRect(x+12,y-52,18,52,'#159447'); pixelRect(x+3,y-34,13,25,'#159447'); pixelRect(x-5,y-28,10,20,'#159447'); pixelRect(x+30,y-39,13,24,'#159447'); pixelRect(x+40,y-31,10,20,'#159447'); pixelRect(x+9,y-48,24,7,'#0c6332'); pixelRect(x+9,y-3,26,8,'#0c6332'); }
+    function draw() { ctx.fillStyle='#61bbed';ctx.fillRect(0,0,canvas.width,canvas.height); pixelRect(0,0,canvas.width,canvas.height,'#61bbed'); clouds.forEach((c)=>{pixelRect(c.x,c.y,55,12,'#fff');pixelRect(c.x+12,c.y-12,34,24,'#fff');pixelRect(c.x+23,c.y-22,24,34,'#fff');}); pixelRect(0,218,760,42,'#f2ad3d');pixelRect(0,218,760,7,'#704327');pixelRect(0,250,760,10,'#c97924'); for(let x=30;x<740;x+=75){pixelRect(x,232,15,7,'#704327');pixelRect(x+29,245,12,6,'#704327');} obstacles.forEach(drawCactus); drawDino(); }
+    function reset() { cancelAnimationFrame(animation); running=false;over=false;score=0;timer=0;obstacles=[];player.y=172;player.vy=0;player.jumping=false;$('gameScore').textContent='Score: 0 — press Jump to start';draw(); }
+    function jump() { if(over||!running){reset();running=true;last=performance.now();animation=requestAnimationFrame(loop);} if(!player.jumping){player.vy=-14;player.jumping=true;} }
+    function loop(time) { const dt=Math.min((time-last)/16.67,2);last=time;player.vy+=.65*dt;player.y+=player.vy*dt;if(player.y>=172){player.y=172;player.vy=0;player.jumping=false;}timer+=dt;clouds.forEach((c)=>{c.x-=.12*dt;if(c.x<-80)c.x=760;});if(timer>68){obstacles.push({x:canvas.width+10,y:218});timer=0;}obstacles.forEach((o)=>o.x-=6.5*dt);obstacles=obstacles.filter((o)=>o.x+50>0);if(obstacles.some((o)=>player.x+12<o.x+42&&player.x+player.w-5>o.x&&player.y+10<o.y&&player.y+player.h>o.y-52)){over=true;running=false;$('gameScore').textContent=`Game over! Score: ${Math.floor(score)} — press Jump to try again`;draw();return;}score+=dt*.1;$('gameScore').textContent=`Score: ${Math.floor(score)}`;draw();animation=requestAnimationFrame(loop); }
+    $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown',(event)=>{if(event.code==='Space'&&isGameUser(auth.currentUser)){event.preventDefault();jump();}});reset();
+    onAuthStateChanged(auth,(user)=>{const owner=isOwner(user),gameUser=isGameUser(user);$('adminPanel').style.display=owner?'block':'none';$('loginButton').textContent=user?(owner?'Add Words':'Logged In'):'Login';$('gameBox').style.display=gameUser?'block':'none';if(!gameUser)reset();});
     searchWords();
   </script>
 </body>
