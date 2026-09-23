@@ -1,647 +1,905 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ \<!DOCTYPE html\> \<html lang="en"\> \<head\> \<meta charset="UTF-8"\> \<meta name="viewport" content="width=device-width, initial-scale=1.0"\>  \<title\>Saof Dictionary\</title\>  \<style\> \* { box-sizing: border-box; }
+```
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: #f4f1ff;
+  color: #222;
+}
+```
 
-  <title>Saof Dictionary</title>
+```
+header {
+  background: linear-gradient(135deg, #6c4cff, #8b6cff);
+  color: white;
+  text-align: center;
+  padding: 35px 20px;
+  position: relative;
+}
+```
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+```
+header h1 {
+  margin: 0;
+  font-size: 42px;
+}
+```
 
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #f4f1ff;
-      color: #222;
-    }
+```
+.login-button {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  background: white;
+  color: #6c4cff;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+}
+```
 
-    header {
-      background: linear-gradient(135deg, #6c4cff, #8b6cff);
-      color: white;
-      text-align: center;
-      padding: 35px 20px;
-      position: relative;
-    }
+```
+.login-button:hover {
+  background: #eeeaff;
+}
+```
 
-    header h1 {
-      margin: 0;
-      font-size: 42px;
-    }
+```
+.search-container {
+  text-align: center;
+  padding: 25px;
+}
+```
 
-    .login-button {
-      position: absolute;
-      right: 20px;
-      top: 20px;
-      background: white;
-      color: #6c4cff;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 10px;
-      font-weight: bold;
-      cursor: pointer;
-    }
+```
+#search {
+  width: 80%;
+  max-width: 500px;
+  padding: 14px;
+  border: 2px solid #6c4cff;
+  border-radius: 12px;
+  font-size: 16px;
+  outline: none;
+}
+```
 
-    .login-button:hover {
-      background: #eeeaff;
-    }
+```
+.dictionary {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px 20px 40px;
+}
+```
 
-    .search-container {
-      text-align: center;
-      padding: 25px;
-    }
+```
+.word-card {
+  background: white;
+  margin: 15px 0;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+```
 
-    #search {
-      width: 80%;
-      max-width: 500px;
-      padding: 14px;
-      border: 2px solid #6c4cff;
-      border-radius: 12px;
-      font-size: 16px;
-      outline: none;
-    }
+```
+.word {
+  font-size: 28px;
+  font-weight: bold;
+  color: #6c4cff;
+}
+```
 
-    .dictionary {
-      max-width: 800px;
-      margin: auto;
-      padding: 10px 20px 40px;
-    }
+```
+.pronunciation {
+  margin-top: 6px;
+  color: #777;
+  font-size: 16px;
+}
+```
 
-    .word-card {
-      background: white;
-      margin: 15px 0;
-      padding: 22px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
+```
+.meaning {
+  font-size: 18px;
+  margin-top: 12px;
+}
+```
 
-    .word {
-      font-size: 28px;
-      font-weight: bold;
-      color: #6c4cff;
-    }
+```
+.admin-panel {
+  display: none;
+  max-width: 800px;
+  margin: 10px auto 25px;
+  padding: 20px;
+}
+```
 
-    .pronunciation {
-      margin-top: 6px;
-      color: #777;
-      font-size: 16px;
-    }
+```
+.admin-box {
+  background: white;
+  padding: 22px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+```
 
-    .meaning {
-      font-size: 18px;
-      margin-top: 12px;
-    }
+```
+.admin-box h2 {
+  margin-top: 0;
+  color: #6c4cff;
+}
+```
 
-    .admin-panel {
-      display: none;
-      max-width: 800px;
-      margin: 10px auto 25px;
-      padding: 20px;
-    }
+```
+.admin-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+```
 
-    .admin-box {
-      background: white;
-      padding: 22px;
-      border-radius: 15px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    }
+```
+.add-button {
+  margin-top: 10px;
+  background: #6c4cff;
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+}
+```
 
-    .admin-box h2 {
-      margin-top: 0;
-      color: #6c4cff;
-    }
+```
+.add-button:hover {
+  background: #5739e6;
+}
+```
 
-    .admin-box input {
-      width: 100%;
-      padding: 12px;
-      margin: 7px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+```
+.logout-button {
+  background: #eee;
+  color: #333;
+  border: none;
+  padding: 9px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+```
 
-    .add-button {
-      margin-top: 10px;
-      background: #6c4cff;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: bold;
-    }
+```
+#login-page {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+```
 
-    .add-button:hover {
-      background: #5739e6;
-    }
+```
+.login-box {
+  background: white;
+  padding: 35px;
+  border-radius: 18px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+```
 
-    .logout-button {
-      background: #eee;
-      color: #333;
-      border: none;
-      padding: 9px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      margin-top: 10px;
-    }
+```
+.login-box h2 {
+  color: #6c4cff;
+}
+```
 
-    #login-page {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.5);
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
+```
+.login-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 7px 0;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 16px;
+}
+```
 
-    .login-box {
-      background: white;
-      padding: 35px;
-      border-radius: 18px;
-      width: 90%;
-      max-width: 400px;
-      text-align: center;
-    }
+```
+.login-action {
+  width: 100%;
+  padding: 13px;
+  border: none;
+  border-radius: 10px;
+  background: #6c4cff;
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  font-weight: bold;
+  margin-top: 8px;
+}
+```
 
-    .login-box h2 {
-      color: #6c4cff;
-    }
+```
+.login-action:hover {
+  background: #5739e6;
+}
+```
 
-    .login-box input {
-      width: 100%;
-      padding: 12px;
-      margin: 7px 0;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      font-size: 16px;
-    }
+```
+.close-button {
+  margin-top: 12px;
+  background: #eee;
+  border: none;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+}
+```
 
-    .login-action {
-      width: 100%;
-      padding: 13px;
-      border: none;
-      border-radius: 10px;
-      background: #6c4cff;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-      font-weight: bold;
-      margin-top: 8px;
-    }
+```
+.login-message {
+  color: #d33;
+  font-size: 14px;
+  margin-top: 10px;
+  min-height: 18px;
+}
+```
 
-    .close-button {
-      margin-top: 12px;
-      background: #eee;
-      border: none;
-      padding: 10px 18px;
-      border-radius: 8px;
-      cursor: pointer;
-    }
+```
+.no-results {
+  text-align: center;
+  color: #777;
+  display: none;
+  padding: 20px;
+}
+```
 
-    .login-message {
-      color: #d33;
-      font-size: 14px;
-      margin-top: 10px;
-    }
+```
+footer {
+  text-align: center;
+  padding: 20px;
+  color: #777;
+}
+```
 
-    .no-results {
-      text-align: center;
-      color: #777;
-      display: none;
-      padding: 20px;
-    }
+```
+@media (max-width: 600px) {
+  header h1 {
+    font-size: 32px;
+  }
+```
 
-    footer {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-    }
-  </style>
-</head>
+```
+  .login-button {
+    right: 10px;
+    top: 10px;
+    padding: 8px 12px;
+  }
+```
 
-<body>
+```
+  .search-container {
+    padding: 20px 10px;
+  }
+```
 
-<header>
-  <h1>Saof Dictionary</h1>
+```
+  #search {
+    width: 95%;
+  }
+```
 
-  <button class="login-button" id="loginButton" onclick="handleLoginButton()">
-    Login
-  </button>
-</header>
+```
+  .dictionary {
+    padding: 10px 12px 30px;
+  }
+```
 
+```
+  .admin-panel {
+    padding: 12px;
+  }
+}
+```
 
-<div class="search-container">
-  <input
-    type="text"
-    id="search"
-    placeholder="Search a word..."
-    onkeyup="searchWords()"
-  >
+ \</style\> \</head\> \<body\> \<header\> \<h1\>Saof Dictionary\</h1\> \<button\
+ class="login-button"\
+ id="loginButton"\
+ onclick="handleLoginButton()"
+
+ >
+
+```
+Login
+```
+
+ \</button\> \</header\> \<div class="search-container"\> \<input type="text" id="search" placeholder="Search a word..." autocomplete="off" oninput="searchWords()" \> \</div\> \<!-- ADMIN PANEL --\> \<div class="admin-panel" id="adminPanel"\>  \<div class="admin-box"\>
+```
+<h2>Add a Word</h2>
+```
+
+```
+<input
+  type="text"
+  id="newWord"
+  placeholder="Word"
+  maxlength="100"
+>
+```
+
+```
+<input
+  type="text"
+  id="newPronunciation"
+  placeholder="Pronunciation"
+  maxlength="200"
+>
+```
+
+```
+<input
+  type="text"
+  id="newMeaning"
+  placeholder="Meaning"
+  maxlength="500"
+>
+```
+
+```
+<button class="add-button" onclick="addWord()">
+  Add Word
+</button>
+```
+
+```
+<br>
+```
+
+```
+<button class="logout-button" onclick="logout()">
+  Logout
+</button>
+```
+
+  \</div\> \</div\> \<!-- DICTIONARY --\> \<main class="dictionary" id="dictionary"\>  \<div class="word-card"\>
+```
+<div class="word">Recos</div>
+```
+
+```
+<div class="pronunciation">
+  Pronunciation: <strong>reh-coss</strong>
 </div>
+```
 
-
-<!-- ONLY YOUR ACCOUNT CAN SEE THIS -->
-
-<div class="admin-panel" id="adminPanel">
-
-  <div class="admin-box">
-
-    <h2>Add a Word</h2>
-
-    <input
-      type="text"
-      id="newWord"
-      placeholder="Word"
-    >
-
-    <input
-      type="text"
-      id="newPronunciation"
-      placeholder="Pronunciation"
-    >
-
-    <input
-      type="text"
-      id="newMeaning"
-      placeholder="Meaning"
-    >
-
-    <button class="add-button" onclick="addWord()">
-      Add Word
-    </button>
-
-    <br>
-
-    <button class="logout-button" onclick="logout()">
-      Logout
-    </button>
-
-  </div>
-
+```
+<div class="meaning">
+  Meaning: <strong>ball</strong>
 </div>
+```
 
+  \</div\>  \<div class="word-card"\>
+```
+<div class="word">Saof</div>
+```
 
-<main class="dictionary" id="dictionary">
-
-  <div class="word-card">
-    <div class="word">Recos</div>
-
-    <div class="pronunciation">
-      Pronunciation: <strong>reh-coss</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning: <strong>ball</strong>
-    </div>
-  </div>
-
-
-  <div class="word-card">
-    <div class="word">Saof</div>
-
-    <div class="pronunciation">
-      Pronunciation: <strong>s-ow-f</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning: <strong>me / and</strong>
-    </div>
-  </div>
-
-
-  <div class="word-card">
-    <div class="word">Thu</div>
-
-    <div class="pronunciation">
-      Pronunciation: <strong>th-oo</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning: <strong>Depends on the context.</strong>
-    </div>
-  </div>
-
-
-  <div class="word-card">
-    <div class="word">Thaoo</div>
-
-    <div class="pronunciation">
-      Pronunciation: <strong>th-ahh-ooo</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning: <strong>hello thaththa</strong>
-    </div>
-  </div>
-
-
-  <div class="word-card">
-    <div class="word">Aooooo</div>
-
-    <div class="pronunciation">
-      Pronunciation: <strong>a-ooo</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning: <strong>hello amma</strong>
-    </div>
-  </div>
-
-</main>
-
-
-<div class="no-results" id="noResults">
-  No words found.
+```
+<div class="pronunciation">
+  Pronunciation: <strong>s-ow-f</strong>
 </div>
+```
 
-
-<footer>
-  © 2026 Saof Dictionary
-</footer>
-
-
-<!-- LOGIN WINDOW -->
-
-<div id="login-page">
-
-  <div class="login-box">
-
-    <h2>Saof Dictionary</h2>
-
-    <p>Login to manage the dictionary.</p>
-
-    <input
-      type="email"
-      id="loginEmail"
-      placeholder="iCloud email"
-    >
-
-    <input
-      type="password"
-      id="loginPassword"
-      placeholder="Password"
-    >
-
-    <button class="login-action" onclick="login()">
-      Login
-    </button>
-
-    <div class="login-message" id="loginMessage"></div>
-
-    <button class="close-button" onclick="closeLogin()">
-      Cancel
-    </button>
-
-  </div>
-
+```
+<div class="meaning">
+  Meaning: <strong>me / and</strong>
 </div>
+```
 
+  \</div\>  \<div class="word-card"\>
+```
+<div class="word">Thu</div>
+```
 
-<!-- FIREBASE -->
+```
+<div class="pronunciation">
+  Pronunciation: <strong>th-oo</strong>
+</div>
+```
 
-<script type="module">
+```
+<div class="meaning">
+  Meaning: <strong>Depends on the context.</strong>
+</div>
+```
 
-  import { initializeApp }
-    from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+  \</div\>  \<div class="word-card"\>
+```
+<div class="word">Thaoo</div>
+```
 
-  import {
-    getAuth,
-    signInWithEmailAndPassword,
-    signOut,
-    onAuthStateChanged
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+```
+<div class="pronunciation">
+  Pronunciation: <strong>th-ahh-ooo</strong>
+</div>
+```
 
-  import {
-    getFirestore,
-    collection,
-    addDoc,
-    getDocs
-  } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+```
+<div class="meaning">
+  Meaning: <strong>hello thaththa</strong>
+</div>
+```
 
+  \</div\>  \<div class="word-card"\>
+```
+<div class="word">Aooooo</div>
+```
 
-  // YOUR FIREBASE PROJECT
+```
+<div class="pronunciation">
+  Pronunciation: <strong>a-ooo</strong>
+</div>
+```
 
-  const firebaseConfig = {
+```
+<div class="meaning">
+  Meaning: <strong>hello amma</strong>
+</div>
+```
 
-    apiKey: "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4",
+  \</div\> \</main\> \<div class="no-results" id="noResults"\> No words found. \</div\> \<footer\> © 2026 Saof Dictionary \</footer\> \<!-- LOGIN WINDOW --\> \<div id="login-page"\>  \<div class="login-box"\>
+```
+<h2>Saof Dictionary</h2>
+```
 
-    authDomain: "saof-dictionary.firebaseapp.com",
+```
+<p>Login to manage the dictionary.</p>
+```
 
-    projectId: "saof-dictionary",
+```
+<input
+  type="email"
+  id="loginEmail"
+  placeholder="iCloud email"
+  autocomplete="email"
+>
+```
 
-    storageBucket: "saof-dictionary.firebasestorage.app",
+```
+<input
+  type="password"
+  id="loginPassword"
+  placeholder="Password"
+  autocomplete="current-password"
+>
+```
 
-    messagingSenderId: "1054693760278",
+```
+<button
+  class="login-action"
+  onclick="login()"
+>
+  Login
+</button>
+```
 
-    appId: "1:1054693760278:web:5f8f9c090fbc737dfc4437"
+```
+<div
+  class="login-message"
+  id="loginMessage"
+></div>
+```
 
-  };
+```
+<button
+  class="close-button"
+  onclick="closeLogin()"
+>
+  Cancel
+</button>
+```
 
+  \</div\> \</div\> \<!-- FIREBASE --\> \<script type="module"\> import {\
+ initializeApp\
+ } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 
-  // YOUR ACCOUNT
+ import {\
+ getAuth,\
+ signInWithEmailAndPassword,\
+ signOut,\
+ onAuthStateChanged\
+ } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-  const ADMIN_EMAIL = "parkernanayakkara@icloud.com";
+ import {\
+ getFirestore,\
+ collection,\
+ addDoc,\
+ getDocs,\
+ serverTimestamp\
+ } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+ /\*
 
-  const app = initializeApp(firebaseConfig);
+ - FIREBASE CONFIG\
+   \*/
 
-  const auth = getAuth(app);
+ const firebaseConfig = {
 
-  const db = getFirestore(app);
+```
+apiKey:
+  "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4",
 
+authDomain:
+  "saof-dictionary.firebaseapp.com",
 
-  // LOGIN
+projectId:
+  "saof-dictionary",
 
-  window.login = async function() {
+storageBucket:
+  "saof-dictionary.firebasestorage.app",
 
-    const email =
-      document.getElementById("loginEmail").value.trim();
+messagingSenderId:
+  "1054693760278",
 
-    const password =
-      document.getElementById("loginPassword").value;
+appId:
+  "1:1054693760278:web:5f8f9c090fbc737dfc4437"
+```
 
-    const message =
-      document.getElementById("loginMessage");
+ };
 
+ /\*
 
-    message.textContent = "";
+ - ADMIN ACCOUNT\
+   \*/
 
+ const ADMIN\_EMAIL =\
+ "parkernanayakkara@icloud.com";
 
-    if (!email || !password) {
+ /\*
 
-      message.textContent =
-        "Please enter your email and password.";
+ - START FIREBASE\
+   \*/
 
-      return;
+ const app =\
+ initializeApp(firebaseConfig);
 
+ const auth =\
+ getAuth(app);
+
+ const db =\
+ getFirestore(app);
+
+ /\*
+
+ - CHECK ADMIN\
+   \*/
+
+ function isAdmin(user) {
+
+```
+return (
+  user &&
+  user.email &&
+  user.email.toLowerCase() ===
+  ADMIN_EMAIL.toLowerCase()
+);
+```
+
+ }
+
+ /\*
+
+ - LOGIN\
+   \*/
+
+ window.login = async function() {
+
+```
+const email =
+  document
+    .getElementById("loginEmail")
+    .value
+    .trim();
+
+const password =
+  document
+    .getElementById("loginPassword")
+    .value;
+
+const message =
+  document.getElementById(
+    "loginMessage"
+  );
+
+message.textContent = "";
+
+if (!email || !password) {
+
+  message.textContent =
+    "Please enter your email and password.";
+
+  return;
+
+}
+
+if (
+  email.toLowerCase() !==
+  ADMIN_EMAIL.toLowerCase()
+) {
+
+  message.textContent =
+    "This account does not have permission.";
+
+  return;
+
+}
+
+try {
+
+  await signInWithEmailAndPassword(
+    auth,
+    email,
+    password
+  );
+
+  closeLogin();
+
+} catch (error) {
+
+  console.error(
+    "Login error:",
+    error
+  );
+
+  if (
+    error.code ===
+    "auth/invalid-credential"
+  ) {
+
+    message.textContent =
+      "Incorrect email or password.";
+
+  } else if (
+    error.code ===
+    "auth/too-many-requests"
+  ) {
+
+    message.textContent =
+      "Too many attempts. Please try again later.";
+
+  } else {
+
+    message.textContent =
+      "Login failed. Please try again.";
+
+  }
+
+}
+```
+
+ };
+
+ /\*
+
+ - LOGOUT\
+   \*/
+
+ window.logout = async function() {
+
+```
+try {
+
+  await signOut(auth);
+
+} catch (error) {
+
+  console.error(
+    "Logout error:",
+    error
+  );
+
+}
+```
+
+ };
+
+ /\*
+
+ - CHECK LOGIN STATE\
+   \*/
+
+ onAuthStateChanged(\
+ auth,\
+ (user) =\> {
+
+```
+  const adminPanel =
+    document.getElementById(
+      "adminPanel"
+    );
+
+  const loginButton =
+    document.getElementById(
+      "loginButton"
+    );
+
+  if (isAdmin(user)) {
+
+    adminPanel.style.display =
+      "block";
+
+    loginButton.textContent =
+      "My Account";
+
+  } else {
+
+    adminPanel.style.display =
+      "none";
+
+    loginButton.textContent =
+      "Login";
+
+  }
+
+}
+```
+
+ );
+
+ /\*
+
+ - ADD WORD\
+   \*/
+
+ window.addWord = async function() {
+
+```
+const user =
+  auth.currentUser;
+
+if (!isAdmin(user)) {
+
+  alert(
+    "You are not allowed to add words."
+  );
+
+  return;
+
+}
+
+const word =
+  document
+    .getElementById("newWord")
+    .value
+    .trim();
+
+const pronunciation =
+  document
+    .getElementById(
+      "newPronunciation"
+    )
+    .value
+    .trim();
+
+const meaning =
+  document
+    .getElementById("newMeaning")
+    .value
+    .trim();
+
+if (
+  !word ||
+  !pronunciation ||
+  !meaning
+) {
+
+  alert(
+    "Please fill in all fields."
+  );
+
+  return;
+
+}
+
+try {
+
+  await addDoc(
+    collection(db, "words"),
+    {
+      word: word,
+      pronunciation: pronunciation,
+      meaning: meaning,
+      createdAt: serverTimestamp()
     }
+  );
 
+  alert("Word added!");
 
-    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+  document.getElementById(
+    "newWord"
+  ).value = "";
 
-      message.textContent =
-        "This account does not have permission.";
+  document.getElementById(
+    "newPronunciation"
+  ).value = "";
 
-      return;
+  document.getElementById(
+    "newMeaning"
+  ).value = "";
 
-    }
+  await loadWords();
 
+} catch (error) {
 
-    try {
+  console.error(
+    "Could not add word:",
+    error
+  );
 
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
+  alert(
+    "Could not add word. Check your Firebase settings and Firestore rules."
+  );
 
-      closeLogin();
+}
+```
 
-    } catch (error) {
+ };
 
-      message.textContent =
-        "Login failed. Check your email and password.";
+ /\*
 
-    }
+ - LOAD ONLINE WORDS\
+   \*/
 
-  };
+ async function loadWords() {
 
+```
+const dictionary =
+  document.getElementById(
+    "dictionary"
+  );
 
-  // LOGOUT
+try {
 
-  window.logout = async function() {
+  const snapshot =
+    await getDocs(
+      collection(db, "words")
+    );
 
-    await signOut(auth);
+  /*
+   * Remove old Firebase cards
+   */
 
-  };
+  dictionary
+    .querySelectorAll(
+      ".firebase-word-card"
+    )
+    .forEach(
+      card => card.remove()
+    );
 
+  /*
+   * Add Firebase cards
+   */
 
-  // CHECK WHO IS LOGGED IN
+  snapshot.forEach(
+    (doc) => {
 
-  onAuthStateChanged(auth, (user) => {
+      const data =
+        doc.data();
 
-    const adminPanel =
-      document.getElementById("adminPanel");
-
-    const loginButton =
-      document.getElementById("loginButton");
-
-
-    if (
-      user &&
-      user.email.toLowerCase() ===
-      ADMIN_EMAIL.toLowerCase()
-    ) {
-
-      adminPanel.style.display = "block";
-
-      loginButton.textContent = "My Account";
-
-    } else {
-
-      adminPanel.style.display = "none";
-
-      loginButton.textContent = "Login";
-
-    }
-
-  });
-
-
-  // ADD WORD
-
-  window.addWord = async function() {
-
-    const user = auth.currentUser;
-
-
-    if (
-      !user ||
-      user.email.toLowerCase() !==
-      ADMIN_EMAIL.toLowerCase()
-    ) {
-
-      alert("You are not allowed to add words.");
-
-      return;
-
-    }
-
-
-    const word =
-      document.getElementById("newWord")
-        .value.trim();
-
-    const pronunciation =
-      document.getElementById("newPronunciation")
-        .value.trim();
-
-    const meaning =
-      document.getElementById("newMeaning")
-        .value.trim();
-
-
-    if (!word || !pronunciation || !meaning) {
-
-      alert("Please fill in all fields.");
-
-      return;
-
-    }
-
-
-    try {
-
-      await addDoc(
-        collection(db, "words"),
-        {
-          word: word,
-          pronunciation: pronunciation,
-          meaning: meaning,
-          createdAt: new Date()
-        }
-      );
-
-
-      alert("Word added!");
-
-
-      document.getElementById("newWord").value = "";
-
-      document.getElementById("newPronunciation").value = "";
-
-      document.getElementById("newMeaning").value = "";
-
-
-      loadWords();
-
-    } catch (error) {
-
-      alert("Could not add word.");
-
-      console.error(error);
-
-    }
-
-  };
-
-
-  // LOAD ONLINE WORDS
-
-  async function loadWords() {
-
-    try {
-
-      const snapshot =
-        await getDocs(collection(db, "words"));
-
-
-      snapshot.forEach((doc) => {
-
-        const data = doc.data();
+      if (
+        data.word &&
+        data.pronunciation &&
+        data.meaning
+      ) {
 
         createWordCard(
           data.word,
@@ -649,183 +907,355 @@
           data.meaning
         );
 
-      });
+      }
 
-    } catch (error) {
+    }
+  );
 
-      console.log(
-        "Online words could not be loaded."
+  searchWords();
+
+} catch (error) {
+
+  console.error(
+    "Online words could not be loaded:",
+    error
+  );
+
+}
+```
+
+ }
+
+ /\*
+
+ - CREATE WORD CARD\
+   \*/
+
+ function createWordCard(\
+ word,\
+ pronunciation,\
+ meaning\
+ ) {
+
+```
+const dictionary =
+  document.getElementById(
+    "dictionary"
+  );
+
+const card =
+  document.createElement(
+    "div"
+  );
+
+card.className =
+  "word-card firebase-word-card";
+
+const wordElement =
+  document.createElement(
+    "div"
+  );
+
+wordElement.className =
+  "word";
+
+wordElement.textContent =
+  word;
+
+const pronunciationElement =
+  document.createElement(
+    "div"
+  );
+
+pronunciationElement.className =
+  "pronunciation";
+
+pronunciationElement.textContent =
+  "Pronunciation: ";
+
+const pronunciationStrong =
+  document.createElement(
+    "strong"
+  );
+
+pronunciationStrong.textContent =
+  pronunciation;
+
+pronunciationElement.appendChild(
+  pronunciationStrong
+);
+
+const meaningElement =
+  document.createElement(
+    "div"
+  );
+
+meaningElement.className =
+  "meaning";
+
+meaningElement.textContent =
+  "Meaning: ";
+
+const meaningStrong =
+  document.createElement(
+    "strong"
+  );
+
+meaningStrong.textContent =
+  meaning;
+
+meaningElement.appendChild(
+  meaningStrong
+);
+
+card.appendChild(
+  wordElement
+);
+
+card.appendChild(
+  pronunciationElement
+);
+
+card.appendChild(
+  meaningElement
+);
+
+dictionary.appendChild(
+  card
+);
+```
+
+ }
+
+ /\*
+
+ - LOAD WORDS ON STARTUP\
+   \*/
+
+ loadWords();
+
+ \</script\> \<script\> /\*
+
+ - SEARCH WORDS\
+   \*/
+
+ function searchWords() {
+
+```
+const search =
+  document
+    .getElementById("search")
+    .value
+    .toLowerCase()
+    .trim();
+
+const cards =
+  document.querySelectorAll(
+    ".word-card"
+  );
+
+let found = 0;
+
+cards.forEach(
+  card => {
+
+    const wordElement =
+      card.querySelector(
+        ".word"
       );
+
+    const meaningElement =
+      card.querySelector(
+        ".meaning"
+      );
+
+    if (
+      !wordElement ||
+      !meaningElement
+    ) {
+
+      return;
 
     }
 
-  }
+    const word =
+      wordElement
+        .textContent
+        .toLowerCase();
 
+    const meaning =
+      meaningElement
+        .textContent
+        .toLowerCase();
 
-  // CREATE WORD CARD
+    if (
+      word.includes(search) ||
+      meaning.includes(search)
+    ) {
 
-  function createWordCard(
-    word,
-    pronunciation,
-    meaning
-  ) {
+      card.style.display =
+        "block";
 
-    const dictionary =
-      document.getElementById("dictionary");
-
-
-    const card =
-      document.createElement("div");
-
-    card.className = "word-card";
-
-
-    card.innerHTML = `
-
-      <div class="word">
-        ${escapeHTML(word)}
-      </div>
-
-      <div class="pronunciation">
-        Pronunciation:
-        <strong>
-          ${escapeHTML(pronunciation)}
-        </strong>
-      </div>
-
-      <div class="meaning">
-        Meaning:
-        <strong>
-          ${escapeHTML(meaning)}
-        </strong>
-      </div>
-
-    `;
-
-
-    dictionary.appendChild(card);
-
-  }
-
-
-  function escapeHTML(text) {
-
-    const div =
-      document.createElement("div");
-
-    div.textContent = text;
-
-    return div.innerHTML;
-
-  }
-
-
-  loadWords();
-
-</script>
-
-
-<script>
-
-  function searchWords() {
-
-    const search =
-      document
-        .getElementById("search")
-        .value
-        .toLowerCase()
-        .trim();
-
-
-    const cards =
-      document.querySelectorAll(".word-card");
-
-
-    let found = 0;
-
-
-    cards.forEach(card => {
-
-      const word =
-        card
-          .querySelector(".word")
-          .textContent
-          .toLowerCase();
-
-
-      const meaning =
-        card
-          .querySelector(".meaning")
-          .textContent
-          .toLowerCase();
-
-
-      if (
-        word.includes(search) ||
-        meaning.includes(search)
-      ) {
-
-        card.style.display = "block";
-
-        found++;
-
-      } else {
-
-        card.style.display = "none";
-
-      }
-
-    });
-
-
-    document.getElementById("noResults")
-      .style.display =
-      found === 0 ? "block" : "none";
-
-  }
-
-
-  function handleLoginButton() {
-
-    const button =
-      document.getElementById("loginButton");
-
-
-    if (button.textContent === "My Account") {
-
-      document.getElementById("adminPanel")
-        .scrollIntoView({
-          behavior: "smooth"
-        });
+      found++;
 
     } else {
 
-      openLogin();
+      card.style.display =
+        "none";
 
     }
 
   }
+);
 
+document.getElementById(
+  "noResults"
+).style.display =
+  found === 0
+    ? "block"
+    : "none";
+```
 
-  function openLogin() {
+ }
 
-    document.getElementById("login-page")
-      .style.display = "flex";
+ /\*
+
+ - LOGIN BUTTON\
+   \*/
+
+ function handleLoginButton() {
+
+```
+const button =
+  document.getElementById(
+    "loginButton"
+  );
+```
+
+```
+if (
+  button.textContent ===
+  "My Account"
+) {
+```
+
+```
+  document
+    .getElementById(
+      "adminPanel"
+    )
+    .scrollIntoView({
+      behavior: "smooth"
+    });
+
+} else {
+
+  openLogin();
+
+}
+```
+
+ }
+
+ /\*
+
+ - OPEN LOGIN\
+   \*/
+
+ function openLogin() {
+
+```
+document.getElementById(
+  "login-page"
+).style.display =
+  "flex";
+```
+
+```
+document.getElementById(
+  "loginEmail"
+).focus();
+```
+
+ }
+
+ /\*
+
+ - CLOSE LOGIN\
+   \*/
+
+ function closeLogin() {
+
+```
+document.getElementById(
+  "login-page"
+).style.display =
+  "none";
+```
+
+```
+document.getElementById(
+  "loginMessage"
+).textContent =
+  "";
+```
+
+ }
+
+ /\*
+
+ - CLICK OUTSIDE LOGIN BOX\
+   \*/
+
+ document\
+ .getElementById("login-page")\
+ .addEventListener(\
+ "click",\
+ function(event) {
+
+```
+    if (
+      event.target === this
+    ) {
+
+      closeLogin();
+
+    }
 
   }
+);
+```
 
+ /\*
 
-  function closeLogin() {
+ - ENTER TO LOGIN\
+   \*/
 
-    document.getElementById("login-page")
-      .style.display = "none";
+ document\
+ .getElementById(\
+ "loginPassword"\
+ )\
+ .addEventListener(\
+ "keydown",\
+ function(event) {
 
-    document.getElementById("loginMessage")
-      .textContent = "";
+```
+    if (
+      event.key === "Enter"
+    ) {
+```
 
+```
+      login();
+```
+
+```
+    }
+```
+
+```
   }
+);
+```
 
-</script>
-
-</body>
-</html>
+ \</script\> \</body\> \</html\>
