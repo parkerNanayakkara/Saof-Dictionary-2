@@ -21,12 +21,13 @@
     .word { color: #6c4cff; font-size: 28px; font-weight: bold; }
     .pronunciation { margin-top: 6px; color: #777; }
     .meaning { margin-top: 12px; font-size: 18px; }
+    .credits { margin-top: 12px; color: #555; font-size: 14px; font-style: italic; }
     .admin-panel, .game-box { display: none; margin-bottom: 25px; }
     .admin-box h2, .game-box h2 { margin-top: 0; color: #6c4cff; }
     .admin-box input, .login-box input { width: 100%; padding: 12px; margin: 7px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
     .add-button, .login-action, .game-button { width: 100%; margin-top: 10px; padding: 12px 20px; border: 0; border-radius: 8px; background: #6c4cff; color: #fff; font-weight: bold; }
     .logout-button, .close-button { margin-top: 10px; padding: 9px 15px; border: 0; border-radius: 8px; background: #eee; color: #333; }
-    #gameCanvas { display: block; width: 100%; height: 220px; margin: 15px auto 0; border: 2px solid #6c4cff; border-radius: 10px; background: #eef0ff; touch-action: manipulation; }
+    #gameCanvas { display: block; width: 100%; height: auto; margin: 15px auto 0; border: 2px solid #6c4cff; border-radius: 10px; background: #87ceeb; touch-action: manipulation; }
     .game-help, footer { color: #777; text-align: center; }
     .no-results { display: none; padding: 20px; color: #777; text-align: center; }
     footer { padding: 20px; }
@@ -41,32 +42,30 @@
   <header><h1>Saof Dictionary</h1><button class="login-button" id="loginButton" type="button">Login</button></header>
   <div class="search-container"><input id="search" type="search" placeholder="Search a word..." autocomplete="off"></div>
 
-  <!-- Only the owner sees this Add Words menu. -->
   <section class="admin-panel" id="adminPanel">
     <div class="admin-box">
       <h2>Add a Word</h2>
       <input id="newWord" type="text" placeholder="Word" maxlength="100">
       <input id="newPronunciation" type="text" placeholder="Pronunciation" maxlength="200">
       <input id="newMeaning" type="text" placeholder="Meaning" maxlength="500">
+      <input id="newCredits" type="text" placeholder="Credits (optional)" maxlength="200">
       <button class="add-button" id="addButton" type="button">Add Word</button><br>
       <button class="logout-button" id="logoutButton" type="button">Logout</button>
     </div>
   </section>
 
-  <!-- The game remains available to the second user without showing Add Words. -->
   <section class="game-box" id="gameBox">
     <h2>T-Rex Runner</h2><p class="game-help">Press Space, tap the game, or click Jump.</p>
-    <canvas id="gameCanvas" width="700" height="220"></canvas>
-    <button class="game-button" id="jumpButton" type="button">Jump / Start</button>
-    <p id="gameScore">Score: 0</p>
+    <canvas id="gameCanvas" width="760" height="260" aria-label="T-Rex runner game"></canvas>
+    <button class="game-button" id="jumpButton" type="button">Jump / Start</button><p id="gameScore">Score: 0</p>
   </section>
 
   <main class="dictionary" id="dictionary">
-    <article class="word-card"><div class="word">Recos</div><div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div><div class="meaning">Meaning: <strong>ball</strong></div></article>
-    <article class="word-card"><div class="word">Saof</div><div class="pronunciation">Pronunciation: <strong>s-ow-f</strong></div><div class="meaning">Meaning: <strong>me / and</strong></div></article>
-    <article class="word-card"><div class="word">Thu</div><div class="pronunciation">Pronunciation: <strong>th-oo</strong></div><div class="meaning">Meaning: <strong>Depends on the context.</strong></div></article>
-    <article class="word-card"><div class="word">Thaoo</div><div class="pronunciation">Pronunciation: <strong>th-ahh-ooo</strong></div><div class="meaning">Meaning: <strong>hello thaththa</strong></div></article>
-    <article class="word-card"><div class="word">Aooooo</div><div class="pronunciation">Pronunciation: <strong>a-ooo</strong></div><div class="meaning">Meaning: <strong>hello amma</strong></div></article>
+    <article class="word-card"><div class="word">Recos</div><div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div><div class="meaning">Meaning: <strong>ball</strong></div><div class="credits">Credits: No credits</div></article>
+    <article class="word-card"><div class="word">Saof</div><div class="pronunciation">Pronunciation: <strong>s-ow-f</strong></div><div class="meaning">Meaning: <strong>me / and</strong></div><div class="credits">Credits: No credits</div></article>
+    <article class="word-card"><div class="word">Thu</div><div class="pronunciation">Pronunciation: <strong>th-oo</strong></div><div class="meaning">Meaning: <strong>Depends on the context.</strong></div><div class="credits">Credits: No credits</div></article>
+    <article class="word-card"><div class="word">Thaoo</div><div class="pronunciation">Pronunciation: <strong>th-ahh-ooo</strong></div><div class="meaning">Meaning: <strong>hello thaththa</strong></div><div class="credits">Credits: No credits</div></article>
+    <article class="word-card"><div class="word">Aooooo</div><div class="pronunciation">Pronunciation: <strong>a-ooo</strong></div><div class="meaning">Meaning: <strong>hello amma</strong></div><div class="credits">Credits: No credits</div></article>
   </main>
   <div class="no-results" id="noResults">No words found.</div><footer>© 2026 Saof Dictionary</footer>
 
@@ -75,19 +74,20 @@
     <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
     <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
     <button class="login-action" id="loginAction" type="button">Login</button>
-    <div class="login-message" id="loginMessage" role="alert"></div>
-    <button class="close-button" id="closeButton" type="button">Cancel</button>
+    <div class="login-message" id="loginMessage" role="alert"></div><button class="close-button" id="closeButton" type="button">Cancel</button>
   </div></div>
 
   <script type="module">
     import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { getAuth, setPersistence, inMemoryPersistence, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
     import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
     const firebaseConfig = { apiKey: 'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4', authDomain: 'saof-dictionary.firebaseapp.com', projectId: 'saof-dictionary', storageBucket: 'saof-dictionary.firebasestorage.app', messagingSenderId: '1054693760278', appId: '1:1054693760278:web:5f8f9c090fbc737dfc4437' };
-    const OWNER_EMAIL = 'parkerNanayakkara@icloud.com';
+    const OWNER_EMAIL = 'parkernanayakkara@icloud.com';
     const GAME_USER_EMAIL = 'ashernanayakkara@icloud.com';
     const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), $ = (id) => document.getElementById(id);
+    // Session-only auth: refreshing or reopening the page requires the user to sign in again.
+    await setPersistence(auth, inMemoryPersistence);
     const emailIs = (user, email) => user?.email?.toLowerCase() === email.toLowerCase();
     const isOwner = (user) => emailIs(user, OWNER_EMAIL);
     const isGameUser = (user) => emailIs(user, GAME_USER_EMAIL);
@@ -101,52 +101,29 @@
       const pronunciationValue = document.createElement('strong'); pronunciationValue.textContent = data.pronunciation; pronunciation.append(pronunciationValue);
       const meaning = document.createElement('div'); meaning.className = 'meaning'; meaning.textContent = 'Meaning: ';
       const meaningValue = document.createElement('strong'); meaningValue.textContent = data.meaning; meaning.append(meaningValue);
-      card.append(word, pronunciation, meaning); $('dictionary').append(card);
+      const credits = document.createElement('div'); credits.className = 'credits'; credits.textContent = `Credits: ${data.credits?.trim() || 'No credits'}`;
+      card.append(word, pronunciation, meaning, credits); $('dictionary').append(card);
     }
-    function searchWords() {
-      const query = $('search').value.trim().toLowerCase(); let visible = 0;
-      document.querySelectorAll('#dictionary .word-card').forEach((card) => { const match = card.textContent.toLowerCase().includes(query); card.hidden = !match; if (match) visible++; });
-      $('noResults').style.display = visible ? 'none' : 'block';
-    }
-    // Everyone can read the shared words, whether signed in or signed out.
-    onSnapshot(collection(db, 'words'), (snapshot) => {
-      document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove());
-      snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data); });
-      searchWords();
-    }, (error) => console.error('Could not load shared words:', error));
+    function searchWords() { const query = $('search').value.trim().toLowerCase(); let visible = 0; document.querySelectorAll('#dictionary .word-card').forEach((card) => { const match = card.textContent.toLowerCase().includes(query); card.hidden = !match; if (match) visible++; }); $('noResults').style.display = visible ? 'none' : 'block'; }
+    onSnapshot(collection(db, 'words'), (snapshot) => { document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove()); snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data); }); searchWords(); }, (error) => console.error('Could not load shared words:', error));
 
     $('search').addEventListener('input', searchWords);
     $('loginButton').addEventListener('click', () => auth.currentUser ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin());
     $('closeButton').addEventListener('click', closeLogin);
-    $('loginAction').addEventListener('click', async () => {
-      const message = $('loginMessage'); message.textContent = '';
-      try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); closeLogin(); }
-      catch (error) { message.textContent = error.code === 'auth/unauthorized-domain' ? 'Add parkerNanayakkara.github.io to Firebase Authorized domains.' : `Login failed: ${error.code || 'check your email and password'}.`; }
-    });
+    $('loginAction').addEventListener('click', async () => { const message = $('loginMessage'); message.textContent = ''; try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); closeLogin(); } catch (error) { message.textContent = error.code === 'auth/unauthorized-domain' ? 'Add parkerNanayakkara.github.io to Firebase Authorized domains.' : `Login failed: ${error.code || 'check your email and password'}.`; } });
     $('logoutButton').addEventListener('click', () => signOut(auth));
-    $('addButton').addEventListener('click', async () => {
-      if (!isOwner(auth.currentUser)) { alert('Only the site owner can add words.'); return; }
-      const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim();
-      if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; }
-      try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, addedBy: auth.currentUser.email, createdAt: serverTimestamp() }); ['newWord','newPronunciation','newMeaning'].forEach((id) => $(id).value = ''); alert('Word added for everyone!'); }
-      catch (error) { alert(`Could not add word: ${error.code || 'Firestore error'}`); }
-    });
+    $('addButton').addEventListener('click', async () => { if (!isOwner(auth.currentUser)) { alert('Only the site owner can add words.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(), credits = $('newCredits').value.trim() || 'No credits'; if (!word || !pronunciation || !meaning) { alert('Please fill in the word, pronunciation, and meaning.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, credits, addedBy: auth.currentUser.email, createdAt: serverTimestamp() }); ['newWord','newPronunciation','newMeaning','newCredits'].forEach((id) => $(id).value = ''); alert('Word added for everyone!'); } catch (error) { alert(`Could not add word: ${error.code || 'Firestore error'}`); } });
 
-    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let running = false, over = false, score = 0, last = 0, timer = 0, animation; const player = { x: 55, y: 170, w: 28, h: 34, vy: 0, jumping: false }; let obstacles = [];
-    function draw() { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#d8d5ff'; ctx.fillRect(0,204,canvas.width,2); ctx.fillStyle='#6c4cff'; ctx.fillRect(player.x,player.y,player.w,player.h); ctx.fillStyle='#5739e6'; obstacles.forEach((o) => ctx.fillRect(o.x,o.y,o.w,o.h)); }
-    function reset() { cancelAnimationFrame(animation); running=false; over=false; score=0; timer=0; obstacles=[]; player.y=170; player.vy=0; player.jumping=false; $('gameScore').textContent='Score: 0 — press Jump to start'; draw(); }
-    function jump() { if (over || !running) { reset(); running=true; last=performance.now(); animation=requestAnimationFrame(loop); } if (!player.jumping) { player.vy=-11; player.jumping=true; } }
-    function loop(time) { const dt=Math.min((time-last)/16.67,2); last=time; player.vy+=.55*dt; player.y+=player.vy*dt; if(player.y>=170){player.y=170;player.vy=0;player.jumping=false;} timer+=dt; if(timer>65){obstacles.push({x:canvas.width,y:184,w:18,h:20});timer=0;} obstacles.forEach((o)=>o.x-=6*dt); obstacles=obstacles.filter((o)=>o.x+o.w>0); if(obstacles.some((o)=>player.x<o.x+o.w&&player.x+player.w>o.x&&player.y<o.y+o.h&&player.y+player.h>o.y)){over=true;running=false;$('gameScore').textContent=`Game over! Score: ${Math.floor(score)} — press Jump to try again`;draw();return;} score+=dt*.1;$('gameScore').textContent=`Score: ${Math.floor(score)}`;draw();animation=requestAnimationFrame(loop); }
+    // Improved runner graphics: sky gradient, clouds, sun, mountains, detailed dinosaur, cacti, shadows, and parallax scenery.
+    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let running = false, over = false, score = 0, last = 0, timer = 0, animation; const player = { x: 70, y: 188, w: 38, h: 48, vy: 0, jumping: false }; let obstacles = [], clouds = [{x:80,y:45,s:1},{x:310,y:70,s:.8},{x:590,y:38,s:1.2}];
+    function drawDino() { ctx.fillStyle='#3e2a8a'; ctx.fillRect(player.x+8,player.y+12,22,30); ctx.fillRect(player.x+18,player.y+3,18,22); ctx.fillRect(player.x+30,player.y+10,13,8); ctx.fillRect(player.x+11,player.y+39,7,9); ctx.fillRect(player.x+27,player.y+39,7,9); ctx.fillStyle='#fff'; ctx.fillRect(player.x+30,player.y+8,4,4); ctx.fillStyle='#ffdf5d'; ctx.fillRect(player.x+38,player.y+13,5,3); }
+    function draw() { const sky=ctx.createLinearGradient(0,0,0,260); sky.addColorStop(0,'#79cfff'); sky.addColorStop(1,'#f0f5ff'); ctx.fillStyle=sky; ctx.fillRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#ffe88a'; ctx.beginPath(); ctx.arc(650,48,25,0,Math.PI*2); ctx.fill(); ctx.fillStyle='#fff'; clouds.forEach((c)=>{ctx.beginPath();ctx.arc(c.x,c.y,16*c.s,0,Math.PI*2);ctx.arc(c.x+20*c.s,c.y-8*c.s,22*c.s,0,Math.PI*2);ctx.arc(c.x+44*c.s,c.y,16*c.s,0,Math.PI*2);ctx.fill();}); ctx.fillStyle='#b6d8e9'; ctx.beginPath();ctx.moveTo(0,190);ctx.lineTo(130,105);ctx.lineTo(260,190);ctx.lineTo(410,90);ctx.lineTo(590,190);ctx.lineTo(700,120);ctx.lineTo(760,190);ctx.fill(); ctx.fillStyle='#7fbf70';ctx.fillRect(0,236,canvas.width,24); ctx.fillStyle='#4f9a4b'; ctx.fillRect(0,236,canvas.width,3); obstacles.forEach((o)=>{ctx.fillStyle='#277a45';ctx.fillRect(o.x+6,o.y-12,7,12);ctx.fillRect(o.x,o.y,19,38);ctx.fillRect(o.x-8,o.y+10,9,7);ctx.fillRect(o.x+18,o.y+18,9,7);}); ctx.fillStyle='#5c3ca8'; drawDino(); }
+    function reset() { cancelAnimationFrame(animation); running=false; over=false; score=0; timer=0; obstacles=[]; player.y=188; player.vy=0; player.jumping=false; $('gameScore').textContent='Score: 0 — press Jump to start'; draw(); }
+    function jump() { if (over || !running) { reset(); running=true; last=performance.now(); animation=requestAnimationFrame(loop); } if (!player.jumping) { player.vy=-13; player.jumping=true; } }
+    function loop(time) { const dt=Math.min((time-last)/16.67,2); last=time; player.vy+=.62*dt; player.y+=player.vy*dt; if(player.y>=188){player.y=188;player.vy=0;player.jumping=false;} timer+=dt; clouds.forEach((c)=>{c.x-=.15*dt;if(c.x<-70)c.x=760;}); if(timer>65){obstacles.push({x:canvas.width+10,y:210,w:27,h:38});timer=0;} obstacles.forEach((o)=>o.x-=6.5*dt); obstacles=obstacles.filter((o)=>o.x+27>0); if(obstacles.some((o)=>player.x+8<o.x+27&&player.x+player.w-3>o.x&&player.y+8<o.y+38&&player.y+player.h>o.y)){over=true;running=false;$('gameScore').textContent=`Game over! Score: ${Math.floor(score)} — press Jump to try again`;draw();return;} score+=dt*.1;$('gameScore').textContent=`Score: ${Math.floor(score)}`;draw();animation=requestAnimationFrame(loop); }
     $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown', (event) => { if(event.code==='Space' && isGameUser(auth.currentUser)){event.preventDefault();jump();} }); reset();
 
-    onAuthStateChanged(auth, (user) => {
-      const owner = isOwner(user), gameUser = isGameUser(user);
-      // The second user never receives the Add Words menu.
-      $('adminPanel').style.display = owner ? 'block' : 'none';
-      $('loginButton').textContent = user ? (owner ? 'Add Words' : 'Logged In') : 'Login';
-      $('gameBox').style.display = gameUser ? 'block' : 'none';
-      if (!gameUser) reset();
-    });
+    onAuthStateChanged(auth, (user) => { const owner = isOwner(user), gameUser = isGameUser(user); $('adminPanel').style.display = owner ? 'block' : 'none'; $('loginButton').textContent = user ? (owner ? 'Add Words' : 'Logged In') : 'Login'; $('gameBox').style.display = gameUser ? 'block' : 'none'; if (!gameUser) reset(); });
     searchWords();
   </script>
 </body>
