@@ -5,59 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Saof Dictionary</title>
   <style>
-    :root { color-scheme: light; font-family: Arial, sans-serif; }
+    :root { font-family: Arial, sans-serif; }
     * { box-sizing: border-box; }
     body { margin: 0; background: #f4f1ff; color: #222; }
-    header { position: relative; padding: 35px 20px; text-align: center; color: white; background: linear-gradient(135deg, #6c4cff, #8b6cff); }
+    header { position: relative; padding: 35px 20px; text-align: center; color: #fff; background: linear-gradient(135deg,#6c4cff,#8b6cff); }
     h1 { margin: 0; font-size: 42px; }
     button { cursor: pointer; font: inherit; }
-    .login-button { position: absolute; right: 20px; top: 20px; padding: 10px 18px; border: 0; border-radius: 10px; background: white; color: #6c4cff; font-weight: bold; }
+    .login-button { position: absolute; top: 20px; right: 20px; padding: 10px 18px; border: 0; border-radius: 10px; background: #fff; color: #6c4cff; font-weight: bold; }
     .search-container { padding: 25px; text-align: center; }
-    #search { width: min(80%, 500px); padding: 14px; border: 2px solid #6c4cff; border-radius: 12px; font-size: 16px; outline: none; }
-    .dictionary, .admin-panel { width: min(100% - 40px, 800px); margin: auto; }
+    #search { width: min(80%,500px); padding: 14px; border: 2px solid #6c4cff; border-radius: 12px; font-size: 16px; }
+    .dictionary, .admin-panel, .game-box { width: min(calc(100% - 40px),800px); margin: auto; }
     .dictionary { padding: 10px 0 40px; }
-    .word-card, .admin-box, .login-box, .game-box { padding: 22px; border-radius: 15px; background: white; box-shadow: 0 4px 12px rgb(0 0 0 / 8%); }
+    .word-card, .admin-box, .login-box, .game-box { padding: 22px; border-radius: 15px; background: #fff; box-shadow: 0 4px 12px rgb(0 0 0 / 8%); }
     .word-card { margin: 15px 0; }
     .word { color: #6c4cff; font-size: 28px; font-weight: bold; }
-    .pronunciation { margin-top: 6px; color: #777; font-size: 16px; }
+    .pronunciation { margin-top: 6px; color: #777; }
     .meaning { margin-top: 12px; font-size: 18px; }
-    .admin-panel { display: none; margin-bottom: 25px; }
+    .admin-panel, .game-box { display: none; margin-bottom: 25px; }
     .admin-box h2, .game-box h2 { margin-top: 0; color: #6c4cff; }
     .admin-box input, .login-box input { width: 100%; padding: 12px; margin: 7px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
-    .add-button, .login-action, .game-button { width: 100%; margin-top: 10px; padding: 12px 20px; border: 0; border-radius: 8px; background: #6c4cff; color: white; font-weight: bold; }
-    .add-button:hover, .login-action:hover, .game-button:hover { background: #5739e6; }
+    .add-button, .login-action, .game-button { width: 100%; margin-top: 10px; padding: 12px 20px; border: 0; border-radius: 8px; background: #6c4cff; color: #fff; font-weight: bold; }
     .logout-button, .close-button { margin-top: 10px; padding: 9px 15px; border: 0; border-radius: 8px; background: #eee; color: #333; }
-    .game-box { display: none; margin-top: 20px; text-align: center; }
-    #gameCanvas { display: block; width: 100%; max-width: 700px; height: 220px; margin: 15px auto 0; border: 2px solid #6c4cff; border-radius: 10px; background: #eef0ff; touch-action: manipulation; }
-    .game-help { color: #666; font-size: 14px; }
+    #gameCanvas { display: block; width: 100%; height: 220px; margin: 15px auto 0; border: 2px solid #6c4cff; border-radius: 10px; background: #eef0ff; touch-action: manipulation; }
+    .game-help, footer { color: #777; text-align: center; }
     .no-results { display: none; padding: 20px; color: #777; text-align: center; }
-    footer { padding: 20px; color: #777; text-align: center; }
+    footer { padding: 20px; }
     #login-page { display: none; position: fixed; inset: 0; z-index: 1000; align-items: center; justify-content: center; padding: 20px; background: rgb(0 0 0 / 50%); }
-    .login-box { width: min(100%, 400px); text-align: center; }
+    .login-box { width: min(100%,400px); text-align: center; }
     .login-box h2 { color: #6c4cff; }
     .login-message { min-height: 18px; margin-top: 10px; color: #d33; font-size: 14px; }
-    @media (max-width: 600px) { h1 { font-size: 32px; } .login-button { top: 10px; right: 10px; padding: 8px 12px; } .dictionary, .admin-panel { width: min(100% - 24px, 800px); } .search-container { padding: 20px 10px; } #search { width: 95%; } }
+    @media (max-width:600px) { h1 { font-size: 32px; } .login-button { top: 10px; right: 10px; padding: 8px 12px; } .dictionary,.admin-panel,.game-box { width: calc(100% - 24px); } }
   </style>
 </head>
 <body>
   <header><h1>Saof Dictionary</h1><button class="login-button" id="loginButton" type="button">Login</button></header>
   <div class="search-container"><input id="search" type="search" placeholder="Search a word..." autocomplete="off"></div>
-  <section class="admin-panel" id="adminPanel" aria-label="Dictionary controls">
+
+  <!-- Only the owner sees this Add Words menu. -->
+  <section class="admin-panel" id="adminPanel">
     <div class="admin-box">
       <h2>Add a Word</h2>
       <input id="newWord" type="text" placeholder="Word" maxlength="100">
       <input id="newPronunciation" type="text" placeholder="Pronunciation" maxlength="200">
       <input id="newMeaning" type="text" placeholder="Meaning" maxlength="500">
       <button class="add-button" id="addButton" type="button">Add Word</button><br>
-      <button class="game-button" id="gameButton" type="button" hidden>Play T-Rex Runner</button><br>
       <button class="logout-button" id="logoutButton" type="button">Logout</button>
     </div>
-    <div class="game-box" id="gameBox">
-      <h2>T-Rex Runner</h2><p class="game-help">Press Space, tap the game, or click Jump to jump over the cacti.</p>
-      <canvas id="gameCanvas" width="700" height="220" aria-label="T-Rex runner game"></canvas>
-      <button class="game-button" id="jumpButton" type="button">Jump / Start</button><p id="gameScore">Score: 0</p>
-    </div>
   </section>
+
+  <!-- The game remains available to the second user without showing Add Words. -->
+  <section class="game-box" id="gameBox">
+    <h2>T-Rex Runner</h2><p class="game-help">Press Space, tap the game, or click Jump.</p>
+    <canvas id="gameCanvas" width="700" height="220"></canvas>
+    <button class="game-button" id="jumpButton" type="button">Jump / Start</button>
+    <p id="gameScore">Score: 0</p>
+  </section>
+
   <main class="dictionary" id="dictionary">
     <article class="word-card"><div class="word">Recos</div><div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div><div class="meaning">Meaning: <strong>ball</strong></div></article>
     <article class="word-card"><div class="word">Saof</div><div class="pronunciation">Pronunciation: <strong>s-ow-f</strong></div><div class="meaning">Meaning: <strong>me / and</strong></div></article>
@@ -66,41 +69,84 @@
     <article class="word-card"><div class="word">Aooooo</div><div class="pronunciation">Pronunciation: <strong>a-ooo</strong></div><div class="meaning">Meaning: <strong>hello amma</strong></div></article>
   </main>
   <div class="no-results" id="noResults">No words found.</div><footer>© 2026 Saof Dictionary</footer>
-  <div id="login-page" role="dialog" aria-modal="true" aria-labelledby="loginTitle"><div class="login-box">
-    <h2 id="loginTitle">Saof Dictionary</h2><p>Sign in to read and add dictionary words.</p>
-    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email"><input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-    <button class="login-action" id="loginAction" type="button">Login</button><div class="login-message" id="loginMessage" role="alert"></div><button class="close-button" id="closeButton" type="button">Cancel</button>
-  </div></div>
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
-    const firebaseConfig = { apiKey: "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4", authDomain: "saof-dictionary.firebaseapp.com", projectId: "saof-dictionary", storageBucket: "saof-dictionary.firebasestorage.app", messagingSenderId: "1054693760278", appId: "1:1054693760278:web:5f8f9c090fbc737dfc4437" };
+  <div id="login-page" role="dialog" aria-modal="true"><div class="login-box">
+    <h2>Saof Dictionary</h2><p>Sign in to continue.</p>
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="login-action" id="loginAction" type="button">Login</button>
+    <div class="login-message" id="loginMessage" role="alert"></div>
+    <button class="close-button" id="closeButton" type="button">Cancel</button>
+  </div></div>
+
+  <script type="module">
+    import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+    import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+    const firebaseConfig = { apiKey: 'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4', authDomain: 'saof-dictionary.firebaseapp.com', projectId: 'saof-dictionary', storageBucket: 'saof-dictionary.firebasestorage.app', messagingSenderId: '1054693760278', appId: '1:1054693760278:web:5f8f9c090fbc737dfc4437' };
+    const OWNER_EMAIL = 'parkerNanayakkara@icloud.com';
     const GAME_USER_EMAIL = 'ashernanayakkara@icloud.com';
     const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), $ = (id) => document.getElementById(id);
-    const isSignedIn = (user) => Boolean(user), isGameUser = (user) => user?.email?.toLowerCase() === GAME_USER_EMAIL;
-    const closeLogin = () => { $('login-page').style.display = 'none'; $('loginMessage').textContent = ''; };
-    const openLogin = () => { $('login-page').style.display = 'flex'; $('loginEmail').focus(); };
-    function loginErrorMessage(error) { const messages = { 'auth/invalid-credential': 'The email or password is incorrect.', 'auth/user-not-found': 'No Firebase account exists for this email.', 'auth/wrong-password': 'The password is incorrect.', 'auth/invalid-email': 'Enter a valid email address.', 'auth/user-disabled': 'This Firebase account has been disabled.', 'auth/operation-not-allowed': 'Email/password sign-in is disabled in Firebase Authentication.', 'auth/unauthorized-domain': 'Add parkerNanayakkara.github.io under Firebase Authentication → Settings → Authorized domains.' }; return messages[error.code] || `Login failed (${error.code || 'unknown error'}).`; }
-    function createWordCard(word, pronunciation, meaning) { const card = document.createElement('article'); card.className = 'word-card firebase-word-card'; const wordEl = document.createElement('div'); wordEl.className = 'word'; wordEl.textContent = word; const pronunciationEl = document.createElement('div'); pronunciationEl.className = 'pronunciation'; pronunciationEl.textContent = 'Pronunciation: '; const pronunciationStrong = document.createElement('strong'); pronunciationStrong.textContent = pronunciation; pronunciationEl.append(pronunciationStrong); const meaningEl = document.createElement('div'); meaningEl.className = 'meaning'; meaningEl.textContent = 'Meaning: '; const meaningStrong = document.createElement('strong'); meaningStrong.textContent = meaning; meaningEl.append(meaningStrong); card.append(wordEl, pronunciationEl, meaningEl); $('dictionary').append(card); }
-    // This listener runs for logged-in and logged-out visitors, so new words appear for everyone automatically.
-    function watchWords() { return onSnapshot(collection(db, 'words'), (snapshot) => { document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove()); snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); }); searchWords(); }, (error) => console.error('Could not watch words:', error)); }
-    function searchWords() { const query = $('search').value.trim().toLowerCase(); let visible = 0; document.querySelectorAll('#dictionary .word-card').forEach((card) => { const matches = card.textContent.toLowerCase().includes(query); card.hidden = !matches; if (matches) visible++; }); $('noResults').style.display = visible ? 'none' : 'block'; }
-    $('search').addEventListener('input', searchWords); $('loginButton').addEventListener('click', () => isSignedIn(auth.currentUser) ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin()); $('closeButton').addEventListener('click', closeLogin);
-    $('loginAction').addEventListener('click', async () => { const email = $('loginEmail').value.trim(), password = $('loginPassword').value, message = $('loginMessage'); message.textContent = ''; if (!email || !password) { message.textContent = 'Please enter your email and password.'; return; } try { await signInWithEmailAndPassword(auth, email, password); closeLogin(); } catch (error) { console.error('Login error:', error); message.textContent = loginErrorMessage(error); } });
-    $('logoutButton').addEventListener('click', () => signOut(auth).catch(console.error));
-    $('addButton').addEventListener('click', async () => { if (!isSignedIn(auth.currentUser)) { alert('Please log in first.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(); if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp(), addedBy: auth.currentUser.email }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); alert('Word added for everyone!'); } catch (error) { console.error('Could not add word:', error); alert(error.code === 'permission-denied' ? 'Firestore denied this action. Update your Firestore rules.' : `Could not add word (${error.code || 'unknown error'}).`); } });
+    const emailIs = (user, email) => user?.email?.toLowerCase() === email.toLowerCase();
+    const isOwner = (user) => emailIs(user, OWNER_EMAIL);
+    const isGameUser = (user) => emailIs(user, GAME_USER_EMAIL);
 
-    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let gameRunning = false, gameOver = false, score = 0, animationId, lastTime = 0, obstacleTimer = 0; const player = { x: 55, y: 170, width: 28, height: 34, velocityY: 0, jumping: false }; let obstacles = [];
-    function resetGame() { cancelAnimationFrame(animationId); gameRunning = false; gameOver = false; score = 0; obstacleTimer = 0; obstacles = []; player.y = 170; player.velocityY = 0; player.jumping = false; $('gameScore').textContent = 'Score: 0 — press Jump to start'; drawGame(); }
-    function jump() { if (gameOver || !gameRunning) { resetGame(); gameRunning = true; lastTime = performance.now(); animationId = requestAnimationFrame(gameLoop); } if (!player.jumping) { player.velocityY = -11; player.jumping = true; } }
-    function drawGame() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#d8d5ff'; ctx.fillRect(0, 204, canvas.width, 2); ctx.fillStyle = '#6c4cff'; ctx.fillRect(player.x, player.y, player.width, player.height); ctx.fillStyle = '#5739e6'; obstacles.forEach((o) => ctx.fillRect(o.x, o.y, o.width, o.height)); }
-    function gameLoop(time) { const dt = Math.min((time - lastTime) / 16.67, 2); lastTime = time; player.velocityY += 0.55 * dt; player.y += player.velocityY * dt; if (player.y >= 170) { player.y = 170; player.velocityY = 0; player.jumping = false; } obstacleTimer += dt; if (obstacleTimer > 65) { obstacles.push({ x: canvas.width, y: 184, width: 18, height: 20 }); obstacleTimer = 0; } obstacles.forEach((o) => o.x -= 6 * dt); obstacles = obstacles.filter((o) => o.x + o.width > 0); if (obstacles.some((o) => player.x < o.x + o.width && player.x + player.width > o.x && player.y < o.y + o.height && player.y + player.height > o.y)) { gameOver = true; gameRunning = false; $('gameScore').textContent = `Game over! Score: ${Math.floor(score)} — press Jump to try again`; drawGame(); return; } score += dt * 0.1; $('gameScore').textContent = `Score: ${Math.floor(score)}`; drawGame(); animationId = requestAnimationFrame(gameLoop); }
-    $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown', (event) => { if (event.code === 'Space' && isGameUser(auth.currentUser)) { event.preventDefault(); jump(); } }); resetGame();
-    onAuthStateChanged(auth, (user) => { const signedIn = isSignedIn(user); $('adminPanel').style.display = signedIn ? 'block' : 'none'; $('loginButton').textContent = signedIn ? 'Add Words' : 'Login'; $('gameButton').hidden = !isGameUser(user); if (!isGameUser(user)) { $('gameBox').style.display = 'none'; resetGame(); } });
-    $('gameButton').addEventListener('click', () => { $('gameBox').style.display = $('gameBox').style.display === 'block' ? 'none' : 'block'; resetGame(); });
-    watchWords();
+    function openLogin() { $('login-page').style.display = 'flex'; $('loginEmail').focus(); }
+    function closeLogin() { $('login-page').style.display = 'none'; $('loginMessage').textContent = ''; }
+    function createWordCard(data) {
+      const card = document.createElement('article'); card.className = 'word-card firebase-word-card';
+      const word = document.createElement('div'); word.className = 'word'; word.textContent = data.word;
+      const pronunciation = document.createElement('div'); pronunciation.className = 'pronunciation'; pronunciation.textContent = 'Pronunciation: ';
+      const pronunciationValue = document.createElement('strong'); pronunciationValue.textContent = data.pronunciation; pronunciation.append(pronunciationValue);
+      const meaning = document.createElement('div'); meaning.className = 'meaning'; meaning.textContent = 'Meaning: ';
+      const meaningValue = document.createElement('strong'); meaningValue.textContent = data.meaning; meaning.append(meaningValue);
+      card.append(word, pronunciation, meaning); $('dictionary').append(card);
+    }
+    function searchWords() {
+      const query = $('search').value.trim().toLowerCase(); let visible = 0;
+      document.querySelectorAll('#dictionary .word-card').forEach((card) => { const match = card.textContent.toLowerCase().includes(query); card.hidden = !match; if (match) visible++; });
+      $('noResults').style.display = visible ? 'none' : 'block';
+    }
+    // Everyone can read the shared words, whether signed in or signed out.
+    onSnapshot(collection(db, 'words'), (snapshot) => {
+      document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove());
+      snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data); });
+      searchWords();
+    }, (error) => console.error('Could not load shared words:', error));
+
+    $('search').addEventListener('input', searchWords);
+    $('loginButton').addEventListener('click', () => auth.currentUser ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin());
+    $('closeButton').addEventListener('click', closeLogin);
+    $('loginAction').addEventListener('click', async () => {
+      const message = $('loginMessage'); message.textContent = '';
+      try { await signInWithEmailAndPassword(auth, $('loginEmail').value.trim(), $('loginPassword').value); closeLogin(); }
+      catch (error) { message.textContent = error.code === 'auth/unauthorized-domain' ? 'Add parkerNanayakkara.github.io to Firebase Authorized domains.' : `Login failed: ${error.code || 'check your email and password'}.`; }
+    });
+    $('logoutButton').addEventListener('click', () => signOut(auth));
+    $('addButton').addEventListener('click', async () => {
+      if (!isOwner(auth.currentUser)) { alert('Only the site owner can add words.'); return; }
+      const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim();
+      if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; }
+      try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, addedBy: auth.currentUser.email, createdAt: serverTimestamp() }); ['newWord','newPronunciation','newMeaning'].forEach((id) => $(id).value = ''); alert('Word added for everyone!'); }
+      catch (error) { alert(`Could not add word: ${error.code || 'Firestore error'}`); }
+    });
+
+    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let running = false, over = false, score = 0, last = 0, timer = 0, animation; const player = { x: 55, y: 170, w: 28, h: 34, vy: 0, jumping: false }; let obstacles = [];
+    function draw() { ctx.clearRect(0,0,canvas.width,canvas.height); ctx.fillStyle='#d8d5ff'; ctx.fillRect(0,204,canvas.width,2); ctx.fillStyle='#6c4cff'; ctx.fillRect(player.x,player.y,player.w,player.h); ctx.fillStyle='#5739e6'; obstacles.forEach((o) => ctx.fillRect(o.x,o.y,o.w,o.h)); }
+    function reset() { cancelAnimationFrame(animation); running=false; over=false; score=0; timer=0; obstacles=[]; player.y=170; player.vy=0; player.jumping=false; $('gameScore').textContent='Score: 0 — press Jump to start'; draw(); }
+    function jump() { if (over || !running) { reset(); running=true; last=performance.now(); animation=requestAnimationFrame(loop); } if (!player.jumping) { player.vy=-11; player.jumping=true; } }
+    function loop(time) { const dt=Math.min((time-last)/16.67,2); last=time; player.vy+=.55*dt; player.y+=player.vy*dt; if(player.y>=170){player.y=170;player.vy=0;player.jumping=false;} timer+=dt; if(timer>65){obstacles.push({x:canvas.width,y:184,w:18,h:20});timer=0;} obstacles.forEach((o)=>o.x-=6*dt); obstacles=obstacles.filter((o)=>o.x+o.w>0); if(obstacles.some((o)=>player.x<o.x+o.w&&player.x+player.w>o.x&&player.y<o.y+o.h&&player.y+player.h>o.y)){over=true;running=false;$('gameScore').textContent=`Game over! Score: ${Math.floor(score)} — press Jump to try again`;draw();return;} score+=dt*.1;$('gameScore').textContent=`Score: ${Math.floor(score)}`;draw();animation=requestAnimationFrame(loop); }
+    $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown', (event) => { if(event.code==='Space' && isGameUser(auth.currentUser)){event.preventDefault();jump();} }); reset();
+
+    onAuthStateChanged(auth, (user) => {
+      const owner = isOwner(user), gameUser = isGameUser(user);
+      // The second user never receives the Add Words menu.
+      $('adminPanel').style.display = owner ? 'block' : 'none';
+      $('loginButton').textContent = user ? (owner ? 'Add Words' : 'Logged In') : 'Login';
+      $('gameBox').style.display = gameUser ? 'block' : 'none';
+      if (!gameUser) reset();
+    });
     searchWords();
   </script>
 </body>
