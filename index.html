@@ -33,37 +33,22 @@
     .login-box { width: min(100%, 400px); text-align: center; }
     .login-box h2 { color: #6c4cff; }
     .login-message { min-height: 18px; margin-top: 10px; color: #d33; font-size: 14px; }
-    @media (max-width: 600px) {
-      h1 { font-size: 32px; }
-      .login-button { top: 10px; right: 10px; padding: 8px 12px; }
-      .dictionary, .admin-panel { width: min(100% - 24px, 800px); }
-      .search-container { padding: 20px 10px; }
-      #search { width: 95%; }
-    }
+    @media (max-width: 600px) { h1 { font-size: 32px; } .login-button { top: 10px; right: 10px; padding: 8px 12px; } .dictionary, .admin-panel { width: min(100% - 24px, 800px); } .search-container { padding: 20px 10px; } #search { width: 95%; } }
   </style>
 </head>
 <body>
-  <header>
-    <h1>Saof Dictionary</h1>
-    <button class="login-button" id="loginButton" type="button">Login</button>
-  </header>
-
-  <div class="search-container">
-    <input id="search" type="search" placeholder="Search a word..." autocomplete="off">
-  </div>
-
-  <section class="admin-panel" id="adminPanel" aria-label="Admin controls">
+  <header><h1>Saof Dictionary</h1><button class="login-button" id="loginButton" type="button">Login</button></header>
+  <div class="search-container"><input id="search" type="search" placeholder="Search a word..." autocomplete="off"></div>
+  <section class="admin-panel" id="adminPanel" aria-label="Dictionary controls">
     <div class="admin-box">
       <h2>Add a Word</h2>
       <input id="newWord" type="text" placeholder="Word" maxlength="100">
       <input id="newPronunciation" type="text" placeholder="Pronunciation" maxlength="200">
       <input id="newMeaning" type="text" placeholder="Meaning" maxlength="500">
-      <button class="add-button" id="addButton" type="button">Add Word</button>
-      <br>
+      <button class="add-button" id="addButton" type="button">Add Word</button><br>
       <button class="logout-button" id="logoutButton" type="button">Logout</button>
     </div>
   </section>
-
   <main class="dictionary" id="dictionary">
     <article class="word-card"><div class="word">Recos</div><div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div><div class="meaning">Meaning: <strong>ball</strong></div></article>
     <article class="word-card"><div class="word">Saof</div><div class="pronunciation">Pronunciation: <strong>s-ow-f</strong></div><div class="meaning">Meaning: <strong>me / and</strong></div></article>
@@ -71,43 +56,24 @@
     <article class="word-card"><div class="word">Thaoo</div><div class="pronunciation">Pronunciation: <strong>th-ahh-ooo</strong></div><div class="meaning">Meaning: <strong>hello thaththa</strong></div></article>
     <article class="word-card"><div class="word">Aooooo</div><div class="pronunciation">Pronunciation: <strong>a-ooo</strong></div><div class="meaning">Meaning: <strong>hello amma</strong></div></article>
   </main>
-  <div class="no-results" id="noResults">No words found.</div>
-  <footer>© 2026 Saof Dictionary</footer>
-
-  <div id="login-page" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
-    <div class="login-box">
-      <h2 id="loginTitle">Saof Dictionary</h2>
-      <p>Login to manage the dictionary.</p>
-      <input type="email" id="loginEmail" placeholder="iCloud email" autocomplete="email">
-      <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-      <button class="login-action" id="loginAction" type="button">Login</button>
-      <div class="login-message" id="loginMessage" role="alert"></div>
-      <button class="close-button" id="closeButton" type="button">Cancel</button>
-    </div>
-  </div>
-
+  <div class="no-results" id="noResults">No words found.</div><footer>© 2026 Saof Dictionary</footer>
+  <div id="login-page" role="dialog" aria-modal="true" aria-labelledby="loginTitle"><div class="login-box">
+    <h2 id="loginTitle">Saof Dictionary</h2><p>Sign in to read and add dictionary words.</p>
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
+    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="login-action" id="loginAction" type="button">Login</button>
+    <div class="login-message" id="loginMessage" role="alert"></div><button class="close-button" id="closeButton" type="button">Cancel</button>
+  </div></div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
     import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-      apiKey: "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4",
-      authDomain: "saof-dictionary.firebaseapp.com",
-      projectId: "saof-dictionary",
-      storageBucket: "saof-dictionary.firebasestorage.app",
-      messagingSenderId: "1054693760278",
-      appId: "1:1054693760278:web:5f8f9c090fbc737dfc4437"
-    };
-    const ADMIN_EMAIL = "parkernanayakkara@icloud.com";
-    const app = initializeApp(firebaseConfig);
-    const auth = getAuth(app);
-    const db = getFirestore(app);
-    const $ = (id) => document.getElementById(id);
-
-    function isAdmin(user) { return Boolean(user?.email && user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase()); }
-    function closeLogin() { $('login-page').style.display = 'none'; $('loginMessage').textContent = ''; }
-    function openLogin() { $('login-page').style.display = 'flex'; $('loginEmail').focus(); }
+    const firebaseConfig = { apiKey: "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4", authDomain: "saof-dictionary.firebaseapp.com", projectId: "saof-dictionary", storageBucket: "saof-dictionary.firebasestorage.app", messagingSenderId: "1054693760278", appId: "1:1054693760278:web:5f8f9c090fbc737dfc4437" };
+    const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), $ = (id) => document.getElementById(id);
+    // Every Firebase Authentication user may read and add words.
+    const isSignedIn = (user) => Boolean(user);
+    const closeLogin = () => { $('login-page').style.display = 'none'; $('loginMessage').textContent = ''; };
+    const openLogin = () => { $('login-page').style.display = 'flex'; $('loginEmail').focus(); };
     function createWordCard(word, pronunciation, meaning) {
       const card = document.createElement('article'); card.className = 'word-card firebase-word-card';
       const wordEl = document.createElement('div'); wordEl.className = 'word'; wordEl.textContent = word;
@@ -118,35 +84,17 @@
       card.append(wordEl, pronunciationEl, meaningEl); $('dictionary').append(card);
     }
     async function loadWords() {
-      try {
-        const snapshot = await getDocs(collection(db, 'words'));
-        document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove());
-        snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); });
-        searchWords();
-      } catch (error) { console.error('Online words could not be loaded:', error); }
+      try { const snapshot = await getDocs(collection(db, 'words')); document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove()); snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); }); searchWords(); }
+      catch (error) { console.error('Online words could not be loaded:', error); }
     }
-    function searchWords() {
-      const query = $('search').value.trim().toLowerCase(); let visible = 0;
-      document.querySelectorAll('#dictionary .word-card').forEach((card) => { const matches = card.textContent.toLowerCase().includes(query); card.hidden = !matches; if (matches) visible++; });
-      $('noResults').style.display = visible ? 'none' : 'block';
-    }
+    function searchWords() { const query = $('search').value.trim().toLowerCase(); let visible = 0; document.querySelectorAll('#dictionary .word-card').forEach((card) => { const matches = card.textContent.toLowerCase().includes(query); card.hidden = !matches; if (matches) visible++; }); $('noResults').style.display = visible ? 'none' : 'block'; }
     $('search').addEventListener('input', searchWords);
-    $('loginButton').addEventListener('click', () => auth.currentUser && isAdmin(auth.currentUser) ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin());
+    $('loginButton').addEventListener('click', () => isSignedIn(auth.currentUser) ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin());
     $('closeButton').addEventListener('click', closeLogin);
-    $('loginAction').addEventListener('click', async () => {
-      const email = $('loginEmail').value.trim(), password = $('loginPassword').value, message = $('loginMessage'); message.textContent = '';
-      if (!email || !password) { message.textContent = 'Please enter your email and password.'; return; }
-      if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) { message.textContent = 'This account does not have permission.'; return; }
-      try { await signInWithEmailAndPassword(auth, email, password); closeLogin(); } catch (error) { console.error('Login error:', error); message.textContent = error.code === 'auth/too-many-requests' ? 'Too many attempts. Please try again later.' : 'Incorrect email or password.'; }
-    });
+    $('loginAction').addEventListener('click', async () => { const email = $('loginEmail').value.trim(), password = $('loginPassword').value, message = $('loginMessage'); message.textContent = ''; if (!email || !password) { message.textContent = 'Please enter your email and password.'; return; } try { await signInWithEmailAndPassword(auth, email, password); closeLogin(); } catch (error) { console.error('Login error:', error); message.textContent = error.code === 'auth/too-many-requests' ? 'Too many attempts. Try again later.' : 'Incorrect email or password.'; } });
     $('logoutButton').addEventListener('click', () => signOut(auth).catch(console.error));
-    $('addButton').addEventListener('click', async () => {
-      if (!isAdmin(auth.currentUser)) { alert('You are not allowed to add words.'); return; }
-      const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim();
-      if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; }
-      try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp() }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); await loadWords(); alert('Word added!'); } catch (error) { console.error('Could not add word:', error); alert('Could not add word. Check your Firestore rules.'); }
-    });
-    onAuthStateChanged(auth, (user) => { const admin = isAdmin(user); $('adminPanel').style.display = admin ? 'block' : 'none'; $('loginButton').textContent = admin ? 'My Account' : 'Login'; });
+    $('addButton').addEventListener('click', async () => { if (!isSignedIn(auth.currentUser)) { alert('Please log in first.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(); if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp(), addedBy: auth.currentUser.email }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); await loadWords(); alert('Word added!'); } catch (error) { console.error('Could not add word:', error); alert('Could not add word. Check your Firestore rules.'); } });
+    onAuthStateChanged(auth, (user) => { const signedIn = isSignedIn(user); $('adminPanel').style.display = signedIn ? 'block' : 'none'; $('loginButton').textContent = signedIn ? 'Add Words' : 'Login'; });
     loadWords();
   </script>
 </body>
