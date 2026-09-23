@@ -53,11 +53,9 @@
       <button class="logout-button" id="logoutButton" type="button">Logout</button>
     </div>
     <div class="game-box" id="gameBox">
-      <h2>T-Rex Runner</h2>
-      <p class="game-help">Press Space, tap the game, or click Jump to jump over the cacti.</p>
+      <h2>T-Rex Runner</h2><p class="game-help">Press Space, tap the game, or click Jump to jump over the cacti.</p>
       <canvas id="gameCanvas" width="700" height="220" aria-label="T-Rex runner game"></canvas>
-      <button class="game-button" id="jumpButton" type="button">Jump / Start</button>
-      <p id="gameScore">Score: 0</p>
+      <button class="game-button" id="jumpButton" type="button">Jump / Start</button><p id="gameScore">Score: 0</p>
     </div>
   </section>
   <main class="dictionary" id="dictionary">
@@ -70,48 +68,39 @@
   <div class="no-results" id="noResults">No words found.</div><footer>© 2026 Saof Dictionary</footer>
   <div id="login-page" role="dialog" aria-modal="true" aria-labelledby="loginTitle"><div class="login-box">
     <h2 id="loginTitle">Saof Dictionary</h2><p>Sign in to read and add dictionary words.</p>
-    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email">
-    <input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
-    <button class="login-action" id="loginAction" type="button">Login</button>
-    <div class="login-message" id="loginMessage" role="alert"></div><button class="close-button" id="closeButton" type="button">Cancel</button>
+    <input type="email" id="loginEmail" placeholder="Email" autocomplete="email"><input type="password" id="loginPassword" placeholder="Password" autocomplete="current-password">
+    <button class="login-action" id="loginAction" type="button">Login</button><div class="login-message" id="loginMessage" role="alert"></div><button class="close-button" id="closeButton" type="button">Cancel</button>
   </div></div>
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
     import { getAuth, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
-    import { getFirestore, collection, addDoc, getDocs, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+    import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
     const firebaseConfig = { apiKey: "AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4", authDomain: "saof-dictionary.firebaseapp.com", projectId: "saof-dictionary", storageBucket: "saof-dictionary.firebasestorage.app", messagingSenderId: "1054693760278", appId: "1:1054693760278:web:5f8f9c090fbc737dfc4437" };
     const GAME_USER_EMAIL = 'ashernanayakkara@icloud.com';
     const app = initializeApp(firebaseConfig), auth = getAuth(app), db = getFirestore(app), $ = (id) => document.getElementById(id);
-    const isSignedIn = (user) => Boolean(user);
-    const isGameUser = (user) => user?.email?.toLowerCase() === GAME_USER_EMAIL;
+    const isSignedIn = (user) => Boolean(user), isGameUser = (user) => user?.email?.toLowerCase() === GAME_USER_EMAIL;
     const closeLogin = () => { $('login-page').style.display = 'none'; $('loginMessage').textContent = ''; };
     const openLogin = () => { $('login-page').style.display = 'flex'; $('loginEmail').focus(); };
     function loginErrorMessage(error) { const messages = { 'auth/invalid-credential': 'The email or password is incorrect.', 'auth/user-not-found': 'No Firebase account exists for this email.', 'auth/wrong-password': 'The password is incorrect.', 'auth/invalid-email': 'Enter a valid email address.', 'auth/user-disabled': 'This Firebase account has been disabled.', 'auth/operation-not-allowed': 'Email/password sign-in is disabled in Firebase Authentication.', 'auth/unauthorized-domain': 'Add parkerNanayakkara.github.io under Firebase Authentication → Settings → Authorized domains.' }; return messages[error.code] || `Login failed (${error.code || 'unknown error'}).`; }
     function createWordCard(word, pronunciation, meaning) { const card = document.createElement('article'); card.className = 'word-card firebase-word-card'; const wordEl = document.createElement('div'); wordEl.className = 'word'; wordEl.textContent = word; const pronunciationEl = document.createElement('div'); pronunciationEl.className = 'pronunciation'; pronunciationEl.textContent = 'Pronunciation: '; const pronunciationStrong = document.createElement('strong'); pronunciationStrong.textContent = pronunciation; pronunciationEl.append(pronunciationStrong); const meaningEl = document.createElement('div'); meaningEl.className = 'meaning'; meaningEl.textContent = 'Meaning: '; const meaningStrong = document.createElement('strong'); meaningStrong.textContent = meaning; meaningEl.append(meaningStrong); card.append(wordEl, pronunciationEl, meaningEl); $('dictionary').append(card); }
-    async function loadWords() { try { const snapshot = await getDocs(collection(db, 'words')); document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove()); snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); }); searchWords(); } catch (error) { console.error('Could not load words:', error); } }
+    // This listener runs for logged-in and logged-out visitors, so new words appear for everyone automatically.
+    function watchWords() { return onSnapshot(collection(db, 'words'), (snapshot) => { document.querySelectorAll('.firebase-word-card').forEach((card) => card.remove()); snapshot.forEach((item) => { const data = item.data(); if (data.word && data.pronunciation && data.meaning) createWordCard(data.word, data.pronunciation, data.meaning); }); searchWords(); }, (error) => console.error('Could not watch words:', error)); }
     function searchWords() { const query = $('search').value.trim().toLowerCase(); let visible = 0; document.querySelectorAll('#dictionary .word-card').forEach((card) => { const matches = card.textContent.toLowerCase().includes(query); card.hidden = !matches; if (matches) visible++; }); $('noResults').style.display = visible ? 'none' : 'block'; }
-
-    $('search').addEventListener('input', searchWords);
-    $('loginButton').addEventListener('click', () => isSignedIn(auth.currentUser) ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin());
-    $('closeButton').addEventListener('click', closeLogin);
+    $('search').addEventListener('input', searchWords); $('loginButton').addEventListener('click', () => isSignedIn(auth.currentUser) ? $('adminPanel').scrollIntoView({ behavior: 'smooth' }) : openLogin()); $('closeButton').addEventListener('click', closeLogin);
     $('loginAction').addEventListener('click', async () => { const email = $('loginEmail').value.trim(), password = $('loginPassword').value, message = $('loginMessage'); message.textContent = ''; if (!email || !password) { message.textContent = 'Please enter your email and password.'; return; } try { await signInWithEmailAndPassword(auth, email, password); closeLogin(); } catch (error) { console.error('Login error:', error); message.textContent = loginErrorMessage(error); } });
     $('logoutButton').addEventListener('click', () => signOut(auth).catch(console.error));
-    $('addButton').addEventListener('click', async () => { if (!isSignedIn(auth.currentUser)) { alert('Please log in first.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(); if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp(), addedBy: auth.currentUser.email }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); await loadWords(); alert('Word added!'); } catch (error) { console.error('Could not add word:', error); alert(error.code === 'permission-denied' ? 'Firestore denied this action. Update your Firestore rules.' : `Could not add word (${error.code || 'unknown error'}).`); } });
+    $('addButton').addEventListener('click', async () => { if (!isSignedIn(auth.currentUser)) { alert('Please log in first.'); return; } const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(); if (!word || !pronunciation || !meaning) { alert('Please fill in all fields.'); return; } try { await addDoc(collection(db, 'words'), { word, pronunciation, meaning, createdAt: serverTimestamp(), addedBy: auth.currentUser.email }); ['newWord', 'newPronunciation', 'newMeaning'].forEach((id) => $(id).value = ''); alert('Word added for everyone!'); } catch (error) { console.error('Could not add word:', error); alert(error.code === 'permission-denied' ? 'Firestore denied this action. Update your Firestore rules.' : `Could not add word (${error.code || 'unknown error'}).`); } });
 
-    // A small canvas runner shown only to the specified Firebase user.
-    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d');
-    let gameRunning = false, gameOver = false, score = 0, animationId, lastTime = 0, obstacleTimer = 0;
-    const player = { x: 55, y: 170, width: 28, height: 34, velocityY: 0, jumping: false };
-    let obstacles = [];
+    const canvas = $('gameCanvas'), ctx = canvas.getContext('2d'); let gameRunning = false, gameOver = false, score = 0, animationId, lastTime = 0, obstacleTimer = 0; const player = { x: 55, y: 170, width: 28, height: 34, velocityY: 0, jumping: false }; let obstacles = [];
     function resetGame() { cancelAnimationFrame(animationId); gameRunning = false; gameOver = false; score = 0; obstacleTimer = 0; obstacles = []; player.y = 170; player.velocityY = 0; player.jumping = false; $('gameScore').textContent = 'Score: 0 — press Jump to start'; drawGame(); }
     function jump() { if (gameOver || !gameRunning) { resetGame(); gameRunning = true; lastTime = performance.now(); animationId = requestAnimationFrame(gameLoop); } if (!player.jumping) { player.velocityY = -11; player.jumping = true; } }
     function drawGame() { ctx.clearRect(0, 0, canvas.width, canvas.height); ctx.fillStyle = '#d8d5ff'; ctx.fillRect(0, 204, canvas.width, 2); ctx.fillStyle = '#6c4cff'; ctx.fillRect(player.x, player.y, player.width, player.height); ctx.fillStyle = '#5739e6'; obstacles.forEach((o) => ctx.fillRect(o.x, o.y, o.width, o.height)); }
-    function gameLoop(time) { const dt = Math.min((time - lastTime) / 16.67, 2); lastTime = time; player.velocityY += 0.55 * dt; player.y += player.velocityY * dt; if (player.y >= 170) { player.y = 170; player.velocityY = 0; player.jumping = false; } obstacleTimer += dt; if (obstacleTimer > 65) { obstacles.push({ x: canvas.width, y: 184, width: 18, height: 20 }); obstacleTimer = 0; } obstacles.forEach((o) => { o.x -= 6 * dt; }); obstacles = obstacles.filter((o) => o.x + o.width > 0); if (obstacles.some((o) => player.x < o.x + o.width && player.x + player.width > o.x && player.y < o.y + o.height && player.y + player.height > o.y)) { gameOver = true; gameRunning = false; $('gameScore').textContent = `Game over! Score: ${score} — press Jump to try again`; drawGame(); return; } score += dt * 0.1; $('gameScore').textContent = `Score: ${Math.floor(score)}`; drawGame(); animationId = requestAnimationFrame(gameLoop); }
-    $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown', (event) => { if (event.code === 'Space' && isGameUser(auth.currentUser)) { event.preventDefault(); jump(); } });
-    resetGame();
-    onAuthStateChanged(auth, (user) => { const signedIn = isSignedIn(user); $('adminPanel').style.display = signedIn ? 'block' : 'none'; $('loginButton').textContent = signedIn ? 'Add Words' : 'Login'; $('gameButton').hidden = !isGameUser(user); if (!isGameUser(user)) { $('gameBox').style.display = 'none'; resetGame(); } if (signedIn) loadWords(); });
+    function gameLoop(time) { const dt = Math.min((time - lastTime) / 16.67, 2); lastTime = time; player.velocityY += 0.55 * dt; player.y += player.velocityY * dt; if (player.y >= 170) { player.y = 170; player.velocityY = 0; player.jumping = false; } obstacleTimer += dt; if (obstacleTimer > 65) { obstacles.push({ x: canvas.width, y: 184, width: 18, height: 20 }); obstacleTimer = 0; } obstacles.forEach((o) => o.x -= 6 * dt); obstacles = obstacles.filter((o) => o.x + o.width > 0); if (obstacles.some((o) => player.x < o.x + o.width && player.x + player.width > o.x && player.y < o.y + o.height && player.y + player.height > o.y)) { gameOver = true; gameRunning = false; $('gameScore').textContent = `Game over! Score: ${Math.floor(score)} — press Jump to try again`; drawGame(); return; } score += dt * 0.1; $('gameScore').textContent = `Score: ${Math.floor(score)}`; drawGame(); animationId = requestAnimationFrame(gameLoop); }
+    $('jumpButton').addEventListener('click', jump); canvas.addEventListener('pointerdown', jump); window.addEventListener('keydown', (event) => { if (event.code === 'Space' && isGameUser(auth.currentUser)) { event.preventDefault(); jump(); } }); resetGame();
+    onAuthStateChanged(auth, (user) => { const signedIn = isSignedIn(user); $('adminPanel').style.display = signedIn ? 'block' : 'none'; $('loginButton').textContent = signedIn ? 'Add Words' : 'Login'; $('gameButton').hidden = !isGameUser(user); if (!isGameUser(user)) { $('gameBox').style.display = 'none'; resetGame(); } });
     $('gameButton').addEventListener('click', () => { $('gameBox').style.display = $('gameBox').style.display === 'block' ? 'none' : 'block'; resetGame(); });
+    watchWords();
     searchWords();
   </script>
 </body>
