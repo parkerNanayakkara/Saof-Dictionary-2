@@ -21,7 +21,7 @@
   --bg-color: #121218;
   --text-color: #f1f1f5;
   --card-bg: #1e1e28;
-  --header-gradient: linear-gradient(135deg,#4a2ee0,#6847e0);
+  --header-bg: linear-gradient(135deg,#4a2ee0,#6847e0);
   --input-bg: #2a2a3b;
   --input-border: #444;
   --secondary-bg: #2a2a3b;
@@ -29,10 +29,10 @@
   --footer-color: #aaa;
 }
 body{margin:0;font-family:Arial,sans-serif;background:var(--bg-color);color:var(--text-color);transition:background 0.3s, color 0.3s}
-header{position:relative;padding:35px 20px;text-align:center;color:#fff;background:var(--header-gradient, linear-gradient(135deg,#6c4cff,#8b6cff))}
+header{position:relative;padding:35px 20px;text-align:center;color:#fff;background:var(--header-bg)}
 h1{margin:0;font-size:42px}
 .header-buttons{position:absolute;right:20px;top:20px;display:flex;gap:10px}
-.login-button,.theme-toggle{padding:10px 18px;border:0;border-radius:10px;background:#fff;color:#6c4cff;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.1)}
+.login-button,.theme-toggle{padding:10px 18px;border:0;border-radius:10px;background:#fff;color:#6c4cff;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.1);cursor:pointer}
 button{cursor:pointer;font:inherit}
 .search{text-align:center;padding:25px}
 .search input,input,textarea,select{width:100%;padding:12px;margin:7px 0;border:1px solid var(--input-border);background:var(--input-bg);color:var(--text-color);border-radius:8px;font:inherit}
@@ -66,8 +66,8 @@ footer{text-align:center;padding:20px;color:var(--footer-color)}
 <header>
   <h1>Saof Dictionary</h1>
   <div class="header-buttons">
-    <button class="theme-toggle" id="themeToggle">🌙 Dark</button>
-    <button class="login-button" id="loginButton">Login</button>
+    <button class="theme-toggle" id="themeToggle" type="button">🌙 Dark</button>
+    <button class="login-button" id="loginButton" type="button">Login</button>
   </div>
 </header>
 <div class="search"><input id="searchInput" placeholder="Search a word..."></div>
@@ -89,7 +89,8 @@ if(currentTheme === 'dark') {
   themeToggle.textContent = '☀️ Light';
 }
 
-themeToggle.onclick = () => {
+themeToggle.onclick = (e) => {
+  e.preventDefault();
   let theme = document.documentElement.getAttribute('data-theme');
   if(theme === 'dark') {
     document.documentElement.removeAttribute('data-theme');
@@ -102,13 +103,30 @@ themeToggle.onclick = () => {
   }
 };
 
-function addCard(d){const c=document.createElement('article');c.className='card live-card';[['word','',d.word],['pronunciation','Pronunciation: ',d.pronunciation],['meaning','Meaning: ',d.meaning],['credits','Credits: ',d.credits?.trim()||'No credits']].forEach(([cl,label,value])=>{const e=document.createElement('div');e.className=cl;e.textContent=label;const strong=document.createElement('strong');strong.textContent=value;e.append(strong);c.append(e)});$('dictionary').append(c)}onSnapshot(collection(db,'words'),snap=>{document.querySelectorAll('.live-card').forEach(e=>e.remove());snap.forEach(x=>{const d=x.data();if(d.word&&d.pronunciation&&d.meaning)addCard(d)})});$('searchInput').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#dictionary .card').forEach(c=>c.hidden=!c.textContent.toLowerCase().includes(q))});$('loginButton').onclick=()=>auth.currentUser?$('adminPanel').scrollIntoView({behavior:'smooth'}):$('login').style.display='flex';$('cancelLogin').onclick=()=>$('login').style.display='none';$('loginAction').onclick=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);$('login').style.display='none'}catch(e){$('loginError').textContent=`Login failed: ${e.code||'check your details'}`}};$('logout').onclick=()=>signOut(auth);
+function addCard(d){const c=document.createElement('article');c.className='card live-card';[['word','',d.word],['pronunciation','Pronunciation: ',d.pronunciation],['meaning','Meaning: ',d.meaning],['credits','Credits: ',d.credits?.trim()||'No credits']].forEach(([cl,label,value])=>{const e=document.createElement('div');e.className=cl;e.textContent=label;const strong=document.createElement('strong');strong.textContent=value;e.append(strong);c.append(e)});$('dictionary').append(c)}onSnapshot(collection(db,'words'),snap=>{document.querySelectorAll('.live-card').forEach(e=>e.remove());snap.forEach(x=>{const d=x.data();if(d.word&&d.pronunciation&&d.meaning)addCard(d)})});
+
+$('searchInput').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#dictionary .card').forEach(c=>c.hidden=!c.textContent.toLowerCase().includes(q))});
+
+// Login button fix
+$('loginButton').onclick = (e) => {
+  e.preventDefault();
+  if(auth.currentUser) {
+    $('adminPanel').scrollIntoView({behavior:'smooth'});
+  } else {
+    $('login').style.display = 'flex';
+  }
+};
+
+$('cancelLogin').onclick = () => $('login').style.display = 'none';$('loginAction').onclick = async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);$('login').style.display='none'}catch(e){$('loginError').textContent=`Login failed: ${e.code||'check your details'}`}};
+$('logout').onclick=()=>signOut(auth);
 $('addWord').onclick=async()=>{if(!matches(auth.currentUser,OWNER)){alert('Only the owner can add words.');return}const word=$('newWord').value.trim(),pronunciation=$('newPronunciation').value.trim(),meaning=$('newMeaning').value.trim();if(!word||!pronunciation||!meaning){alert('Fill in word, pronunciation and meaning.');return}await addDoc(collection(db,'words'),{word,pronunciation,meaning,credits:$('newCredits').value.trim()\vert{}\vert{}'No credits',addedBy:auth.currentUser.email,createdAt:serverTimestamp()});['newWord','newPronunciation','newMeaning','newCredits'].forEach(id=>$(id).value='');alert('Word added for everyone!')};
 $('saveQuestion').onclick=async()=>{const text=$('questionText').value.trim();if(!text){$('questionStatus').textContent='Type a question first.';return}try{await addDoc(collection(db,'questions'),{name:$('questionName').value.trim()||'Anonymous visitor',question:text,status:'new',createdAt:serverTimestamp()});$('questionText').value='';$('questionName').value='';$('questionStatus').textContent='Question saved for the owner.'}catch(e){$('questionStatus').textContent=`Could not save question: ${e.code||'Firestore error'}`}};$('openMessages').onclick=()=>{const text=$('questionText').value.trim();location.href=`sms:?&body=${encodeURIComponent(`Saof Dictionary question:\n${text||'(type your question first)'}`)}`};
-// Enhanced original animation: cinematic camera movement, lighting, shadows, depth layers, particles, detailed dinosaur, party decorations, and three scenes.
+
+// Animation script
 const canvas=$('canvas'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,rect=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(x,y,w,h)},dino={x:155,y:280,vy:0,jump:false},clouds=[{x:80,y:76,s:1.1},{x:650,y:112,s:.8}],balloons=[{x:620,y:210,c:'#ef476f'},{x:685,y:235,c:'#ffd166'},{x:750,y:190,c:'#06d6a0'}];let movie=false,start=0,raf,audio,timer,sceneIndex=0;
 function round(x,y,w,h,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}function cloud(c){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(c.x,c.y,22*c.s,0,Math.PI*2);ctx.arc(c.x+26*c.s,c.y-12*c.s,30*c.s,0,Math.PI*2);ctx.arc(c.x+60*c.s,c.y,22*c.s,0,Math.PI*2);ctx.fill()}function drawDino(t){const x=dino.x,y=dino.y+Math.sin(t/120)*3,leg=Math.sin(t/70)*5;ctx.save();ctx.shadowColor='#25324288';ctx.shadowBlur=8;round(x+18,y+23,48,63,10,'#647180');round(x+47,y-5,70,52,7,'#647180');round(x+106,y+12,27,25,3,'#647180');round(x+5,y+35,25,45,5,'#647180');round(x+32,y+75+leg,20,28,4,'#647180');round(x+75,y+75-leg,20,28,4,'#647180');ctx.restore();rect(x+65,y+15,14,18,'#293544');rect(x+109,y+8,8,8,'#172331');rect(x+112,y+10,3,3,'white');rect(x+37,y+36,13,13,'#8a96a3');rect(x+42,y-22,68,8,'#e63950');rect(x+58,y-42,12,20,'#e63950');rect(x+82,y-32,12,15,'#ffd166');rect(x+30,y-32,12,15,'#06d6a0');}function drawCactus(x,ground){rect(x+20,ground-105,27,105,'#159447');rect(x,ground-70,20,42,'#159447');rect(x-13,ground-57,15,34,'#159447');rect(x+48,ground-82,20,40,'#159447');rect(x+66,ground-69,15,34,'#159447');rect(x+18,ground-105,34,8,'#0b6332')}
 function draw(t=0){const selected=$('scene').value;const scenes=selected==='random'?['day','night','candy']: [selected];const s=scenes[Math.floor(t/18000)%scenes.length];let sky=s==='night'?'#17284d':s==='candy'?'#eaa4d1':'#62c4ed';ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);if(s==='night'){for(let i=0;i<45;i++){ctx.fillStyle='#fff';ctx.fillRect((i*83)%W,(i*47)%190,3,3)}ctx.fillStyle='#ffe89b';ctx.beginPath();ctx.arc(720,70,38,0,Math.PI*2);ctx.fill()}else{clouds.forEach(c=>cloud({...c,x:c.x-(t/90)%W}))}ctx.fillStyle=s==='candy'?'#f28fba':'#a5c7d1';ctx.beginPath();ctx.moveTo(0,292);ctx.lineTo(180,175);ctx.lineTo(350,292);ctx.lineTo(520,145);ctx.lineTo(760,292);ctx.fill();ctx.fillStyle='#6eae58';ctx.fillRect(0,315,W,105);ctx.fillStyle='#d79a39';ctx.fillRect(0,315,W,8);ctx.fillStyle='#c6812b';for(let x=0;x<W;x+=65)ctx.fillRect(x+(t/12)%65,350,25,8);drawCactus(610,315);balloons.forEach((b,i)=>{const x=b.x-(t/(i+2))%W;ctx.strokeStyle='#555';ctx.beginPath();ctx.moveTo(x,250);ctx.lineTo(x,315);ctx.stroke();ctx.fillStyle=b.c;ctx.beginPath();ctx.ellipse(x,220-(i%2)*20,18,25,0,0,Math.PI*2);ctx.fill()});drawDino(t);ctx.fillStyle='#fff';ctx.font='bold 18px Arial';ctx.fillText('HAPPY BIRTHDAY ASHER!',285,55);}
 function music(){audio=audio||new AudioContext();const notes=[261.63,329.63,392,523.25,659.25,523.25,392,329.63];let i=0;clearInterval(timer);timer=setInterval(()=>{const o=audio.createOscillator(),g=audio.createGain();o.type='triangle';o.frequency.value=notes[i++%notes.length];g.gain.setValueAtTime(.04,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.45);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+.45)},500)}function frame(t){if(!movie)return;const elapsed=t-start;if(elapsed>=180000){movie=false;clearInterval(timer);$('movieStatus').textContent='Birthday movie finished!';draw(elapsed);return}draw(elapsed);$('movieStatus').textContent=`Birthday movie playing: ${Math.floor(elapsed/1000)} / 180 seconds`;raf=requestAnimationFrame(frame)}$('movieButton').onclick=()=>{if(movie){movie=false;cancelAnimationFrame(raf);clearInterval(timer);$('movieButton').textContent='▶ Start Birthday Movie & Music';return}movie=true;start=performance.now();$('movieButton').textContent='■ Stop Movie';music();raf=requestAnimationFrame(frame)};draw(0);
+
 onAuthStateChanged(auth,user=>{const o=matches(user,OWNER),a=matches(user,ASHER);$('adminPanel').style.display=o?'block':'none';$('questionPanel').style.display=o?'none':'block';$('gamePanel').style.display=a?'block':'none';$('birthday').style.display=a?'block':'none';$('loginButton').textContent=user?(o?'Add Words':'Logged In'):'Login'});
 </script></body></html>
