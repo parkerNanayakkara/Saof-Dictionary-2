@@ -12,7 +12,7 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f4f1ff;
-  color:#222;
+  color:#222
 }
 
 header{
@@ -20,7 +20,7 @@ header{
   padding:35px 20px;
   text-align:center;
   color:#fff;
-  background:linear-gradient(135deg,#6c4cff,#8b6cff);
+  background:linear-gradient(135deg,#6c4cff,#8b6cff)
 }
 
 h1{margin:0;font-size:42px}
@@ -34,17 +34,22 @@ h1{margin:0;font-size:42px}
   border-radius:10px;
   background:#fff;
   color:#6c4cff;
-  font-weight:bold;
+  font-weight:bold
 }
 
 button{
   cursor:pointer;
-  font:inherit;
+  font:inherit
+}
+
+button:disabled{
+  opacity:.65;
+  cursor:not-allowed
 }
 
 .search{
   text-align:center;
-  padding:25px;
+  padding:25px
 }
 
 .search input,
@@ -56,23 +61,23 @@ select{
   margin:7px 0;
   border:1px solid #ccc;
   border-radius:8px;
-  font:inherit;
+  font:inherit
 }
 
 .search input{
   width:min(80%,500px);
-  border:2px solid #6c4cff;
+  border:2px solid #6c4cff
 }
 
 .panel,
 .dictionary{
   width:min(calc(100% - 40px),900px);
-  margin:auto;
+  margin:auto
 }
 
 .panel{
   display:none;
-  margin-bottom:25px;
+  margin-bottom:25px
 }
 
 .box,
@@ -80,38 +85,38 @@ select{
   padding:22px;
   border-radius:15px;
   background:#fff;
-  box-shadow:0 4px 12px #00000014;
+  box-shadow:0 4px 12px #00000014
 }
 
 .card{
-  margin:15px 0;
+  margin:15px 0
 }
 
 .word{
   font-size:28px;
   font-weight:bold;
-  color:#6c4cff;
+  color:#6c4cff
 }
 
 .pronunciation{
   margin-top:6px;
-  color:#777;
+  color:#777
 }
 
 .meaning{
   margin-top:12px;
-  font-size:18px;
+  font-size:18px
 }
 
 .credits{
   margin-top:12px;
   color:#555;
   font-size:14px;
-  font-style:italic;
+  font-style:italic
 }
 
 h2{
-  color:#6c4cff;
+  color:#6c4cff
 }
 
 .primary{
@@ -122,7 +127,7 @@ h2{
   background:#6c4cff;
   color:white;
   font-weight:bold;
-  margin-top:8px;
+  margin-top:8px
 }
 
 .secondary{
@@ -130,57 +135,58 @@ h2{
   border:0;
   border-radius:8px;
   background:#eee;
-  margin-top:10px;
+  margin-top:10px
 }
 
 .green{
-  background:#19a463;
+  background:#19a463
 }
 
-.red{
-  background:#d64545;
+.orange{
+  background:#ff9f1c
 }
 
 .game-menu{
   display:grid;
   grid-template-columns:repeat(2,1fr);
   gap:15px;
-  margin-top:20px;
+  margin-top:20px
 }
 
 .game-choice{
   border:0;
   border-radius:15px;
   padding:22px;
-  min-height:130px;
+  min-height:140px;
   background:linear-gradient(135deg,#6c4cff,#947cff);
   color:white;
   font-weight:bold;
   font-size:18px;
   box-shadow:0 5px 15px #0002;
+  transition:.15s
 }
 
 .game-choice:hover{
-  transform:translateY(-2px);
+  transform:translateY(-2px)
 }
 
 .game-choice small{
   display:block;
   margin-top:8px;
   font-weight:normal;
-  opacity:.9;
+  opacity:.9
 }
 
 .game-screen{
   display:none;
-  margin-top:20px;
+  margin-top:20px
 }
 
 .back-button{
   width:auto;
   background:#eee;
   color:#333;
-  margin-bottom:12px;
+  margin-bottom:12px
 }
 
 /* LOGIN */
@@ -193,7 +199,7 @@ h2{
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:#0008;
+  background:#0008
 }
 
 .login-box{
@@ -201,13 +207,13 @@ h2{
   padding:30px;
   border-radius:18px;
   background:#fff;
-  text-align:center;
+  text-align:center
 }
 
 .error{
   min-height:20px;
   color:#c33;
-  margin-top:8px;
+  margin-top:8px
 }
 
 .loading{
@@ -219,7 +225,7 @@ h2{
   border-radius:50%;
   animation:spin .7s linear infinite;
   vertical-align:middle;
-  margin-right:8px;
+  margin-right:8px
 }
 
 @keyframes spin{
@@ -230,14 +236,14 @@ h2{
 
 .puzzle-info{
   text-align:center;
-  color:#555;
+  color:#555
 }
 
 .puzzle-layout{
   display:grid;
   grid-template-columns:1fr 1fr;
   gap:20px;
-  margin-top:15px;
+  margin-top:15px
 }
 
 .puzzle-area{
@@ -248,20 +254,14 @@ h2{
   border:4px solid #29354a;
   border-radius:14px;
   overflow:hidden;
-  background:
-    linear-gradient(45deg,#ffffff 25%,transparent 25%),
-    linear-gradient(-45deg,#ffffff 25%,transparent 25%),
-    linear-gradient(45deg,transparent 75%,#ffffff 75%),
-    linear-gradient(-45deg,transparent 75%,#ffffff 75%);
-  background-size:30px 30px;
-  background-position:0 0,0 15px,15px -15px,-15px 0;
+  background:#f8f8ff
 }
 
 .puzzle-target{
   position:absolute;
   border:2px dashed #8c7bd8;
   background:#8c7bd820;
-  border-radius:8px;
+  border-radius:8px
 }
 
 .piece{
@@ -271,44 +271,23 @@ h2{
   touch-action:none;
   user-select:none;
   cursor:grab;
-  transition:transform .15s;
   z-index:3;
+  transform-origin:center
 }
 
 .piece.selected{
   filter:drop-shadow(0 0 8px #ffb300);
-  z-index:20;
+  z-index:20
 }
 
 .piece.dragging{
   cursor:grabbing;
-  z-index:30;
-  transition:none;
+  z-index:30
 }
 
 .piece svg{
   width:100%;
-  height:100%;
-  overflow:visible;
-}
-
-.rotate-button{
-  width:100%;
-  background:#ff9f1c;
-  color:#fff;
-  font-size:18px;
-}
-
-.rotate-button:disabled{
-  opacity:.5;
-  cursor:not-allowed;
-}
-
-.puzzle-controls{
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:10px;
-  margin-top:12px;
+  height:100%
 }
 
 .puzzle-status{
@@ -316,21 +295,39 @@ h2{
   min-height:25px;
   font-weight:bold;
   color:#6c4cff;
+  margin-top:10px
 }
 
-/* HIGH SCORES */
+.rotate-button{
+  background:#ff9f1c;
+  color:#fff;
+  font-size:18px
+}
+
+.rotate-button:disabled{
+  opacity:.5
+}
+
+.puzzle-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:10px
+}
+
+/* SCORES */
 
 .score-table{
   width:100%;
   border-collapse:collapse;
-  margin-top:15px;
+  margin-top:15px
 }
 
 .score-table th,
 .score-table td{
   padding:10px;
   border-bottom:1px solid #ddd;
-  text-align:left;
+  text-align:left
 }
 
 /* TREX */
@@ -341,7 +338,7 @@ h2{
   border:4px solid #29354a;
   border-radius:14px;
   display:block;
-  touch-action:none;
+  touch-action:none
 }
 
 /* MOVIE */
@@ -356,20 +353,11 @@ h2{
   justify-content:center;
   color:white;
   text-align:center;
-  overflow:hidden;
+  overflow:hidden
 }
 
 .movie-placeholder{
-  padding:30px;
-}
-
-.movie-controls{
-  display:flex;
-  gap:10px;
-}
-
-.movie-controls select{
-  flex:1;
+  padding:30px
 }
 
 /* ASHER */
@@ -385,43 +373,36 @@ h2{
   color:#704600;
   text-align:center;
   font-size:30px;
-  font-weight:bold;
-}
-
-#birthdayMovie{
-  display:none;
+  font-weight:bold
 }
 
 footer{
   text-align:center;
   padding:30px;
-  color:#777;
+  color:#777
 }
 
 @media(max-width:650px){
+
   h1{font-size:32px}
 
   .panel,
   .dictionary{
-    width:calc(100% - 24px);
+    width:calc(100% - 24px)
   }
 
   .game-menu{
-    grid-template-columns:1fr;
+    grid-template-columns:1fr
   }
 
   .puzzle-layout{
-    grid-template-columns:1fr;
-  }
-
-  .movie-controls{
-    display:block;
+    grid-template-columns:1fr
   }
 
   .login-button{
     right:10px;
     top:10px;
-    padding:8px 12px;
+    padding:8px 12px
   }
 }
 </style>
@@ -449,8 +430,13 @@ footer{
     <input id="questionName" placeholder="Your name (optional)">
     <textarea id="questionText" placeholder="Your question"></textarea>
 
-    <button class="primary" id="saveQuestion">Save Question</button>
-    <button class="primary" id="openMessages">Open Messages</button>
+    <button class="primary" id="saveQuestion">
+      Save Question
+    </button>
+
+    <button class="primary" id="openMessages">
+      Open Messages
+    </button>
 
     <div id="questionStatus"></div>
   </div>
@@ -459,6 +445,7 @@ footer{
 <!-- ADMIN -->
 <section class="panel" id="adminPanel">
   <div class="box">
+
     <h2>Add a Word</h2>
 
     <input id="newWord" placeholder="Word">
@@ -466,68 +453,106 @@ footer{
     <input id="newMeaning" placeholder="Meaning">
     <input id="newCredits" placeholder="Credits (optional)">
 
-    <button class="primary" id="addWord">Add Word</button>
-    <button class="secondary" id="logout">Logout</button>
+    <button class="primary" id="addWord">
+      Add Word
+    </button>
+
+    <button class="secondary" id="logout">
+      Logout
+    </button>
+
   </div>
 </section>
 
-<!-- GAMES -->
+<!-- GAMES
+     IMPORTANT:
+     This panel is intentionally NOT restricted to logged-in users.
+     Everyone can play.
+-->
 <section class="panel" id="gamePanel">
+
   <div class="box">
 
     <h2>🎮 Games</h2>
-    <p>Choose a game to play.</p>
+
+    <p>
+      Everyone can play the games.
+      Log in if you want your high scores saved.
+    </p>
 
     <div class="game-menu">
 
       <button class="game-choice" id="mobilePuzzleChoice">
         🧩 Puzzle
-        <small>Mobile — drag the pieces together</small>
+        <small>
+          Mobile — drag pieces with touch and rotate them
+        </small>
       </button>
 
       <button class="game-choice" id="desktopPuzzleChoice">
         🧩 Puzzle
-        <small>Laptop/iMac — drag with your mouse</small>
+        <small>
+          Laptop/iMac — drag pieces with your mouse
+        </small>
       </button>
 
       <button class="game-choice" id="trexChoice">
         🦖 T-Rex Runner
-        <small>Run, jump and avoid obstacles</small>
+        <small>
+          Run, jump and avoid obstacles
+        </small>
       </button>
 
       <button class="game-choice" id="watchMovieChoice">
         🎬 Watch Movie
-        <small>Watch a movie</small>
+        <small>
+          Watch a movie — nothing to do with Asher
+        </small>
       </button>
 
       <button class="game-choice" id="scoresChoice">
         🏆 High Scores
-        <small>View your scores</small>
+        <small>
+          View saved scores
+        </small>
       </button>
 
-      <button class="game-choice" id="birthdayMovieChoice" style="display:none">
+      <!-- ONLY SHOWN TO ASHER -->
+      <button
+        class="game-choice"
+        id="birthdayMovieChoice"
+        style="display:none"
+      >
         🎂 Asher's Birthday Movie
-        <small>Special movie for Asher</small>
+        <small>
+          Special birthday movie
+        </small>
       </button>
 
     </div>
 
-    <!-- PUZZLE -->
+
+    <!-- ================= PUZZLE ================= -->
+
     <div class="game-screen" id="puzzleScreen">
 
-      <button class="secondary back-button" data-back>← Back to Games</button>
+      <button class="secondary back-button" data-back>
+        ← Back to Games
+      </button>
 
       <h2>🧩 Hard Puzzle</h2>
 
       <p class="puzzle-info">
-        Drag pieces into the matching locations.
-        Select a piece and press <b>↻ Rotate</b> when its orientation is wrong.
+        Drag the pieces into the matching positions.
+        Select a piece and use
+        <b>↻ Rotate Selected Piece</b>
+        whenever the orientation is wrong.
       </p>
 
       <div class="puzzle-layout">
 
         <div>
-          <h3>Pieces</h3>
+          <h3>Mixed Pieces</h3>
           <div class="puzzle-area" id="pieceArea"></div>
         </div>
 
@@ -542,21 +567,36 @@ footer{
         Select a piece to rotate it.
       </div>
 
-      <button class="primary rotate-button" id="rotatePiece" disabled>
+      <button
+        class="primary rotate-button"
+        id="rotatePiece"
+        disabled
+      >
         ↻ Rotate Selected Piece
       </button>
 
       <div class="puzzle-controls">
-        <button class="primary" id="newPuzzle">New Hard Puzzle</button>
-        <button class="secondary" id="checkPuzzle">Check Puzzle</button>
+
+        <button class="primary" id="newPuzzle">
+          New Hard Puzzle
+        </button>
+
+        <button class="secondary" id="checkPuzzle">
+          Check Puzzle
+        </button>
+
       </div>
 
     </div>
 
-    <!-- TREX -->
+
+    <!-- ================= T-REX ================= -->
+
     <div class="game-screen" id="trexScreen">
 
-      <button class="secondary back-button" data-back>← Back to Games</button>
+      <button class="secondary back-button" data-back>
+        ← Back to Games
+      </button>
 
       <h2>🦖 T-Rex Runner</h2>
 
@@ -564,41 +604,58 @@ footer{
         Press Space, tap the screen, or click to jump.
       </p>
 
-      <canvas id="trexCanvas" width="900" height="350"></canvas>
+      <canvas
+        id="trexCanvas"
+        width="900"
+        height="350"
+      ></canvas>
 
       <button class="primary" id="startTrex">
         ▶ Start T-Rex Runner
       </button>
 
-      <p id="trexStatus">Ready!</p>
+      <p id="trexStatus">
+        Ready!
+      </p>
 
     </div>
 
-    <!-- WATCH MOVIE -->
+
+    <!-- ================= WATCH MOVIE ================= -->
+
     <div class="game-screen" id="watchMovieScreen">
 
-      <button class="secondary back-button" data-back>← Back to Games</button>
+      <button class="secondary back-button" data-back>
+        ← Back to Games
+      </button>
 
       <h2>🎬 Watch Movie</h2>
 
-      <div class="movie-controls">
-        <select id="movieChoice">
-          <option value="movie1">Movie 1</option>
-          <option value="movie2">Movie 2</option>
-          <option value="movie3">Movie 3</option>
-        </select>
-      </div>
+      <p>
+        This is the normal movie section and has nothing
+        to do with Asher.
+      </p>
+
+      <select id="movieChoice">
+        <option value="movie1">Movie 1</option>
+        <option value="movie2">Movie 2</option>
+        <option value="movie3">Movie 3</option>
+      </select>
 
       <div class="movie-frame" id="movieFrame">
+
         <div class="movie-placeholder">
-          <h2 style="color:white">🎬 Movie</h2>
+
+          <h2 style="color:white">
+            🎬 Watch Movie
+          </h2>
+
           <p>
-            Choose a movie above and add your movie video below in the code.
+            Select a movie and press Play.
           </p>
-          <p>
-            This movie section is completely separate from Asher's birthday movie.
-          </p>
+
         </div>
+
       </div>
 
       <button class="primary" id="playMovie">
@@ -607,18 +664,24 @@ footer{
 
     </div>
 
-    <!-- HIGH SCORES -->
+
+    <!-- ================= HIGH SCORES ================= -->
+
     <div class="game-screen" id="scoresScreen">
 
-      <button class="secondary back-button" data-back>← Back to Games</button>
+      <button class="secondary back-button" data-back>
+        ← Back to Games
+      </button>
 
       <h2>🏆 High Scores</h2>
 
-      <p>
-        Your scores are saved to Firebase when you are logged in.
+      <p id="scoreMessage">
+        High scores saved to Firebase by logged-in players
+        will appear here.
       </p>
 
       <table class="score-table">
+
         <thead>
           <tr>
             <th>Game</th>
@@ -626,74 +689,110 @@ footer{
             <th>Player</th>
           </tr>
         </thead>
+
         <tbody id="scoreBody"></tbody>
+
       </table>
 
     </div>
 
-    <!-- ASHER BIRTHDAY MOVIE -->
+
+    <!-- ================= ASHER MOVIE ================= -->
+
     <div class="game-screen" id="birthdayMovie">
 
-      <button class="secondary back-button" data-back>← Back to Games</button>
+      <button class="secondary back-button" data-back>
+        ← Back to Games
+      </button>
 
       <h2>🎂 Asher's Birthday Movie</h2>
 
       <p>
-        This special birthday animation is only available to Asher.
+        This special movie is only available when
+        Asher's account is logged in.
       </p>
 
-      <canvas id="birthdayCanvas" width="900" height="420"
-        style="width:100%;border-radius:14px;background:#62c4ed">
-      </canvas>
+      <canvas
+        id="birthdayCanvas"
+        width="900"
+        height="420"
+        style="
+          width:100%;
+          border-radius:14px;
+          background:#62c4ed
+        "
+      ></canvas>
 
       <button class="primary" id="birthdayButton">
         ▶ Start Birthday Movie
       </button>
 
-      <p id="birthdayStatus">Ready to play!</p>
+      <p id="birthdayStatus">
+        Ready to play!
+      </p>
 
     </div>
 
   </div>
+
 </section>
 
-<!-- DICTIONARY -->
+
+<!-- ORIGINAL DICTIONARY WORDS ARE PRESERVED -->
+
 <main class="dictionary" id="dictionary">
 
   <article class="card">
     <div class="word">Recos</div>
+
     <div class="pronunciation">
-      Pronunciation: <strong>reh-coss</strong>
+      Pronunciation:
+      <strong>reh-coss</strong>
     </div>
+
     <div class="meaning">
-      Meaning: <strong>ball</strong>
+      Meaning:
+      <strong>ball</strong>
     </div>
+
     <div class="credits">
       Credits: No credits
     </div>
   </article>
+
 
   <article class="card">
     <div class="word">Saof</div>
+
     <div class="pronunciation">
-      Pronunciation: <strong>s-ow-f</strong>
+      Pronunciation:
+      <strong>s-ow-f</strong>
     </div>
+
     <div class="meaning">
-      Meaning: <strong>me / and</strong>
+      Meaning:
+      <strong>me / and</strong>
     </div>
+
     <div class="credits">
       Credits: No credits
     </div>
   </article>
 
+
   <article class="card">
     <div class="word">Thu</div>
+
     <div class="pronunciation">
-      Pronunciation: <strong>th-oo</strong>
+      Pronunciation:
+      <strong>th-oo</strong>
     </div>
+
     <div class="meaning">
-      Meaning: <strong>Depends on the context.</strong>
+      Meaning:
+      <strong>Depends on the context.</strong>
     </div>
+
     <div class="credits">
       Credits: No credits
     </div>
@@ -701,17 +800,31 @@ footer{
 
 </main>
 
-<footer>© 2026 Saof Dictionary</footer>
 
-<!-- LOGIN / SIGNUP -->
+<footer>
+  © 2026 Saof Dictionary
+</footer>
+
+
+<!-- ================= LOGIN ================= -->
+
 <div id="login">
 
   <div class="login-box">
 
-    <h2 id="loginTitle">Login</h2>
+    <h2>Login</h2>
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
+    <input
+      id="email"
+      type="email"
+      placeholder="Email"
+    >
+
+    <input
+      id="password"
+      type="password"
+      placeholder="Password"
+    >
 
     <button class="primary" id="loginAction">
       Login
@@ -731,18 +844,19 @@ footer{
 
 </div>
 
+
 <script type="module">
 
 /* =========================================================
    FIREBASE
 ========================================================= */
 
-import {
+import{
   initializeApp
-} from
+}from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 
-import {
+import{
   getAuth,
   setPersistence,
   inMemoryPersistence,
@@ -750,47 +864,73 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged
-} from
+}from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
-import {
+import{
   getFirestore,
   collection,
   addDoc,
+  onSnapshot,
   getDocs,
   query,
   orderBy,
   limit,
   serverTimestamp
-} from
+}from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
+
 const config={
-  apiKey:'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
-  authDomain:'saof-dictionary.firebaseapp.com',
-  projectId:'saof-dictionary',
-  storageBucket:'saof-dictionary.firebasestorage.app',
-  messagingSenderId:'1054693760278',
-  appId:'1:1054693760278:web:5f8f9c090fbc737dfc4437'
+
+  apiKey:
+    'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
+
+  authDomain:
+    'saof-dictionary.firebaseapp.com',
+
+  projectId:
+    'saof-dictionary',
+
+  storageBucket:
+    'saof-dictionary.firebasestorage.app',
+
+  messagingSenderId:
+    '1054693760278',
+
+  appId:
+    '1:1054693760278:web:5f8f9c090fbc737dfc4437'
+
 };
 
+
 const OWNER='parkernanayakkara@icloud.com';
+
 const ASHER='ashernanayakkara@icloud.com';
 
+
 const app=initializeApp(config);
+
 const auth=getAuth(app);
+
 const db=getFirestore(app);
 
 const $=id=>document.getElementById(id);
 
-await setPersistence(auth,inMemoryPersistence);
+
+await setPersistence(
+  auth,
+  inMemoryPersistence
+);
+
 
 const matches=(user,email)=>
-  user?.email?.toLowerCase()===email.toLowerCase();
+  user?.email?.toLowerCase()===
+  email.toLowerCase();
 
 
 /* =========================================================
-   DICTIONARY
+   FIREBASE WORDS
 ========================================================= */
 
 function addCard(d){
@@ -799,18 +939,17 @@ function addCard(d){
 
   c.className='card live-card';
 
-  const fields=[
+  [
     ['word','',d.word],
     ['pronunciation','Pronunciation: ',d.pronunciation],
     ['meaning','Meaning: ',d.meaning],
     ['credits','Credits: ',d.credits?.trim()||'No credits']
-  ];
-
-  fields.forEach(([cl,label,value])=>{
+  ].forEach(([cl,label,value])=>{
 
     const e=document.createElement('div');
 
     e.className=cl;
+
     e.textContent=label;
 
     const strong=document.createElement('strong');
@@ -818,42 +957,72 @@ function addCard(d){
     strong.textContent=value;
 
     e.append(strong);
+
     c.append(e);
 
   });
 
   $('dictionary').append(c);
+
 }
 
 
-/* =========================================================
-   WORD SEARCH
-========================================================= */
+onSnapshot(
+  collection(db,'words'),
+  snap=>{
 
-$('searchInput').addEventListener('input',e=>{
+    document
+      .querySelectorAll('.live-card')
+      .forEach(e=>e.remove());
 
-  const q=e.target.value.toLowerCase();
+    snap.forEach(x=>{
 
-  document
-    .querySelectorAll('#dictionary .card')
-    .forEach(c=>{
-      c.hidden=!c.textContent.toLowerCase().includes(q);
+      const d=x.data();
+
+      if(
+        d.word&&
+        d.pronunciation&&
+        d.meaning
+      ){
+
+        addCard(d);
+
+      }
+
     });
 
-});
+  }
+);
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+$('searchInput').addEventListener(
+  'input',
+  e=>{
+
+    const q=e.target.value.toLowerCase();
+
+    document
+      .querySelectorAll('#dictionary .card')
+      .forEach(c=>{
+
+        c.hidden=
+          !c.textContent
+            .toLowerCase()
+            .includes(q);
+
+      });
+
+  }
+);
 
 
 /* =========================================================
    LOGIN
 ========================================================= */
-
-function showLogin(){
-
-  $('login').style.display='flex';
-  $('loginError').textContent='';
-  $('email').focus();
-
-}
 
 $('loginButton').onclick=()=>{
 
@@ -865,11 +1034,12 @@ $('loginButton').onclick=()=>{
 
   }else{
 
-    showLogin();
+    $('login').style.display='flex';
 
   }
 
 };
+
 
 $('cancelLogin').onclick=()=>{
 
@@ -878,12 +1048,15 @@ $('cancelLogin').onclick=()=>{
 };
 
 
-/* LOGIN WITH LOADING */
+/* LOGIN LOADING */
 
 $('loginAction').onclick=async()=>{
 
-  const email=$('email').value.trim();
-  const password=$('password').value;
+  const email=
+    $('email').value.trim();
+
+  const password=
+    $('password').value;
 
   if(!email||!password){
 
@@ -891,6 +1064,7 @@ $('loginAction').onclick=async()=>{
       'Enter your email and password.';
 
     return;
+
   }
 
   const button=$('loginAction');
@@ -920,6 +1094,7 @@ $('loginAction').onclick=async()=>{
   }finally{
 
     button.disabled=false;
+
     button.textContent='Login';
 
   }
@@ -928,13 +1103,16 @@ $('loginAction').onclick=async()=>{
 
 
 /* =========================================================
-   FREE ACCOUNT CREATION
+   UPGRADE FOR FREE
 ========================================================= */
 
 $('upgradeAction').onclick=async()=>{
 
-  const email=$('email').value.trim();
-  const password=$('password').value;
+  const email=
+    $('email').value.trim();
+
+  const password=
+    $('password').value;
 
   if(!email||!password){
 
@@ -942,14 +1120,16 @@ $('upgradeAction').onclick=async()=>{
       'Enter an email and password first.';
 
     return;
+
   }
 
   if(password.length<6){
 
     $('loginError').textContent=
-      'Firebase passwords must be at least 6 characters.';
+      'Password must be at least 6 characters.';
 
     return;
+
   }
 
   const button=$('upgradeAction');
@@ -974,11 +1154,14 @@ $('upgradeAction').onclick=async()=>{
   }catch(e){
 
     $('loginError').textContent=
-      `Could not create account: ${e.code||'unknown error'}`;
+      `Could not create account: ${
+        e.code||'unknown error'
+      }`;
 
   }finally{
 
     button.disabled=false;
+
     button.textContent='Upgrade for Free';
 
   }
@@ -992,36 +1175,56 @@ $('upgradeAction').onclick=async()=>{
 
 $('logout').onclick=()=>signOut(auth);
 
+
 $('addWord').onclick=async()=>{
 
   if(!matches(auth.currentUser,OWNER)){
 
     alert('Only the owner can add words.');
+
     return;
 
   }
 
-  const word=$('newWord').value.trim();
-  const pronunciation=$('newPronunciation').value.trim();
-  const meaning=$('newMeaning').value.trim();
+  const word=
+    $('newWord').value.trim();
+
+  const pronunciation=
+    $('newPronunciation').value.trim();
+
+  const meaning=
+    $('newMeaning').value.trim();
 
   if(!word||!pronunciation||!meaning){
 
-    alert('Fill in word, pronunciation and meaning.');
+    alert(
+      'Fill in word, pronunciation and meaning.'
+    );
+
     return;
 
   }
 
-  await addDoc(collection(db,'words'),{
+  await addDoc(
+    collection(db,'words'),
+    {
 
-    word,
-    pronunciation,
-    meaning,
-    credits:$('newCredits').value.trim()||'No credits',
-    addedBy:auth.currentUser.email,
-    createdAt:serverTimestamp()
+      word,
+      pronunciation,
+      meaning,
 
-  });
+      credits:
+        $('newCredits').value.trim()||
+        'No credits',
+
+      addedBy:
+        auth.currentUser.email,
+
+      createdAt:
+        serverTimestamp()
+
+    }
+  );
 
   [
     'newWord',
@@ -1041,7 +1244,8 @@ $('addWord').onclick=async()=>{
 
 $('saveQuestion').onclick=async()=>{
 
-  const text=$('questionText').value.trim();
+  const text=
+    $('questionText').value.trim();
 
   if(!text){
 
@@ -1054,16 +1258,23 @@ $('saveQuestion').onclick=async()=>{
 
   try{
 
-    await addDoc(collection(db,'questions'),{
+    await addDoc(
+      collection(db,'questions'),
+      {
 
-      name:$('questionName').value.trim()||
-        'Anonymous visitor',
+        name:
+          $('questionName').value.trim()||
+          'Anonymous visitor',
 
-      question:text,
-      status:'new',
-      createdAt:serverTimestamp()
+        question:text,
 
-    });
+        status:'new',
+
+        createdAt:
+          serverTimestamp()
+
+      }
+    );
 
     $('questionText').value='';
     $('questionName').value='';
@@ -1074,15 +1285,19 @@ $('saveQuestion').onclick=async()=>{
   }catch(e){
 
     $('questionStatus').textContent=
-      `Could not save question: ${e.code||'Firestore error'}`;
+      `Could not save question: ${
+        e.code||'Firestore error'
+      }`;
 
   }
 
 };
 
+
 $('openMessages').onclick=()=>{
 
-  const text=$('questionText').value.trim();
+  const text=
+    $('questionText').value.trim();
 
   location.href=
     `sms:?&body=${encodeURIComponent(
@@ -1095,7 +1310,8 @@ $('openMessages').onclick=()=>{
 
 
 /* =========================================================
-   GAME SCREEN SYSTEM
+   GAME NAVIGATION
+   GAMES ARE PUBLIC
 ========================================================= */
 
 const screens=[
@@ -1106,6 +1322,7 @@ const screens=[
   'birthdayMovie'
 ];
 
+
 function hideScreens(){
 
   screens.forEach(id=>{
@@ -1114,11 +1331,13 @@ function hideScreens(){
 
 }
 
+
 function openScreen(id){
 
   hideScreens();
 
   $('gamePanel').style.display='block';
+
   $(id).style.display='block';
 
   $('gamePanel').scrollIntoView({
@@ -1127,60 +1346,81 @@ function openScreen(id){
 
 }
 
+
 function backToGames(){
 
   hideScreens();
 
-  $('gamePanel').scrollIntoView({
-    behavior:'smooth'
-  });
-
 }
+
 
 document
   .querySelectorAll('[data-back]')
-  .forEach(b=>b.onclick=backToGames);
+  .forEach(button=>{
+    button.onclick=backToGames;
+  });
+
 
 $('mobilePuzzleChoice').onclick=()=>{
+
   startPuzzle();
+
   openScreen('puzzleScreen');
+
 };
+
 
 $('desktopPuzzleChoice').onclick=()=>{
+
   startPuzzle();
+
   openScreen('puzzleScreen');
+
 };
+
 
 $('trexChoice').onclick=()=>{
+
   openScreen('trexScreen');
+
 };
+
 
 $('watchMovieChoice').onclick=()=>{
+
   openScreen('watchMovieScreen');
+
 };
+
 
 $('scoresChoice').onclick=()=>{
+
   loadScores();
+
   openScreen('scoresScreen');
+
 };
 
+
 $('birthdayMovieChoice').onclick=()=>{
+
   openScreen('birthdayMovie');
+
 };
 
 
 /* =========================================================
-   HARD ROTATABLE PUZZLE
+   HARD PUZZLE
 ========================================================= */
 
-const pieceArea=$('pieceArea');
-const targetArea=$('targetArea');
+const pieceArea=
+  $('pieceArea');
 
-let pieces=[];
-let selectedPiece=null;
-let puzzleSolved=false;
+const targetArea=
+  $('targetArea');
 
 const PUZZLE_SIZE=4;
+
 const PIECE_COUNT=16;
 
 const colors=[
@@ -1202,59 +1442,85 @@ const colors=[
   '#3a86ff'
 ];
 
+let pieces=[];
+
+let selectedPiece=null;
+
+let puzzleSolved=false;
+
+let puzzleStartTime=0;
+
+
 function randomInt(max){
-  return Math.floor(Math.random()*max);
+
+  return Math.floor(
+    Math.random()*max
+  );
+
 }
 
 
-/* Create irregular SVG puzzle shape */
+/* DIFFERENT IRREGULAR SHAPES */
 
 function makePieceSVG(index){
 
-  const color=colors[index%colors.length];
+  const color=
+    colors[index%colors.length];
 
-  const tab=(index%4)-1;
+  const shapes=[
 
-  let path=
-    'M 8 8 '+
-    'L 62 8 '+
-    'L 62 20 '+
-    'C 82 16 82 42 62 38 '+
-    'L 62 62 '+
-    'L 42 62 '+
-    'C 46 82 18 82 22 62 '+
-    'L 8 62 Z';
+    `
+    M8 8
+    L45 8
+    C45 20 65 18 62 30
+    L62 62
+    L35 62
+    C38 48 18 48 21 62
+    L8 62 Z
+    `,
 
-  if(index%3===0){
+    `
+    M8 8
+    L62 8
+    L62 27
+    C48 24 48 45 62 42
+    L62 62
+    L42 62
+    C45 48 22 48 25 62
+    L8 62 Z
+    `,
 
-    path=
-      'M 8 8 L 62 8 '+
-      'C 54 18 78 24 64 35 '+
-      'L 64 62 L 40 62 '+
-      'C 46 48 17 48 23 62 '+
-      'L 8 62 Z';
+    `
+    M8 8
+    L32 8
+    C25 22 47 25 43 8
+    L62 8
+    L62 62
+    L8 62 Z
+    `,
 
-  }else if(index%3===1){
+    `
+    M8 8
+    L62 8
+    L62 20
+    C45 16 45 40 62 36
+    L62 62
+    L8 62 Z
+    `
 
-    path=
-      'M 8 8 L 35 8 '+
-      'C 20 18 24 35 40 28 '+
-      'C 52 22 66 30 62 42 '+
-      'L 62 62 L 8 62 Z';
-
-  }
+  ];
 
   return `
     <svg viewBox="0 0 70 70">
       <path
-        d="${path}"
+        d="${shapes[index%shapes.length]}"
         fill="${color}"
         stroke="#202938"
         stroke-width="3"
       />
       <circle
-        cx="${15+(index*17)%40}"
-        cy="${20+(index*11)%30}"
+        cx="${15+(index*13)%40}"
+        cy="${18+(index*17)%32}"
         r="3"
         fill="#ffffff55"
       />
@@ -1270,42 +1536,59 @@ function startPuzzle(){
   targetArea.innerHTML='';
 
   pieces=[];
+
   selectedPiece=null;
+
   puzzleSolved=false;
+
+  puzzleStartTime=
+    performance.now();
 
   $('rotatePiece').disabled=true;
 
   $('puzzleStatus').textContent=
-    'Select a piece and rotate it if necessary.';
+    'Select a piece. Use Rotate when its orientation is wrong.';
 
-  const areaWidth=
-    pieceArea.clientWidth||350;
-
-  const cell=
-    Math.min(
-      72,
-      Math.floor((areaWidth-20)/PUZZLE_SIZE)
-    );
 
   /*
-    Create the target board.
-    Every piece has a precise target position.
+    Target board
   */
+
+  const boardWidth=
+    targetArea.clientWidth;
+
+  const cell=
+    Math.floor(
+      (boardWidth-10)/
+      PUZZLE_SIZE
+    );
+
 
   for(let i=0;i<PIECE_COUNT;i++){
 
-    const row=Math.floor(i/PUZZLE_SIZE);
-    const col=i%PUZZLE_SIZE;
+    const row=
+      Math.floor(i/PUZZLE_SIZE);
 
-    const target=document.createElement('div');
+    const col=
+      i%PUZZLE_SIZE;
 
-    target.className='puzzle-target';
+    const target=
+      document.createElement('div');
 
-    target.style.width=`${cell}px`;
-    target.style.height=`${cell}px`;
+    target.className=
+      'puzzle-target';
 
-    target.style.left=`${col*cell+5}px`;
-    target.style.top=`${row*cell+5}px`;
+    target.style.width=
+      `${cell}px`;
+
+    target.style.height=
+      `${cell}px`;
+
+    target.style.left=
+      `${5+col*cell}px`;
+
+    target.style.top=
+      `${5+row*cell}px`;
 
     targetArea.append(target);
 
@@ -1313,19 +1596,25 @@ function startPuzzle(){
 
 
   /*
-    Create shuffled pieces.
-    Every piece begins with a random rotation.
+    Pieces begin scattered and randomly rotated.
   */
 
   for(let i=0;i<PIECE_COUNT;i++){
 
-    const piece=document.createElement('div');
+    const piece=
+      document.createElement('div');
 
     piece.className='piece';
 
     piece.dataset.index=i;
 
-    piece.innerHTML=makePieceSVG(i);
+    piece.dataset.rotation=
+      [0,90,180,270][
+        randomInt(4)
+      ];
+
+    piece.innerHTML=
+      makePieceSVG(i);
 
     const maxX=
       Math.max(
@@ -1339,19 +1628,14 @@ function startPuzzle(){
         pieceArea.clientHeight-78
       );
 
-    const rotation=
-      [0,90,180,270][randomInt(4)];
-
     piece.style.left=
       `${5+Math.random()*maxX}px`;
 
     piece.style.top=
       `${5+Math.random()*maxY}px`;
 
-    piece.dataset.rotation=rotation;
-
     piece.style.transform=
-      `rotate(${rotation}deg)`;
+      `rotate(${piece.dataset.rotation}deg)`;
 
     piece.addEventListener(
       'pointerdown',
@@ -1374,8 +1658,6 @@ function startPuzzle(){
 }
 
 
-/* SELECT */
-
 function selectPiece(piece){
 
   pieces.forEach(p=>
@@ -1389,36 +1671,45 @@ function selectPiece(piece){
   $('rotatePiece').disabled=false;
 
   $('puzzleStatus').textContent=
-    `Piece ${Number(piece.dataset.index)+1} selected.`;
+    `Piece ${
+      Number(piece.dataset.index)+1
+    } selected.`;
 
 }
 
 
-/* ROTATE FUNCTION */
+/* DEDICATED ROTATE FUNCTION */
 
 $('rotatePiece').onclick=()=>{
 
   if(!selectedPiece)return;
 
   let rotation=
-    Number(selectedPiece.dataset.rotation);
+    Number(
+      selectedPiece.dataset.rotation
+    );
 
-  rotation=(rotation+90)%360;
+  rotation=
+    (rotation+90)%360;
 
-  selectedPiece.dataset.rotation=rotation;
+  selectedPiece.dataset.rotation=
+    rotation;
 
   selectedPiece.style.transform=
     `rotate(${rotation}deg)`;
 
   $('puzzleStatus').textContent=
-    `Piece ${Number(selectedPiece.dataset.index)+1} rotated ${rotation}°.`;
+    `Piece ${
+      Number(selectedPiece.dataset.index)+1
+    } rotated to ${rotation}°.`;
 
 };
 
 
-/* DRAGGING */
+/* DRAG */
 
 let dragData=null;
+
 
 function beginDrag(e){
 
@@ -1428,17 +1719,31 @@ function beginDrag(e){
 
   selectPiece(piece);
 
-  const rect=piece.getBoundingClientRect();
+  const rect=
+    piece.getBoundingClientRect();
+
+  const area=
+    pieceArea.getBoundingClientRect();
 
   dragData={
+
     piece,
-    offsetX:e.clientX-rect.left,
-    offsetY:e.clientY-rect.top
+
+    offsetX:
+      e.clientX-rect.left,
+
+    offsetY:
+      e.clientY-rect.top,
+
+    area
+
   };
 
   piece.classList.add('dragging');
 
-  piece.setPointerCapture(e.pointerId);
+  piece.setPointerCapture(
+    e.pointerId
+  );
 
   piece.addEventListener(
     'pointermove',
@@ -1458,22 +1763,27 @@ function dragMove(e){
 
   if(!dragData)return;
 
-  const piece=dragData.piece;
+  const piece=
+    dragData.piece;
 
-  const area=pieceArea.getBoundingClientRect();
+  const area=
+    dragData.area;
 
   let x=
-    e.clientX-area.left-
+    e.clientX-
+    area.left-
     dragData.offsetX;
 
   let y=
-    e.clientY-area.top-
+    e.clientY-
+    area.top-
     dragData.offsetY;
 
   x=Math.max(
     0,
     Math.min(
-      pieceArea.clientWidth-piece.offsetWidth,
+      pieceArea.clientWidth-
+      piece.offsetWidth,
       x
     )
   );
@@ -1481,13 +1791,17 @@ function dragMove(e){
   y=Math.max(
     0,
     Math.min(
-      pieceArea.clientHeight-piece.offsetHeight,
+      pieceArea.clientHeight-
+      piece.offsetHeight,
       y
     )
   );
 
-  piece.style.left=`${x}px`;
-  piece.style.top=`${y}px`;
+  piece.style.left=
+    `${x}px`;
+
+  piece.style.top=
+    `${y}px`;
 
 }
 
@@ -1496,112 +1810,193 @@ function endDrag(){
 
   if(!dragData)return;
 
-  const piece=dragData.piece;
+  dragData.piece
+    .classList
+    .remove('dragging');
 
-  piece.classList.remove('dragging');
-
-  piece.removeEventListener(
-    'pointermove',
-    dragMove
-  );
+  dragData.piece
+    .removeEventListener(
+      'pointermove',
+      dragMove
+    );
 
   dragData=null;
 
 }
 
 
-/* CHECK PUZZLE */
+/* CHECK */
 
 $('checkPuzzle').onclick=async()=>{
 
   let correct=0;
 
+  const boardWidth=
+    targetArea.clientWidth;
+
+  const boardHeight=
+    targetArea.clientHeight;
+
+  const cell=
+    boardWidth/
+    PUZZLE_SIZE;
+
+
   pieces.forEach(piece=>{
 
-    const i=Number(piece.dataset.index);
+    const i=
+      Number(piece.dataset.index);
 
-    const row=Math.floor(i/PUZZLE_SIZE);
-    const col=i%PUZZLE_SIZE;
+    const row=
+      Math.floor(i/PUZZLE_SIZE);
+
+    const col=
+      i%PUZZLE_SIZE;
 
     const targetX=
-      col*(targetArea.clientWidth/PUZZLE_SIZE);
+      col*cell+5;
 
     const targetY=
-      row*(targetArea.clientHeight/PUZZLE_SIZE);
+      row*cell+5;
 
-    const x=parseFloat(piece.style.left);
-    const y=parseFloat(piece.style.top);
+    const x=
+      parseFloat(piece.style.left);
 
-    const expectedRotation=0;
-
-    /*
-      We deliberately require the correct rotation.
-    */
+    const y=
+      parseFloat(piece.style.top);
 
     const rotation=
-      Number(piece.dataset.rotation)%360;
+      Number(
+        piece.dataset.rotation
+      )%360;
 
-    const correctPosition=
-      Math.abs(x-targetX)<35 &&
-      Math.abs(y-targetY)<35;
+    /*
+      Correct position + correct rotation.
+    */
 
-    if(correctPosition && rotation===expectedRotation){
+    const positionCorrect=
+      Math.abs(x-targetX)<32&&
+      Math.abs(y-targetY)<32;
+
+    const rotationCorrect=
+      rotation===0;
+
+    if(
+      positionCorrect&&
+      rotationCorrect
+    ){
 
       correct++;
 
-      piece.style.left=`${targetX}px`;
-      piece.style.top=`${targetY}px`;
+      piece.style.left=
+        `${targetX}px`;
+
+      piece.style.top=
+        `${targetY}px`;
 
     }
 
   });
 
-  $('puzzleStatus').textContent=
-    `${correct} / ${PIECE_COUNT} pieces are correctly placed and rotated.`;
 
-  if(correct===PIECE_COUNT&&!puzzleSolved){
+  if(
+    correct===PIECE_COUNT&&
+    !puzzleSolved
+  ){
 
     puzzleSolved=true;
 
+    const seconds=
+      Math.max(
+        1,
+        Math.floor(
+          (performance.now()-
+            puzzleStartTime)/1000
+        )
+      );
+
+    /*
+      Faster puzzle = higher score.
+    */
+
+    const score=
+      Math.max(
+        100,
+        5000-seconds*20
+      );
+
     $('puzzleStatus').textContent=
-      '🎉 Puzzle solved! Great job!';
+      `🎉 Puzzle solved in ${
+        seconds
+      } seconds! Score: ${score}`;
 
     await saveScore(
       'Hard Puzzle',
-      1000
+      score
     );
+
+  }else{
+
+    $('puzzleStatus').textContent=
+      `${correct} / ${PIECE_COUNT} pieces are correctly placed and rotated.`;
 
   }
 
 };
 
-$('newPuzzle').onclick=startPuzzle;
+
+$('newPuzzle').onclick=
+  startPuzzle;
 
 
 /* =========================================================
    HIGH SCORES
 ========================================================= */
 
-async function saveScore(game,score){
+async function saveScore(
+  game,
+  score
+){
 
-  if(!auth.currentUser)return;
+  /*
+    Logged-out users can play,
+    but their score is NOT saved.
+  */
+
+  if(!auth.currentUser){
+
+    return;
+
+  }
 
   try{
 
     await addDoc(
       collection(db,'highScores'),
       {
+
         game,
+
         score,
-        player:auth.currentUser.email,
-        uid:auth.currentUser.uid,
-        createdAt:serverTimestamp()
+
+        player:
+          auth.currentUser.email,
+
+        uid:
+          auth.currentUser.uid,
+
+        createdAt:
+          serverTimestamp()
+
       }
     );
 
   }catch(e){
 
-    console.error('Could not save score',e);
+    console.error(
+      'Could not save score',
+      e
+    );
 
   }
 
@@ -1610,20 +2005,26 @@ async function saveScore(game,score){
 
 async function loadScores(){
 
-  const body=$('scoreBody');
+  const body=
+    $('scoreBody');
 
   body.innerHTML=
     '<tr><td colspan="3">Loading...</td></tr>';
 
   try{
 
-    const q=query(
-      collection(db,'highScores'),
-      orderBy('score','desc'),
-      limit(50)
-    );
+    const q=
+      query(
+        collection(db,'highScores'),
+        orderBy(
+          'score',
+          'desc'
+        ),
+        limit(50)
+      );
 
-    const snap=await getDocs(q);
+    const snap=
+      await getDocs(q);
 
     body.innerHTML='';
 
@@ -1631,35 +2032,47 @@ async function loadScores(){
 
       const d=doc.data();
 
-      const tr=document.createElement('tr');
+      const tr=
+        document.createElement('tr');
 
-      const game=document.createElement('td');
-      game.textContent=d.game||'Game';
+      const game=
+        document.createElement('td');
 
-      const score=document.createElement('td');
-      score.textContent=d.score||0;
+      game.textContent=
+        d.game||'Game';
 
-      const player=document.createElement('td');
+      const score=
+        document.createElement('td');
 
-      /*
-        Show only a shortened email in the public
-        score table.
-      */
+      score.textContent=
+        d.score||0;
 
-      const email=d.player||'Player';
+      const player=
+        document.createElement('td');
 
-      const at=email.indexOf('@');
+      const email=
+        d.player||'Player';
+
+      const at=
+        email.indexOf('@');
 
       player.textContent=
         at>2
-          ? email.slice(0,2)+'***'+email.slice(at)
+          ? email.slice(0,2)+
+            '***'+
+            email.slice(at)
           : 'Player';
 
-      tr.append(game,score,player);
+      tr.append(
+        game,
+        score,
+        player
+      );
 
       body.append(tr);
 
     });
+
 
     if(!body.children.length){
 
@@ -1671,7 +2084,7 @@ async function loadScores(){
   }catch(e){
 
     body.innerHTML=
-      `<tr><td colspan="3">Could not load scores.</td></tr>`;
+      '<tr><td colspan="3">Could not load scores.</td></tr>';
 
   }
 
@@ -1682,12 +2095,18 @@ async function loadScores(){
    T-REX RUNNER
 ========================================================= */
 
-const trexCanvas=$('trexCanvas');
-const trexCtx=trexCanvas.getContext('2d');
+const trexCanvas=
+  $('trexCanvas');
+
+const trexCtx=
+  trexCanvas.getContext('2d');
 
 let trexRunning=false;
+
 let trexRAF=null;
+
 let trexScore=0;
+
 let trexPlayer={
   x:100,
   y:270,
@@ -1699,6 +2118,7 @@ let trexPlayer={
 
 let obstacles=[];
 
+
 function trexJump(){
 
   if(!trexRunning)return;
@@ -1706,29 +2126,39 @@ function trexJump(){
   if(!trexPlayer.jumping){
 
     trexPlayer.vy=-14;
+
     trexPlayer.jumping=true;
 
   }
 
 }
 
+
 function startTrex(){
 
   trexRunning=true;
+
   trexScore=0;
+
   obstacles=[];
 
   trexPlayer.y=270;
+
   trexPlayer.vy=0;
+
   trexPlayer.jumping=false;
 
-  $('trexStatus').textContent='Running!';
+  $('trexStatus').textContent=
+    'Running!';
 
-  cancelAnimationFrame(trexRAF);
+  cancelAnimationFrame(
+    trexRAF
+  );
 
   trexFrame();
 
 }
+
 
 function trexFrame(){
 
@@ -1743,29 +2173,56 @@ function trexFrame(){
     trexCanvas.height
   );
 
-  /* sky */
+
+  /* SKY */
 
   ctx.fillStyle='#87ceeb';
 
   ctx.fillRect(
-    0,0,
+    0,
+    0,
     trexCanvas.width,
     trexCanvas.height
   );
 
-  /* clouds */
+
+  /* CLOUD */
 
   ctx.fillStyle='#fff';
 
   ctx.beginPath();
-  ctx.arc(200,70,30,0,Math.PI*2);
-  ctx.arc(240,65,40,0,Math.PI*2);
-  ctx.arc(285,75,28,0,Math.PI*2);
+
+  ctx.arc(
+    200,
+    70,
+    30,
+    0,
+    Math.PI*2
+  );
+
+  ctx.arc(
+    240,
+    65,
+    40,
+    0,
+    Math.PI*2
+  );
+
+  ctx.arc(
+    285,
+    75,
+    28,
+    0,
+    Math.PI*2
+  );
+
   ctx.fill();
 
-  /* ground */
+
+  /* GROUND */
 
   ctx.fillStyle='#555';
+
   ctx.fillRect(
     0,
     325,
@@ -1773,20 +2230,29 @@ function trexFrame(){
     25
   );
 
-  /* player physics */
 
-  trexPlayer.vy+=0.7;
-  trexPlayer.y+=trexPlayer.vy;
+  /* PHYSICS */
 
-  if(trexPlayer.y>=270){
+  trexPlayer.vy+=.7;
+
+  trexPlayer.y+=
+    trexPlayer.vy;
+
+
+  if(
+    trexPlayer.y>=270
+  ){
 
     trexPlayer.y=270;
+
     trexPlayer.vy=0;
+
     trexPlayer.jumping=false;
 
   }
 
-  /* dinosaur */
+
+  /* DINO */
 
   ctx.fillStyle='#29354a';
 
@@ -1813,21 +2279,34 @@ function trexFrame(){
     6
   );
 
-  /* obstacles */
+
+  /* SPAWN OBSTACLES */
 
   if(
     obstacles.length===0||
-    obstacles[obstacles.length-1].x<600
+    obstacles[
+      obstacles.length-1
+    ].x<600
   ){
 
     obstacles.push({
+
       x:900,
-      y:285,
-      w:25+Math.random()*20,
-      h:40+Math.random()*25
+
+      y:325,
+
+      w:25+
+        Math.random()*20,
+
+      h:40+
+        Math.random()*25
+
     });
 
   }
+
+
+  /* MOVE */
 
   obstacles.forEach(o=>{
 
@@ -1851,18 +2330,32 @@ function trexFrame(){
 
   });
 
-  obstacles=
-    obstacles.filter(o=>o.x>-100);
 
-  /* collision */
+  obstacles=
+    obstacles.filter(
+      o=>o.x>-100
+    );
+
+
+  /* COLLISION */
 
   for(const o of obstacles){
 
     const hit=
-      trexPlayer.x<o.x+o.w &&
-      trexPlayer.x+trexPlayer.w>o.x &&
-      trexPlayer.y<o.y &&
-      trexPlayer.y+trexPlayer.h>o.y-o.h;
+      trexPlayer.x<
+        o.x+o.w&&
+
+      trexPlayer.x+
+        trexPlayer.w>
+        o.x&&
+
+      trexPlayer.y<
+        o.y&&
+
+      trexPlayer.y+
+        trexPlayer.h>
+        o.y-o.h;
+
 
     if(hit){
 
@@ -1882,21 +2375,29 @@ function trexFrame(){
 
   }
 
+
   trexScore++;
 
   $('trexStatus').textContent=
     `Score: ${trexScore}`;
 
-  trexRAF=requestAnimationFrame(trexFrame);
+  trexRAF=
+    requestAnimationFrame(
+      trexFrame
+    );
 
 }
+
 
 $('startTrex').onclick=()=>{
 
   if(trexRunning){
 
     trexRunning=false;
-    cancelAnimationFrame(trexRAF);
+
+    cancelAnimationFrame(
+      trexRAF
+    );
 
     $('trexStatus').textContent=
       'Paused.';
@@ -1909,20 +2410,25 @@ $('startTrex').onclick=()=>{
 
 };
 
+
 trexCanvas.addEventListener(
   'pointerdown',
   trexJump
 );
 
+
 window.addEventListener(
   'keydown',
   e=>{
+
     if(e.code==='Space'){
 
       e.preventDefault();
+
       trexJump();
 
     }
+
   }
 );
 
@@ -1932,51 +2438,82 @@ window.addEventListener(
 ========================================================= */
 
 /*
-  Put your own movie URLs here.
+  Add your own movie URLs here.
 
   Example:
-  movie1: "https://your-site.com/movie.mp4"
 
-  This section is intentionally NOT connected
-  to Asher's birthday movie.
+  movie1:
+    'https://example.com/movie.mp4'
+
+  This is completely separate from
+  Asher's birthday movie.
 */
 
 const MOVIES={
+
   movie1:'',
+
   movie2:'',
+
   movie3:''
+
 };
+
 
 $('playMovie').onclick=()=>{
 
-  const selected=$('movieChoice').value;
-  const url=MOVIES[selected];
+  const selected=
+    $('movieChoice').value;
+
+  const url=
+    MOVIES[selected];
+
 
   if(!url){
 
     $('movieFrame').innerHTML=`
+
       <div class="movie-placeholder">
-        <h2 style="color:white">🎬 Movie not added yet</h2>
+
+        <h2 style="color:white">
+          🎬 Movie not added yet
+        </h2>
+
         <p>
-          Add the movie's video URL to the MOVIES
-          section in the code.
+          Add your movie URL to the
+          MOVIES section in the code.
         </p>
+
       </div>
+
     `;
 
     return;
 
   }
 
+
   $('movieFrame').innerHTML=`
+
     <video
       controls
       autoplay
-      style="width:100%;height:100%;object-fit:contain"
+      style="
+        width:100%;
+        height:100%;
+        object-fit:contain
+      "
     >
-      <source src="${url}" type="video/mp4">
+
+      <source
+        src="${url}"
+        type="video/mp4"
+      >
+
       Your browser does not support video playback.
+
     </video>
+
   `;
 
 };
@@ -1986,26 +2523,44 @@ $('playMovie').onclick=()=>{
    ASHER'S SPECIAL BIRTHDAY MOVIE
 ========================================================= */
 
-const birthdayCanvas=$('birthdayCanvas');
-const bctx=birthdayCanvas.getContext('2d');
+const birthdayCanvas=
+  $('birthdayCanvas');
+
+const bctx=
+  birthdayCanvas.getContext('2d');
 
 let birthdayPlaying=false;
+
 let birthdayStart=0;
+
 let birthdayRAF=null;
+
 
 function birthdayDraw(t){
 
-  const W=birthdayCanvas.width;
-  const H=birthdayCanvas.height;
+  const W=
+    birthdayCanvas.width;
+
+  const H=
+    birthdayCanvas.height;
+
+
+  /* SKY */
 
   bctx.fillStyle=
     t%10000<5000
       ? '#62c4ed'
       : '#18284c';
 
-  bctx.fillRect(0,0,W,H);
+  bctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
 
-  /* stars */
+
+  /* STARS */
 
   if(t%10000>=5000){
 
@@ -2024,7 +2579,8 @@ function birthdayDraw(t){
 
   }
 
-  /* ground */
+
+  /* GROUND */
 
   bctx.fillStyle='#6eae58';
 
@@ -2035,42 +2591,60 @@ function birthdayDraw(t){
     105
   );
 
-  /* balloons */
+
+  /* BALLOONS */
 
   const balloons=[
+
     [620,190,'#ef476f'],
+
     [690,220,'#ffd166'],
+
     [760,180,'#06d6a0']
+
   ];
 
-  balloons.forEach(([x,y,c])=>{
 
-    bctx.strokeStyle='#555';
+  balloons.forEach(
+    ([x,y,c])=>{
 
-    bctx.beginPath();
-    bctx.moveTo(x,y+25);
-    bctx.lineTo(x,315);
-    bctx.stroke();
+      bctx.strokeStyle='#555';
 
-    bctx.fillStyle=c;
+      bctx.beginPath();
 
-    bctx.beginPath();
+      bctx.moveTo(
+        x,
+        y+25
+      );
 
-    bctx.ellipse(
-      x,
-      y,
-      20,
-      28,
-      0,
-      0,
-      Math.PI*2
-    );
+      bctx.lineTo(
+        x,
+        315
+      );
 
-    bctx.fill();
+      bctx.stroke();
 
-  });
+      bctx.fillStyle=c;
 
-  /* dinosaur */
+      bctx.beginPath();
+
+      bctx.ellipse(
+        x,
+        y,
+        20,
+        28,
+        0,
+        0,
+        Math.PI*2
+      );
+
+      bctx.fill();
+
+    }
+  );
+
+
+  /* DINO */
 
   const bob=
     Math.sin(t/180)*4;
@@ -2112,7 +2686,8 @@ function birthdayDraw(t){
     30
   );
 
-  /* eye */
+
+  /* EYE */
 
   bctx.fillStyle='#111';
 
@@ -2123,11 +2698,13 @@ function birthdayDraw(t){
     8
   );
 
-  /* birthday text */
+
+  /* TEXT */
 
   bctx.fillStyle='#fff';
 
-  bctx.font='bold 34px Arial';
+  bctx.font=
+    'bold 34px Arial';
 
   bctx.textAlign='center';
 
@@ -2137,7 +2714,8 @@ function birthdayDraw(t){
     65
   );
 
-  bctx.font='bold 22px Arial';
+  bctx.font=
+    'bold 22px Arial';
 
   bctx.fillText(
     '🎂 🎈 🎉',
@@ -2147,17 +2725,23 @@ function birthdayDraw(t){
 
 }
 
+
 function birthdayFrame(t){
 
   if(!birthdayPlaying)return;
 
-  const elapsed=t-birthdayStart;
+  const elapsed=
+    t-birthdayStart;
 
   birthdayDraw(elapsed);
+
 
   if(elapsed>=180000){
 
     birthdayPlaying=false;
+
+    $('birthdayButton').textContent=
+      '▶ Start Birthday Movie';
 
     $('birthdayStatus').textContent=
       'Birthday movie finished! 🎉';
@@ -2166,13 +2750,20 @@ function birthdayFrame(t){
 
   }
 
+
   $('birthdayStatus').textContent=
-    `Birthday movie playing: ${Math.floor(elapsed/1000)} / 180 seconds`;
+    `Birthday movie playing: ${
+      Math.floor(elapsed/1000)
+    } / 180 seconds`;
+
 
   birthdayRAF=
-    requestAnimationFrame(birthdayFrame);
+    requestAnimationFrame(
+      birthdayFrame
+    );
 
 }
+
 
 $('birthdayButton').onclick=()=>{
 
@@ -2180,23 +2771,33 @@ $('birthdayButton').onclick=()=>{
 
     birthdayPlaying=false;
 
-    cancelAnimationFrame(birthdayRAF);
+    cancelAnimationFrame(
+      birthdayRAF
+    );
 
     $('birthdayButton').textContent=
       '▶ Start Birthday Movie';
+
+    $('birthdayStatus').textContent=
+      'Movie stopped.';
 
     return;
 
   }
 
+
   birthdayPlaying=true;
-  birthdayStart=performance.now();
+
+  birthdayStart=
+    performance.now();
 
   $('birthdayButton').textContent=
     '■ Stop Birthday Movie';
 
   birthdayRAF=
-    requestAnimationFrame(birthdayFrame);
+    requestAnimationFrame(
+      birthdayFrame
+    );
 
 };
 
@@ -2205,51 +2806,88 @@ $('birthdayButton').onclick=()=>{
    AUTH STATE
 ========================================================= */
 
-onAuthStateChanged(auth,user=>{
+onAuthStateChanged(
+  auth,
+  user=>{
 
-  const owner=matches(user,OWNER);
-  const asher=matches(user,ASHER);
+    const owner=
+      matches(user,OWNER);
 
-  $('adminPanel').style.display=
-    owner?'block':'none';
+    const asher=
+      matches(user,ASHER);
 
-  $('questionPanel').style.display=
-    owner?'none':'block';
 
-  $('gamePanel').style.display=
-    user?'block':'none';
+    /*
+      IMPORTANT:
+      gamePanel is ALWAYS visible.
+      This means logged-out visitors
+      can play games.
+    */
 
-  $('birthday').style.display=
-    asher?'block':'none';
+    $('gamePanel').style.display=
+      'block';
 
-  $('birthdayMovieChoice').style.display=
-    asher?'block':'none';
 
-  $('loginButton').textContent=
-    user
-      ? (owner?'Add Words':'Games')
-      : 'Login';
+    $('adminPanel').style.display=
+      owner
+        ? 'block'
+        : 'none';
 
-  if(asher){
 
-    $('birthdayMovieChoice').style.display='block';
+    $('questionPanel').style.display=
+      owner
+        ? 'none'
+        : 'block';
 
-  }else{
 
-    $('birthdayMovieChoice').style.display='none';
+    /*
+      Only Asher sees the birthday movie.
+    */
+
+    $('birthday').style.display=
+      asher
+        ? 'block'
+        : 'none';
+
+
+    $('birthdayMovieChoice').style.display=
+      asher
+        ? 'block'
+        : 'none';
+
+
+    $('loginButton').textContent=
+      user
+        ? 'Games'
+        : 'Login';
+
+
+    /*
+      If someone logs out while viewing
+      Asher's movie, close that screen.
+    */
+
+    if(!asher){
+
+      $('birthdayMovie').style.display=
+        'none';
+
+    }
 
   }
-
-});
+);
 
 
 /* =========================================================
-   INITIAL PUZZLE DRAW
+   INITIAL PUZZLE
 ========================================================= */
 
-setTimeout(()=>{
-  startPuzzle();
-},300);
+setTimeout(
+  ()=>{
+    startPuzzle();
+  },
+  500
+);
 
 </script>
 
