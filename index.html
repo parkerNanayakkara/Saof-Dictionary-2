@@ -4,30 +4,2564 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Saof Dictionary</title>
+
 <style>
-*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:#f4f1ff;color:#222}header{position:relative;padding:35px 20px;text-align:center;color:#fff;background:linear-gradient(135deg,#6c4cff,#8b6cff)}h1{margin:0;font-size:42px}.login-button{position:absolute;right:20px;top:20px;padding:10px 18px;border:0;border-radius:10px;background:#fff;color:#6c4cff;font-weight:bold}button{cursor:pointer;font:inherit}.search{text-align:center;padding:25px}.search input,input,textarea,select{width:100%;padding:12px;margin:7px 0;border:1px solid #ccc;border-radius:8px;font:inherit}.search input{width:min(80%,500px);border:2px solid #6c4cff}.panel,.dictionary{width:min(calc(100% - 40px),800px);margin:auto}.panel{display:none;margin-bottom:25px}.box,.card{padding:22px;border-radius:15px;background:#fff;box-shadow:0 4px 12px #00000014}.card{margin:15px 0}.word{font-size:28px;font-weight:bold;color:#6c4cff}.pronunciation{margin-top:6px;color:#777}.meaning{margin-top:12px;font-size:18px}.credits{margin-top:12px;color:#555;font-size:14px;font-style:italic}h2{color:#6c4cff}.primary{width:100%;padding:12px;border:0;border-radius:8px;background:#6c4cff;color:white;font-weight:bold}.secondary{padding:10px 15px;border:0;border-radius:8px;background:#eee;margin-top:10px}#birthday{display:none;margin:20px auto;width:min(calc(100% - 40px),800px);padding:24px;border:3px solid #f0b429;border-radius:18px;background:#ffd166;color:#704600;text-align:center;font-size:30px;font-weight:bold}.question{margin-bottom:25px}.game canvas{display:block;width:100%;height:auto;border:3px solid #29354a;border-radius:14px;image-rendering:auto;background:#61bbed}.game-note{text-align:center;color:#666}.movie-controls{display:flex;gap:10px}.movie-controls select{flex:1}#movieStatus{text-align:center;color:#555;min-height:20px}#login{display:none;position:fixed;inset:0;z-index:5;align-items:center;justify-content:center;padding:20px;background:#0008}.login-box{width:min(100%,400px);padding:30px;border-radius:18px;background:#fff;text-align:center}.error{min-height:20px;color:#c33}footer{text-align:center;padding:20px;color:#777}@media(max-width:600px){h1{font-size:32px}.panel,.dictionary{width:calc(100% - 24px)}.movie-controls{display:block}}
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#f4f1ff;
+  color:#222
+}
+
+header{
+  position:relative;
+  padding:35px 20px;
+  text-align:center;
+  color:#fff;
+  background:linear-gradient(135deg,#6c4cff,#8b6cff)
+}
+
+h1{
+  margin:0;
+  font-size:42px
+}
+
+.login-button{
+  position:absolute;
+  right:20px;
+  top:20px;
+  padding:10px 18px;
+  border:0;
+  border-radius:10px;
+  background:#fff;
+  color:#6c4cff;
+  font-weight:bold
+}
+
+.upgrade-button{
+  position:absolute;
+  left:20px;
+  top:20px;
+  padding:10px 18px;
+  border:0;
+  border-radius:10px;
+  background:#ffd166;
+  color:#704600;
+  font-weight:bold
+}
+
+button{
+  cursor:pointer;
+  font:inherit
+}
+
+button:disabled{
+  cursor:not-allowed;
+  opacity:.65
+}
+
+.search{
+  text-align:center;
+  padding:25px
+}
+
+.search input,input,textarea,select{
+  width:100%;
+  padding:12px;
+  margin:7px 0;
+  border:1px solid #ccc;
+  border-radius:8px;
+  font:inherit
+}
+
+.search input{
+  width:min(80%,500px);
+  border:2px solid #6c4cff
+}
+
+.panel,.dictionary{
+  width:min(calc(100% - 40px),800px);
+  margin:auto
+}
+
+.panel{
+  display:none;
+  margin-bottom:25px
+}
+
+.box,.card{
+  padding:22px;
+  border-radius:15px;
+  background:#fff;
+  box-shadow:0 4px 12px #00000014
+}
+
+.card{
+  margin:15px 0
+}
+
+.word{
+  font-size:28px;
+  font-weight:bold;
+  color:#6c4cff
+}
+
+.pronunciation{
+  margin-top:6px;
+  color:#777
+}
+
+.meaning{
+  margin-top:12px;
+  font-size:18px
+}
+
+.credits{
+  margin-top:12px;
+  color:#555;
+  font-size:14px;
+  font-style:italic
+}
+
+h2{
+  color:#6c4cff
+}
+
+.primary{
+  width:100%;
+  padding:12px;
+  border:0;
+  border-radius:8px;
+  background:#6c4cff;
+  color:white;
+  font-weight:bold
+}
+
+.secondary{
+  padding:10px 15px;
+  border:0;
+  border-radius:8px;
+  background:#eee;
+  margin-top:10px
+}
+
+#birthday{
+  display:none;
+  margin:20px auto;
+  width:min(calc(100% - 40px),800px);
+  padding:24px;
+  border:3px solid #f0b429;
+  border-radius:18px;
+  background:#ffd166;
+  color:#704600;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold
+}
+
+.question{
+  margin-bottom:25px
+}
+
+.game-menu{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:12px;
+  margin-bottom:20px
+}
+
+.game-option{
+  padding:18px;
+  border:2px solid #ddd;
+  border-radius:14px;
+  background:#fff;
+  font-weight:bold;
+  color:#444;
+  transition:.15s
+}
+
+.game-option:hover{
+  border-color:#6c4cff;
+  transform:translateY(-2px)
+}
+
+.game-option.active{
+  background:#6c4cff;
+  color:#fff;
+  border-color:#6c4cff
+}
+
+.game-area{
+  display:none
+}
+
+.game-area.active{
+  display:block
+}
+
+.game canvas{
+  display:block;
+  width:100%;
+  height:auto;
+  border:3px solid #29354a;
+  border-radius:14px;
+  image-rendering:auto;
+  background:#61bbed;
+  touch-action:none
+}
+
+.game-note{
+  text-align:center;
+  color:#666
+}
+
+.movie-controls{
+  display:flex;
+  gap:10px
+}
+
+.movie-controls select{
+  flex:1
+}
+
+#movieStatus{
+  text-align:center;
+  color:#555;
+  min-height:20px
+}
+
+.score-box{
+  margin-top:18px;
+  padding:15px;
+  border-radius:12px;
+  background:#f4f1ff
+}
+
+.score-list{
+  margin:10px 0 0;
+  padding-left:25px
+}
+
+.score-list li{
+  margin:6px 0
+}
+
+.high-score{
+  color:#6c4cff;
+  font-size:24px;
+  font-weight:bold
+}
+
+.game-message{
+  min-height:24px;
+  text-align:center;
+  font-weight:bold
+}
+
+#login{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:10;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:#0008
+}
+
+.login-box{
+  width:min(100%,400px);
+  padding:30px;
+  border-radius:18px;
+  background:#fff;
+  text-align:center
+}
+
+.error{
+  min-height:20px;
+  color:#c33;
+  margin-top:8px
+}
+
+.loading-spinner{
+  width:18px;
+  height:18px;
+  border:3px solid #ffffff66;
+  border-top-color:#fff;
+  border-radius:50%;
+  display:inline-block;
+  vertical-align:middle;
+  animation:spin .7s linear infinite;
+  margin-right:8px
+}
+
+.login-spinner{
+  border-color:#6c4cff44;
+  border-top-color:#6c4cff
+}
+
+@keyframes spin{
+  to{transform:rotate(360deg)}
+}
+
+.auth-switch{
+  margin-top:15px;
+  color:#666;
+  font-size:14px
+}
+
+.link-button{
+  border:0;
+  background:none;
+  color:#6c4cff;
+  font-weight:bold;
+  cursor:pointer
+}
+
+.hidden{
+  display:none!important
+}
+
+footer{
+  text-align:center;
+  padding:20px;
+  color:#777
+}
+
+@media(max-width:600px){
+  h1{
+    font-size:32px;
+    padding-top:25px
+  }
+
+  .login-button{
+    right:10px;
+    top:10px;
+    padding:8px 12px
+  }
+
+  .upgrade-button{
+    left:10px;
+    top:10px;
+    padding:8px 12px
+  }
+
+  .panel,.dictionary{
+    width:calc(100% - 24px)
+  }
+
+  .movie-controls{
+    display:block
+  }
+
+  .game-menu{
+    grid-template-columns:1fr
+  }
+}
 </style>
 </head>
+
 <body>
-<header><h1>Saof Dictionary</h1><button class="login-button" id="loginButton">Login</button></header>
-<div class="search"><input id="searchInput" placeholder="Search a word..."></div>
+
+<header>
+  <button class="upgrade-button" id="upgradeButton">⭐ Upgrade for Free</button>
+  <h1>Saof Dictionary</h1>
+  <button class="login-button" id="loginButton">Login</button>
+</header>
+
+<div class="search">
+  <input id="searchInput" placeholder="Search a word...">
+</div>
+
 <div id="birthday">🎉 Happy Birthday, Asher! 🎂</div>
-<section class="panel question" id="questionPanel"><div class="box"><h2>Ask about a word</h2><p>Send a question or word suggestion to the dictionary owner.</p><input id="questionName" placeholder="Your name (optional)"><textarea id="questionText" placeholder="Your question"></textarea><button class="primary" id="saveQuestion">Save Question</button><button class="primary" id="openMessages">Open Messages</button><div id="questionStatus"></div></div></section>
-<section class="panel" id="adminPanel"><div class="box"><h2>Add a Word</h2><input id="newWord" placeholder="Word"><input id="newPronunciation" placeholder="Pronunciation"><input id="newMeaning" placeholder="Meaning"><input id="newCredits" placeholder="Credits (optional)"><button class="primary" id="addWord">Add Word</button><br><button class="secondary" id="logout">Logout</button></div></section>
-<section class="panel game" id="gamePanel"><div class="box"><h2>🎂 Asher's Birthday Movie</h2><p class="game-note">A richer original three-minute animated birthday adventure. Press start to begin the animation and music.</p><div class="movie-controls"><select id="scene"><option value="random">Random scenes</option><option value="day">Sunny party</option><option value="night">Night party</option><option value="candy">Candy party</option></select><select id="quality"><option value="high">Detailed graphics</option><option value="pixel">Pixel graphics</option></select></div><canvas id="canvas" width="900" height="420"></canvas><button class="primary" id="movieButton">▶ Start Birthday Movie &amp; Music</button><p id="movieStatus">Ready to play</p></div></section>
-<main class="dictionary" id="dictionary"><article class="card"><div class="word">Recos</div><div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div><div class="meaning">Meaning: <strong>ball</strong></div><div class="credits">Credits: No credits</div></article><article class="card"><div class="word">Saof</div><div class="pronunciation">Pronunciation: <strong>s-ow-f</strong></div><div class="meaning">Meaning: <strong>me / and</strong></div><div class="credits">Credits: No credits</div></article><article class="card"><div class="word">Thu</div><div class="pronunciation">Pronunciation: <strong>th-oo</strong></div><div class="meaning">Meaning: <strong>Depends on the context.</strong></div><div class="credits">Credits: No credits</div></article></main><footer>© 2026 Saof Dictionary</footer>
-<div id="login"><div class="login-box"><h2>Login</h2><input id="email" type="email" placeholder="Email"><input id="password" type="password" placeholder="Password"><button class="primary" id="loginAction">Login</button><div class="error" id="loginError"></div><button class="secondary" id="cancelLogin">Cancel</button></div></div>
+
+<!-- QUESTIONS -->
+<section class="panel question" id="questionPanel">
+  <div class="box">
+    <h2>Ask about a word</h2>
+    <p>Send a question or word suggestion to the dictionary owner.</p>
+
+    <input id="questionName" placeholder="Your name (optional)">
+    <textarea id="questionText" placeholder="Your question"></textarea>
+
+    <button class="primary" id="saveQuestion">Save Question</button>
+    <button class="primary" id="openMessages">Open Messages</button>
+
+    <div id="questionStatus"></div>
+  </div>
+</section>
+
+<!-- ADMIN -->
+<section class="panel" id="adminPanel">
+  <div class="box">
+    <h2>Add a Word</h2>
+
+    <input id="newWord" placeholder="Word">
+    <input id="newPronunciation" placeholder="Pronunciation">
+    <input id="newMeaning" placeholder="Meaning">
+    <input id="newCredits" placeholder="Credits (optional)">
+
+    <button class="primary" id="addWord">Add Word</button>
+    <br>
+
+    <button class="secondary" id="logout">Logout</button>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="panel game" id="gamePanel">
+
+  <div class="box">
+
+    <h2>🎮 Games</h2>
+
+    <p class="game-note">
+      Everyone can play. Log in to save your high scores.
+    </p>
+
+    <div class="game-menu">
+
+      <button class="game-option" data-game="puzzle">
+        🧩 Puzzle
+      </button>
+
+      <button class="game-option" data-game="trex">
+        🦖 T-Rex Runner
+      </button>
+
+      <button class="game-option" data-game="movie">
+        🎬 Watch Movie
+      </button>
+
+    </div>
+
+    <!-- PUZZLE -->
+    <div class="game-area" id="puzzleGame">
+
+      <h2>🧩 Drag Puzzle</h2>
+
+      <p class="game-note">
+        Drag each colored piece onto its matching area.
+        Touch works on phones and mouse works on computers.
+      </p>
+
+      <canvas id="puzzleCanvas" width="700" height="450"></canvas>
+
+      <p id="puzzleMessage" class="game-message"></p>
+
+      <button class="primary" id="restartPuzzle">
+        Restart Puzzle
+      </button>
+
+    </div>
+
+    <!-- TREX -->
+    <div class="game-area" id="trexGame">
+
+      <h2>🦖 T-Rex Runner</h2>
+
+      <p class="game-note">
+        Press Space, tap the screen, or click to jump.
+      </p>
+
+      <canvas id="trexCanvas" width="800" height="350"></canvas>
+
+      <p id="trexMessage" class="game-message">
+        Press Space or tap to start.
+      </p>
+
+      <button class="primary" id="restartTrex">
+        Start / Restart
+      </button>
+
+    </div>
+
+    <!-- MOVIE -->
+    <div class="game-area" id="movieGame">
+
+      <h2>🎂 Asher's Birthday Movie</h2>
+
+      <p class="game-note">
+        A richer original three-minute animated birthday adventure.
+      </p>
+
+      <div class="movie-controls">
+
+        <select id="scene">
+          <option value="random">Random scenes</option>
+          <option value="day">Sunny party</option>
+          <option value="night">Night party</option>
+          <option value="candy">Candy party</option>
+        </select>
+
+        <select id="quality">
+          <option value="high">Detailed graphics</option>
+          <option value="pixel">Pixel graphics</option>
+        </select>
+
+      </div>
+
+      <canvas id="canvas" width="900" height="420"></canvas>
+
+      <button class="primary" id="movieButton">
+        ▶ Start Birthday Movie &amp; Music
+      </button>
+
+      <p id="movieStatus">Ready to play</p>
+
+    </div>
+
+    <!-- HIGH SCORES -->
+    <div class="score-box">
+
+      <h2>🏆 High Scores</h2>
+
+      <div id="guestScoreMessage">
+        <p>
+          You're playing as a guest.
+          <button class="link-button" id="scoreLoginButton">
+            Log in
+          </button>
+          to save your scores.
+        </p>
+      </div>
+
+      <div id="loggedInScores" class="hidden">
+
+        <p>
+          Your best score:
+          <span class="high-score" id="myBestScore">0</span>
+        </p>
+
+        <ol class="score-list" id="scoreList">
+          <li>Loading scores...</li>
+        </ol>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- DICTIONARY -->
+<main class="dictionary" id="dictionary">
+
+  <article class="card">
+    <div class="word">Recos</div>
+    <div class="pronunciation">
+      Pronunciation: <strong>reh-coss</strong>
+    </div>
+    <div class="meaning">
+      Meaning: <strong>ball</strong>
+    </div>
+    <div class="credits">
+      Credits: No credits
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="word">Saof</div>
+    <div class="pronunciation">
+      Pronunciation: <strong>s-ow-f</strong>
+    </div>
+    <div class="meaning">
+      Meaning: <strong>me / and</strong>
+    </div>
+    <div class="credits">
+      Credits: No credits
+    </div>
+  </article>
+
+  <article class="card">
+    <div class="word">Thu</div>
+    <div class="pronunciation">
+      Pronunciation: <strong>th-oo</strong>
+    </div>
+    <div class="meaning">
+      Meaning: <strong>Depends on the context.</strong>
+    </div>
+    <div class="credits">
+      Credits: No credits
+    </div>
+  </article>
+
+</main>
+
+<footer>
+  © 2026 Saof Dictionary
+</footer>
+
+<!-- LOGIN / SIGNUP -->
+<div id="login">
+
+  <div class="login-box">
+
+    <h2 id="authTitle">Login</h2>
+
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+
+    <button class="primary" id="loginAction">
+      Login
+    </button>
+
+    <div class="error" id="loginError"></div>
+
+    <div class="auth-switch">
+
+      <span id="authSwitchText">
+        Don't have an account?
+      </span>
+
+      <button class="link-button" id="authSwitch">
+        Create one
+      </button>
+
+    </div>
+
+    <button class="secondary" id="cancelLogin">
+      Cancel
+    </button>
+
+  </div>
+
+</div>
+
 <script type="module">
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';import{getAuth,setPersistence,inMemoryPersistence,signInWithEmailAndPassword,signOut,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';import{getFirestore,collection,addDoc,onSnapshot,serverTimestamp}from'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-const config={apiKey:'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',authDomain:'saof-dictionary.firebaseapp.com',projectId:'saof-dictionary',storageBucket:'saof-dictionary.firebasestorage.app',messagingSenderId:'1054693760278',appId:'1:1054693760278:web:5f8f9c090fbc737dfc4437'},OWNER='parkernanayakkara@icloud.com',ASHER='ashernanayakkara@icloud.com',app=initializeApp(config),auth=getAuth(app),db=getFirestore(app),$=id=>document.getElementById(id);await setPersistence(auth,inMemoryPersistence);const matches=(u,e)=>u?.email?.toLowerCase()===e;
-function addCard(d){const c=document.createElement('article');c.className='card live-card';[['word','',d.word],['pronunciation','Pronunciation: ',d.pronunciation],['meaning','Meaning: ',d.meaning],['credits','Credits: ',d.credits?.trim()||'No credits']].forEach(([cl,label,value])=>{const e=document.createElement('div');e.className=cl;e.textContent=label;const strong=document.createElement('strong');strong.textContent=value;e.append(strong);c.append(e)});$('dictionary').append(c)}onSnapshot(collection(db,'words'),snap=>{document.querySelectorAll('.live-card').forEach(e=>e.remove());snap.forEach(x=>{const d=x.data();if(d.word&&d.pronunciation&&d.meaning)addCard(d)})});
-$('searchInput').addEventListener('input',e=>{const q=e.target.value.toLowerCase();document.querySelectorAll('#dictionary .card').forEach(c=>c.hidden=!c.textContent.toLowerCase().includes(q))});$('loginButton').onclick=()=>auth.currentUser?$('adminPanel').scrollIntoView({behavior:'smooth'}):$('login').style.display='flex';$('cancelLogin').onclick=()=>$('login').style.display='none';$('loginAction').onclick=async()=>{try{await signInWithEmailAndPassword(auth,$('email').value.trim(),$('password').value);$('login').style.display='none'}catch(e){$('loginError').textContent=`Login failed: ${e.code||'check your details'}`}};$('logout').onclick=()=>signOut(auth);
-$('addWord').onclick=async()=>{if(!matches(auth.currentUser,OWNER)){alert('Only the owner can add words.');return}const word=$('newWord').value.trim(),pronunciation=$('newPronunciation').value.trim(),meaning=$('newMeaning').value.trim();if(!word||!pronunciation||!meaning){alert('Fill in word, pronunciation and meaning.');return}await addDoc(collection(db,'words'),{word,pronunciation,meaning,credits:$('newCredits').value.trim()||'No credits',addedBy:auth.currentUser.email,createdAt:serverTimestamp()});['newWord','newPronunciation','newMeaning','newCredits'].forEach(id=>$(id).value='');alert('Word added for everyone!')};
-$('saveQuestion').onclick=async()=>{const text=$('questionText').value.trim();if(!text){$('questionStatus').textContent='Type a question first.';return}try{await addDoc(collection(db,'questions'),{name:$('questionName').value.trim()||'Anonymous visitor',question:text,status:'new',createdAt:serverTimestamp()});$('questionText').value='';$('questionName').value='';$('questionStatus').textContent='Question saved for the owner.'}catch(e){$('questionStatus').textContent=`Could not save question: ${e.code||'Firestore error'}`}};$('openMessages').onclick=()=>{const text=$('questionText').value.trim();location.href=`sms:?&body=${encodeURIComponent(`Saof Dictionary question:\n${text||'(type your question first)'}`)}`};
-// Enhanced original animation: cinematic camera movement, lighting, shadows, depth layers, particles, detailed dinosaur, party decorations, and three scenes.
-const canvas=$('canvas'),ctx=canvas.getContext('2d'),W=canvas.width,H=canvas.height,rect=(x,y,w,h,c)=>{ctx.fillStyle=c;ctx.fillRect(x,y,w,h)},dino={x:155,y:280,vy:0,jump:false},clouds=[{x:80,y:76,s:1.1},{x:650,y:112,s:.8}],balloons=[{x:620,y:210,c:'#ef476f'},{x:685,y:235,c:'#ffd166'},{x:750,y:190,c:'#06d6a0'}];let movie=false,start=0,raf,audio,timer,sceneIndex=0;
-function round(x,y,w,h,r,c){ctx.fillStyle=c;ctx.beginPath();ctx.roundRect(x,y,w,h,r);ctx.fill()}function cloud(c){ctx.fillStyle='#fff';ctx.beginPath();ctx.arc(c.x,c.y,22*c.s,0,Math.PI*2);ctx.arc(c.x+26*c.s,c.y-12*c.s,30*c.s,0,Math.PI*2);ctx.arc(c.x+60*c.s,c.y,22*c.s,0,Math.PI*2);ctx.fill()}function drawDino(t){const x=dino.x,y=dino.y+Math.sin(t/120)*3,leg=Math.sin(t/70)*5;ctx.save();ctx.shadowColor='#25324288';ctx.shadowBlur=8;round(x+18,y+23,48,63,10,'#647180');round(x+47,y-5,70,52,7,'#647180');round(x+106,y+12,27,25,3,'#647180');round(x+5,y+35,25,45,5,'#647180');round(x+32,y+75+leg,20,28,4,'#647180');round(x+75,y+75-leg,20,28,4,'#647180');ctx.restore();rect(x+65,y+15,14,18,'#293544');rect(x+109,y+8,8,8,'#172331');rect(x+112,y+10,3,3,'white');rect(x+37,y+36,13,13,'#8a96a3');rect(x+42,y-22,68,8,'#e63950');rect(x+58,y-42,12,20,'#e63950');rect(x+82,y-32,12,15,'#ffd166');rect(x+30,y-32,12,15,'#06d6a0');}function drawCactus(x,ground){rect(x+20,ground-105,27,105,'#159447');rect(x,ground-70,20,42,'#159447');rect(x-13,ground-57,15,34,'#159447');rect(x+48,ground-82,20,40,'#159447');rect(x+66,ground-69,15,34,'#159447');rect(x+18,ground-105,34,8,'#0b6332')}
-function draw(t=0){const selected=$('scene').value;const scenes=selected==='random'?['day','night','candy']: [selected];const s=scenes[Math.floor(t/18000)%scenes.length];let sky=s==='night'?'#17284d':s==='candy'?'#eaa4d1':'#62c4ed';ctx.fillStyle=sky;ctx.fillRect(0,0,W,H);if(s==='night'){for(let i=0;i<45;i++){ctx.fillStyle='#fff';ctx.fillRect((i*83)%W,(i*47)%190,3,3)}ctx.fillStyle='#ffe89b';ctx.beginPath();ctx.arc(720,70,38,0,Math.PI*2);ctx.fill()}else{clouds.forEach(c=>cloud({...c,x:c.x-(t/90)%W}))}ctx.fillStyle=s==='candy'?'#f28fba':'#a5c7d1';ctx.beginPath();ctx.moveTo(0,292);ctx.lineTo(180,175);ctx.lineTo(350,292);ctx.lineTo(520,145);ctx.lineTo(760,292);ctx.fill();ctx.fillStyle='#6eae58';ctx.fillRect(0,315,W,105);ctx.fillStyle='#d79a39';ctx.fillRect(0,315,W,8);ctx.fillStyle='#c6812b';for(let x=0;x<W;x+=65)ctx.fillRect(x+(t/12)%65,350,25,8);drawCactus(610,315);balloons.forEach((b,i)=>{const x=b.x-(t/(i+2))%W;ctx.strokeStyle='#555';ctx.beginPath();ctx.moveTo(x,250);ctx.lineTo(x,315);ctx.stroke();ctx.fillStyle=b.c;ctx.beginPath();ctx.ellipse(x,220-(i%2)*20,18,25,0,0,Math.PI*2);ctx.fill()});drawDino(t);ctx.fillStyle='#fff';ctx.font='bold 18px Arial';ctx.fillText('HAPPY BIRTHDAY ASHER!',285,55);}
-function music(){audio=audio||new AudioContext();const notes=[261.63,329.63,392,523.25,659.25,523.25,392,329.63];let i=0;clearInterval(timer);timer=setInterval(()=>{const o=audio.createOscillator(),g=audio.createGain();o.type='triangle';o.frequency.value=notes[i++%notes.length];g.gain.setValueAtTime(.04,audio.currentTime);g.gain.exponentialRampToValueAtTime(.001,audio.currentTime+.45);o.connect(g).connect(audio.destination);o.start();o.stop(audio.currentTime+.45)},500)}function frame(t){if(!movie)return;const elapsed=t-start;if(elapsed>=180000){movie=false;clearInterval(timer);$('movieStatus').textContent='Birthday movie finished!';draw(elapsed);return}draw(elapsed);$('movieStatus').textContent=`Birthday movie playing: ${Math.floor(elapsed/1000)} / 180 seconds`;raf=requestAnimationFrame(frame)}$('movieButton').onclick=()=>{if(movie){movie=false;cancelAnimationFrame(raf);clearInterval(timer);$('movieButton').textContent='▶ Start Birthday Movie & Music';return}movie=true;start=performance.now();$('movieButton').textContent='■ Stop Movie';music();raf=requestAnimationFrame(frame)};draw(0);
-onAuthStateChanged(auth,user=>{const o=matches(user,OWNER),a=matches(user,ASHER);$('adminPanel').style.display=o?'block':'none';$('questionPanel').style.display=o?'none':'block';$('gamePanel').style.display=a?'block':'none';$('birthday').style.display=a?'block':'none';$('loginButton').textContent=user?(o?'Add Words':'Logged In'):'Login'});
-</script></body></html>
+
+import {
+  initializeApp
+} from
+'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+
+import {
+  getAuth,
+  setPersistence,
+  browserLocalPersistence,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  signOut,
+  onAuthStateChanged
+} from
+'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  serverTimestamp,
+  query,
+  orderBy,
+  limit
+} from
+'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+
+
+/* =========================
+   FIREBASE
+========================= */
+
+const config = {
+  apiKey:'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
+  authDomain:'saof-dictionary.firebaseapp.com',
+  projectId:'saof-dictionary',
+  storageBucket:'saof-dictionary.firebasestorage.app',
+  messagingSenderId:'1054693760278',
+  appId:'1:1054693760278:web:5f8f9c090fbc737dfc4437'
+};
+
+const OWNER='parkernanayakkara@icloud.com';
+const ASHER='ashernanayakkara@icloud.com';
+
+const app=initializeApp(config);
+const auth=getAuth(app);
+const db=getFirestore(app);
+
+await setPersistence(auth,browserLocalPersistence);
+
+const $=id=>document.getElementById(id);
+
+const matches=(u,e)=>
+  u?.email?.toLowerCase()===e.toLowerCase();
+
+
+/* =========================
+   AUTH
+========================= */
+
+let signupMode=false;
+
+function openAuth(signup=false){
+
+  signupMode=signup;
+
+  $('authTitle').textContent=
+    signup?'Create Free Account':'Login';
+
+  $('loginAction').textContent=
+    signup?'Create Free Account':'Login';
+
+  $('authSwitchText').textContent=
+    signup?'Already have an account?':
+    "Don't have an account?";
+
+  $('authSwitch').textContent=
+    signup?'Login':'Create one';
+
+  $('loginError').textContent='';
+
+  $('login').style.display='flex';
+
+  $('email').focus();
+}
+
+
+function setAuthLoading(loading){
+
+  const button=$('loginAction');
+
+  button.disabled=loading;
+
+  if(loading){
+
+    button.innerHTML=
+      '<span class="loading-spinner login-spinner"></span>'+
+      (signupMode?'Creating account...':'Logging in...');
+
+  }else{
+
+    button.textContent=
+      signupMode?'Create Free Account':'Login';
+
+  }
+
+}
+
+
+$('loginButton').onclick=()=>{
+
+  if(auth.currentUser){
+
+    $('gamePanel').scrollIntoView({
+      behavior:'smooth'
+    });
+
+  }else{
+
+    openAuth(false);
+
+  }
+
+};
+
+
+$('upgradeButton').onclick=()=>{
+
+  if(auth.currentUser){
+
+    $('gamePanel').scrollIntoView({
+      behavior:'smooth'
+    });
+
+  }else{
+
+    openAuth(true);
+
+  }
+
+};
+
+
+$('scoreLoginButton').onclick=()=>openAuth(false);
+
+
+$('cancelLogin').onclick=()=>{
+  $('login').style.display='none';
+};
+
+
+$('authSwitch').onclick=()=>{
+  openAuth(!signupMode);
+};
+
+
+$('loginAction').onclick=async()=>{
+
+  const email=$('email').value.trim();
+  const password=$('password').value;
+
+  $('loginError').textContent='';
+
+  if(!email||!password){
+
+    $('loginError').textContent=
+      'Please enter your email and password.';
+
+    return;
+  }
+
+  setAuthLoading(true);
+
+  try{
+
+    if(signupMode){
+
+      await createUserWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    }else{
+
+      await signInWithEmailAndPassword(
+        auth,
+        email,
+        password
+      );
+
+    }
+
+    $('login').style.display='none';
+
+    $('email').value='';
+    $('password').value='';
+
+  }catch(e){
+
+    let message='Something went wrong.';
+
+    if(e.code==='auth/email-already-in-use'){
+      message='That email already has an account.';
+    }
+
+    if(e.code==='auth/invalid-email'){
+      message='Please enter a valid email address.';
+    }
+
+    if(e.code==='auth/weak-password'){
+      message='Password must be at least 6 characters.';
+    }
+
+    if(e.code==='auth/invalid-credential'){
+      message='Email or password is incorrect.';
+    }
+
+    $('loginError').textContent=message;
+
+  }finally{
+
+    setAuthLoading(false);
+
+  }
+
+};
+
+
+$('logout').onclick=()=>signOut(auth);
+
+
+/* =========================
+   DICTIONARY
+========================= */
+
+function addCard(d){
+
+  const c=document.createElement('article');
+
+  c.className='card live-card';
+
+  [
+    ['word','',d.word],
+    ['pronunciation','Pronunciation: ',d.pronunciation],
+    ['meaning','Meaning: ',d.meaning],
+    ['credits','Credits: ',d.credits?.trim()||'No credits']
+  ].forEach(([cl,label,value])=>{
+
+    const e=document.createElement('div');
+
+    e.className=cl;
+    e.textContent=label;
+
+    const strong=document.createElement('strong');
+
+    strong.textContent=value;
+
+    e.append(strong);
+    c.append(e);
+
+  });
+
+  $('dictionary').append(c);
+
+}
+
+
+onSnapshot(
+  collection(db,'words'),
+  snap=>{
+
+    document
+      .querySelectorAll('.live-card')
+      .forEach(e=>e.remove());
+
+    snap.forEach(x=>{
+
+      const d=x.data();
+
+      if(
+        d.word&&
+        d.pronunciation&&
+        d.meaning
+      ){
+
+        addCard(d);
+
+      }
+
+    });
+
+  }
+);
+
+
+$('searchInput').addEventListener('input',e=>{
+
+  const q=e.target.value.toLowerCase();
+
+  document
+    .querySelectorAll('#dictionary .card')
+    .forEach(c=>{
+
+      c.hidden=
+        !c.textContent
+          .toLowerCase()
+          .includes(q);
+
+    });
+
+});
+
+
+/* =========================
+   ADD WORD
+========================= */
+
+$('addWord').onclick=async()=>{
+
+  if(!matches(auth.currentUser,OWNER)){
+
+    alert('Only the owner can add words.');
+
+    return;
+  }
+
+  const word=$('newWord').value.trim();
+  const pronunciation=$('newPronunciation').value.trim();
+  const meaning=$('newMeaning').value.trim();
+
+  if(!word||!pronunciation||!meaning){
+
+    alert(
+      'Fill in word, pronunciation and meaning.'
+    );
+
+    return;
+  }
+
+  await addDoc(
+    collection(db,'words'),
+    {
+      word,
+      pronunciation,
+      meaning,
+      credits:
+        $('newCredits').value.trim()||
+        'No credits',
+      addedBy:auth.currentUser.email,
+      createdAt:serverTimestamp()
+    }
+  );
+
+  [
+    'newWord',
+    'newPronunciation',
+    'newMeaning',
+    'newCredits'
+  ].forEach(id=>$(id).value='');
+
+  alert('Word added for everyone!');
+
+};
+
+
+/* =========================
+   QUESTIONS
+========================= */
+
+$('saveQuestion').onclick=async()=>{
+
+  const text=$('questionText').value.trim();
+
+  if(!text){
+
+    $('questionStatus').textContent=
+      'Type a question first.';
+
+    return;
+  }
+
+  try{
+
+    await addDoc(
+      collection(db,'questions'),
+      {
+        name:
+          $('questionName').value.trim()||
+          'Anonymous visitor',
+        question:text,
+        status:'new',
+        createdAt:serverTimestamp()
+      }
+    );
+
+    $('questionText').value='';
+    $('questionName').value='';
+
+    $('questionStatus').textContent=
+      'Question saved for the owner.';
+
+  }catch(e){
+
+    $('questionStatus').textContent=
+      `Could not save question: ${
+        e.code||'Firestore error'
+      }`;
+
+  }
+
+};
+
+
+$('openMessages').onclick=()=>{
+
+  const text=$('questionText').value.trim();
+
+  location.href=
+    `sms:?&body=${encodeURIComponent(
+      `Saof Dictionary question:\n${
+        text||'(type your question first)'
+      }`
+    )}`;
+
+};
+
+
+/* =========================
+   GAME MENU
+========================= */
+
+document
+  .querySelectorAll('.game-option')
+  .forEach(button=>{
+
+    button.onclick=()=>{
+
+      document
+        .querySelectorAll('.game-option')
+        .forEach(b=>
+          b.classList.remove('active')
+        );
+
+      button.classList.add('active');
+
+      document
+        .querySelectorAll('.game-area')
+        .forEach(a=>
+          a.classList.remove('active')
+        );
+
+      const game=button.dataset.game;
+
+      $(`${game}Game`)
+        .classList.add('active');
+
+    };
+
+  });
+
+
+/* =========================
+   HIGH SCORES
+========================= */
+
+let currentUser=null;
+
+async function saveScore(game,score){
+
+  if(!currentUser){
+
+    return;
+
+  }
+
+  try{
+
+    await addDoc(
+      collection(db,'scores'),
+      {
+        uid:currentUser.uid,
+        email:currentUser.email,
+        game,
+        score:Number(score),
+        createdAt:serverTimestamp()
+      }
+    );
+
+    loadScores();
+
+  }catch(e){
+
+    console.error(
+      'Could not save score:',
+      e
+    );
+
+  }
+
+}
+
+
+function loadScores(){
+
+  if(!currentUser){
+
+    $('guestScoreMessage')
+      .classList.remove('hidden');
+
+    $('loggedInScores')
+      .classList.add('hidden');
+
+    return;
+
+  }
+
+  $('guestScoreMessage')
+    .classList.add('hidden');
+
+  $('loggedInScores')
+    .classList.remove('hidden');
+
+  const scoresQuery=query(
+    collection(db,'scores'),
+    orderBy('score','desc'),
+    limit(50)
+  );
+
+  onSnapshot(
+    scoresQuery,
+    snap=>{
+
+      const scores=[];
+
+      snap.forEach(doc=>{
+
+        const d=doc.data();
+
+        if(d.uid===currentUser.uid){
+
+          scores.push(d);
+
+        }
+
+      });
+
+      scores.sort(
+        (a,b)=>b.score-a.score
+      );
+
+      const best=scores[0]?.score||0;
+
+      $('myBestScore').textContent=best;
+
+      const list=$('scoreList');
+
+      list.innerHTML='';
+
+      if(!scores.length){
+
+        list.innerHTML=
+          '<li>No scores yet. Play a game!</li>';
+
+        return;
+
+      }
+
+      scores
+        .slice(0,10)
+        .forEach((s,index)=>{
+
+          const li=document.createElement('li');
+
+          li.textContent=
+            `${s.game}: ${s.score}`;
+
+          list.append(li);
+
+        });
+
+    },
+    error=>{
+
+      console.error(
+        'Score loading error:',
+        error
+      );
+
+    }
+  );
+
+}
+
+
+/* =========================
+   PUZZLE GAME
+========================= */
+
+const puzzleCanvas=$('puzzleCanvas');
+const pctx=puzzleCanvas.getContext('2d');
+
+const puzzleW=puzzleCanvas.width;
+const puzzleH=puzzleCanvas.height;
+
+const puzzlePieces=[
+  {
+    color:'#ef476f',
+    x:50,
+    y:70,
+    targetX:450,
+    targetY:70,
+    size:100,
+    placed:false
+  },
+  {
+    color:'#ffd166',
+    x:180,
+    y:280,
+    targetX:580,
+    targetY:70,
+    size:100,
+    placed:false
+  },
+  {
+    color:'#06d6a0',
+    x:420,
+    y:280,
+    targetX:450,
+    targetY:250,
+    size:100,
+    placed:false
+  }
+];
+
+let draggedPiece=null;
+let puzzleOffsetX=0;
+let puzzleOffsetY=0;
+let puzzleStartTime=0;
+let puzzleFinished=false;
+
+
+function resetPuzzle(){
+
+  puzzlePieces[0].x=50;
+  puzzlePieces[0].y=70;
+
+  puzzlePieces[1].x=180;
+  puzzlePieces[1].y=280;
+
+  puzzlePieces[2].x=420;
+  puzzlePieces[2].y=280;
+
+  puzzlePieces.forEach(p=>
+    p.placed=false
+  );
+
+  draggedPiece=null;
+  puzzleFinished=false;
+  puzzleStartTime=performance.now();
+
+  $('puzzleMessage').textContent='';
+
+  drawPuzzle();
+
+}
+
+
+function drawPuzzle(){
+
+  pctx.clearRect(
+    0,
+    0,
+    puzzleW,
+    puzzleH
+  );
+
+  pctx.fillStyle='#f7f5ff';
+
+  pctx.fillRect(
+    0,
+    0,
+    puzzleW,
+    puzzleH
+  );
+
+  pctx.font='bold 18px Arial';
+  pctx.fillStyle='#555';
+
+  pctx.fillText(
+    'Put the pieces in their matching spots',
+    20,
+    30
+  );
+
+  /* Targets */
+
+  puzzlePieces.forEach(p=>{
+
+    pctx.strokeStyle=p.color;
+    pctx.lineWidth=4;
+    pctx.setLineDash([8,5]);
+
+    pctx.strokeRect(
+      p.targetX,
+      p.targetY,
+      p.size,
+      p.size
+    );
+
+  });
+
+  pctx.setLineDash([]);
+
+  /* Pieces */
+
+  puzzlePieces.forEach(p=>{
+
+    pctx.fillStyle=p.color;
+
+    pctx.beginPath();
+
+    pctx.roundRect(
+      p.x,
+      p.y,
+      p.size,
+      p.size,
+      15
+    );
+
+    pctx.fill();
+
+    pctx.fillStyle='#ffffffaa';
+
+    pctx.font='bold 25px Arial';
+
+    pctx.fillText(
+      'DRAG',
+      p.x+20,
+      p.y+58
+    );
+
+  });
+
+}
+
+
+function pointerPosition(e){
+
+  const rect=
+    puzzleCanvas.getBoundingClientRect();
+
+  const point=
+    e.touches?
+      e.touches[0]:
+      e;
+
+  return {
+
+    x:
+      (point.clientX-rect.left)*
+      (puzzleCanvas.width/rect.width),
+
+    y:
+      (point.clientY-rect.top)*
+      (puzzleCanvas.height/rect.height)
+
+  };
+
+}
+
+
+function puzzleDown(e){
+
+  e.preventDefault();
+
+  if(puzzleFinished)return;
+
+  const pos=pointerPosition(e);
+
+  for(let i=puzzlePieces.length-1;i>=0;i--){
+
+    const p=puzzlePieces[i];
+
+    if(p.placed)continue;
+
+    if(
+      pos.x>=p.x&&
+      pos.x<=p.x+p.size&&
+      pos.y>=p.y&&
+      pos.y<=p.y+p.size
+    ){
+
+      draggedPiece=p;
+
+      puzzleOffsetX=
+        pos.x-p.x;
+
+      puzzleOffsetY=
+        pos.y-p.y;
+
+      break;
+
+    }
+
+  }
+
+}
+
+
+function puzzleMove(e){
+
+  if(!draggedPiece)return;
+
+  e.preventDefault();
+
+  const pos=pointerPosition(e);
+
+  draggedPiece.x=
+    pos.x-puzzleOffsetX;
+
+  draggedPiece.y=
+    pos.y-puzzleOffsetY;
+
+  drawPuzzle();
+
+}
+
+
+function puzzleUp(e){
+
+  if(!draggedPiece)return;
+
+  const p=draggedPiece;
+
+  const centerX=
+    p.x+p.size/2;
+
+  const centerY=
+    p.y+p.size/2;
+
+  const targetCenterX=
+    p.targetX+p.size/2;
+
+  const targetCenterY=
+    p.targetY+p.size/2;
+
+  const distance=Math.hypot(
+    centerX-targetCenterX,
+    centerY-targetCenterY
+  );
+
+  if(distance<65){
+
+    p.x=p.targetX;
+    p.y=p.targetY;
+    p.placed=true;
+
+  }
+
+  draggedPiece=null;
+
+  drawPuzzle();
+
+  if(
+    puzzlePieces.every(p=>p.placed)
+  ){
+
+    puzzleFinished=true;
+
+    const seconds=
+      Math.max(
+        1,
+        Math.floor(
+          (performance.now()-puzzleStartTime)/1000
+        )
+      );
+
+    const score=
+      Math.max(
+        100,
+        10000-seconds*100
+      );
+
+    $('puzzleMessage').textContent=
+      `🎉 Puzzle complete! Score: ${score}`;
+
+    saveScore('Puzzle',score);
+
+  }
+
+}
+
+
+puzzleCanvas.addEventListener(
+  'mousedown',
+  puzzleDown
+);
+
+puzzleCanvas.addEventListener(
+  'mousemove',
+  puzzleMove
+);
+
+window.addEventListener(
+  'mouseup',
+  puzzleUp
+);
+
+puzzleCanvas.addEventListener(
+  'touchstart',
+  puzzleDown,
+  {passive:false}
+);
+
+puzzleCanvas.addEventListener(
+  'touchmove',
+  puzzleMove,
+  {passive:false}
+);
+
+puzzleCanvas.addEventListener(
+  'touchend',
+  puzzleUp,
+  {passive:false}
+);
+
+$('restartPuzzle').onclick=resetPuzzle;
+
+resetPuzzle();
+
+
+/* =========================
+   T-REX RUNNER
+========================= */
+
+const trexCanvas=$('trexCanvas');
+const tctx=trexCanvas.getContext('2d');
+
+let trexRunning=false;
+let trexGameOver=false;
+let trexScore=0;
+let trexLastTime=0;
+let trexObstacleTimer=0;
+let trexAnimation=0;
+
+const trex={
+  x:80,
+  y:255,
+  width:45,
+  height:55,
+  velocityY:0,
+  jumping:false
+};
+
+let obstacles=[];
+
+
+function resetTrex(){
+
+  trexRunning=true;
+  trexGameOver=false;
+  trexScore=0;
+  trexLastTime=performance.now();
+  trexObstacleTimer=0;
+
+  trex.y=255;
+  trex.velocityY=0;
+  trex.jumping=false;
+
+  obstacles=[];
+
+  $('trexMessage').textContent=
+    'Jump over the obstacles!';
+
+  requestAnimationFrame(trexFrame);
+
+}
+
+
+function trexJump(){
+
+  if(!trexRunning){
+
+    resetTrex();
+
+    return;
+
+  }
+
+  if(!trex.jumping){
+
+    trex.velocityY=-620;
+    trex.jumping=true;
+
+  }
+
+}
+
+
+function drawTrex(){
+
+  tctx.clearRect(
+    0,
+    0,
+    trexCanvas.width,
+    trexCanvas.height
+  );
+
+  /* sky */
+
+  tctx.fillStyle='#e8f8ff';
+
+  tctx.fillRect(
+    0,
+    0,
+    trexCanvas.width,
+    trexCanvas.height
+  );
+
+  /* clouds */
+
+  tctx.fillStyle='#fff';
+
+  [
+    [130,70],
+    [480,90],
+    [700,55]
+  ].forEach(([x,y])=>{
+
+    tctx.beginPath();
+    tctx.arc(x,y,20,0,Math.PI*2);
+    tctx.arc(x+25,y-10,27,0,Math.PI*2);
+    tctx.arc(x+55,y,20,0,Math.PI*2);
+    tctx.fill();
+
+  });
+
+  /* ground */
+
+  tctx.fillStyle='#555';
+
+  tctx.fillRect(
+    0,
+    310,
+    trexCanvas.width,
+    5
+  );
+
+  /* dino */
+
+  tctx.fillStyle='#566573';
+
+  tctx.fillRect(
+    trex.x,
+    trex.y,
+    trex.width,
+    trex.height
+  );
+
+  tctx.fillRect(
+    trex.x+30,
+    trex.y-25,
+    40,
+    35
+  );
+
+  tctx.fillRect(
+    trex.x+55,
+    trex.y-10,
+    30,
+    18
+  );
+
+  /* eye */
+
+  tctx.fillStyle='#fff';
+
+  tctx.fillRect(
+    trex.x+55,
+    trex.y-18,
+    8,
+    8
+  );
+
+  tctx.fillStyle='#111';
+
+  tctx.fillRect(
+    trex.x+59,
+    trex.y-17,
+    4,
+    4
+  );
+
+  /* legs */
+
+  tctx.fillStyle='#45515d';
+
+  tctx.fillRect(
+    trex.x+8,
+    trex.y+45,
+    12,
+    25
+  );
+
+  tctx.fillRect(
+    trex.x+30,
+    trex.y+45,
+    12,
+    25
+  );
+
+  /* obstacles */
+
+  obstacles.forEach(o=>{
+
+    tctx.fillStyle='#159447';
+
+    tctx.fillRect(
+      o.x,
+      o.y,
+      o.width,
+      o.height
+    );
+
+    tctx.fillRect(
+      o.x-10,
+      o.y+20,
+      10,
+      12
+    );
+
+  });
+
+  /* score */
+
+  tctx.fillStyle='#29354a';
+  tctx.font='bold 22px Arial';
+
+  tctx.fillText(
+    `Score: ${Math.floor(trexScore)}`,
+    20,
+    35
+  );
+
+}
+
+
+function collision(a,b){
+
+  return(
+    a.x<b.x+b.width&&
+    a.x+a.width>b.x&&
+    a.y<b.y+b.height&&
+    a.y+a.height>b.y
+  );
+
+}
+
+
+function trexFrame(time){
+
+  if(!trexRunning){
+
+    drawTrex();
+
+    return;
+
+  }
+
+  const dt=
+    Math.min(
+      .035,
+      (time-trexLastTime)/1000
+    );
+
+  trexLastTime=time;
+
+  trex.velocityY+=1500*dt;
+
+  trex.y+=trex.velocityY*dt;
+
+  if(trex.y>=255){
+
+    trex.y=255;
+    trex.velocityY=0;
+    trex.jumping=false;
+
+  }
+
+  trexObstacleTimer+=dt;
+
+  if(trexObstacleTimer>1.2){
+
+    trexObstacleTimer=0;
+
+    obstacles.push({
+      x:820,
+      y:270,
+      width:25,
+      height:40
+    });
+
+  }
+
+  obstacles.forEach(o=>{
+
+    o.x-=300*dt;
+
+  });
+
+  obstacles=
+    obstacles.filter(
+      o=>o.x>-50
+    );
+
+  trexScore+=dt*10;
+
+  for(const o of obstacles){
+
+    if(
+      collision(
+        {
+          x:trex.x+8,
+          y:trex.y+5,
+          width:trex.width-10,
+          height:trex.height-5
+        },
+        o
+      )
+    ){
+
+      trexRunning=false;
+      trexGameOver=true;
+
+      const finalScore=
+        Math.floor(trexScore);
+
+      $('trexMessage').textContent=
+        `💥 Game Over! Score: ${finalScore}`;
+
+      saveScore(
+        'T-Rex Runner',
+        finalScore
+      );
+
+      drawTrex();
+
+      return;
+
+    }
+
+  }
+
+  drawTrex();
+
+  requestAnimationFrame(trexFrame);
+
+}
+
+
+$('restartTrex').onclick=resetTrex;
+
+trexCanvas.addEventListener(
+  'mousedown',
+  trexJump
+);
+
+trexCanvas.addEventListener(
+  'touchstart',
+  e=>{
+    e.preventDefault();
+    trexJump();
+  },
+  {passive:false}
+);
+
+window.addEventListener(
+  'keydown',
+  e=>{
+
+    if(
+      e.code==='Space'&&
+      !e.repeat
+    ){
+
+      e.preventDefault();
+      trexJump();
+
+    }
+
+  }
+);
+
+drawTrex();
+
+
+/* =========================
+   BIRTHDAY MOVIE
+========================= */
+
+const canvas=$('canvas');
+const ctx=canvas.getContext('2d');
+
+const W=canvas.width;
+const H=canvas.height;
+
+const rect=(
+  x,y,w,h,c
+)=>{
+  ctx.fillStyle=c;
+  ctx.fillRect(x,y,w,h);
+};
+
+const dino={
+  x:155,
+  y:280,
+  vy:0,
+  jump:false
+};
+
+const clouds=[
+  {x:80,y:76,s:1.1},
+  {x:650,y:112,s:.8}
+];
+
+const balloons=[
+  {x:620,y:210,c:'#ef476f'},
+  {x:685,y:235,c:'#ffd166'},
+  {x:750,y:190,c:'#06d6a0'}
+];
+
+let movie=false;
+let start=0;
+let raf;
+let audio;
+let timer;
+
+
+function round(x,y,w,h,r,c){
+
+  ctx.fillStyle=c;
+  ctx.beginPath();
+  ctx.roundRect(
+    x,y,w,h,r
+  );
+  ctx.fill();
+
+}
+
+
+function cloud(c){
+
+  ctx.fillStyle='#fff';
+
+  ctx.beginPath();
+
+  ctx.arc(
+    c.x,
+    c.y,
+    22*c.s,
+    0,
+    Math.PI*2
+  );
+
+  ctx.arc(
+    c.x+26*c.s,
+    c.y-12*c.s,
+    30*c.s,
+    0,
+    Math.PI*2
+  );
+
+  ctx.arc(
+    c.x+60*c.s,
+    c.y,
+    22*c.s,
+    0,
+    Math.PI*2
+  );
+
+  ctx.fill();
+
+}
+
+
+function drawDino(t){
+
+  const x=dino.x;
+  const y=dino.y+
+    Math.sin(t/120)*3;
+
+  const leg=
+    Math.sin(t/70)*5;
+
+  ctx.save();
+
+  ctx.shadowColor='#25324288';
+  ctx.shadowBlur=8;
+
+  round(
+    x+18,
+    y+23,
+    48,
+    63,
+    10,
+    '#647180'
+  );
+
+  round(
+    x+47,
+    y-5,
+    70,
+    52,
+    7,
+    '#647180'
+  );
+
+  round(
+    x+106,
+    y+12,
+    27,
+    25,
+    3,
+    '#647180'
+  );
+
+  round(
+    x+5,
+    y+35,
+    25,
+    45,
+    5,
+    '#647180'
+  );
+
+  round(
+    x+32,
+    y+75+leg,
+    20,
+    28,
+    4,
+    '#647180'
+  );
+
+  round(
+    x+75,
+    y+75-leg,
+    20,
+    28,
+    4,
+    '#647180'
+  );
+
+  ctx.restore();
+
+  rect(
+    x+65,
+    y+15,
+    14,
+    18,
+    '#293544'
+  );
+
+  rect(
+    x+109,
+    y+8,
+    8,
+    8,
+    '#172331'
+  );
+
+  rect(
+    x+112,
+    y+10,
+    3,
+    3,
+    'white'
+  );
+
+  rect(
+    x+37,
+    y+36,
+    13,
+    13,
+    '#8a96a3'
+  );
+
+  rect(
+    x+42,
+    y-22,
+    68,
+    8,
+    '#e63950'
+  );
+
+  rect(
+    x+58,
+    y-42,
+    12,
+    20,
+    '#e63950'
+  );
+
+  rect(
+    x+82,
+    y-32,
+    12,
+    15,
+    '#ffd166'
+  );
+
+  rect(
+    x+30,
+    y-32,
+    12,
+    15,
+    '#06d6a0'
+  );
+
+}
+
+
+function drawCactus(x,ground){
+
+  rect(
+    x+20,
+    ground-105,
+    27,
+    105,
+    '#159447'
+  );
+
+  rect(
+    x,
+    ground-70,
+    20,
+    42,
+    '#159447'
+  );
+
+  rect(
+    x-13,
+    ground-57,
+    15,
+    34,
+    '#159447'
+  );
+
+  rect(
+    x+48,
+    ground-82,
+    20,
+    40,
+    '#159447'
+  );
+
+  rect(
+    x+66,
+    ground-69,
+    15,
+    34,
+    '#159447'
+  );
+
+}
+
+
+function draw(t=0){
+
+  const selected=$('scene').value;
+
+  const scenes=
+    selected==='random'
+      ?['day','night','candy']
+      :[selected];
+
+  const s=
+    scenes[
+      Math.floor(t/18000)%scenes.length
+    ];
+
+  let sky=
+    s==='night'
+      ?'#17284d'
+      :s==='candy'
+        ?'#eaa4d1'
+        :'#62c4ed';
+
+  ctx.fillStyle=sky;
+
+  ctx.fillRect(
+    0,0,W,H
+  );
+
+  if(s==='night'){
+
+    for(let i=0;i<45;i++){
+
+      ctx.fillStyle='#fff';
+
+      ctx.fillRect(
+        (i*83)%W,
+        (i*47)%190,
+        3,
+        3
+      );
+
+    }
+
+    ctx.fillStyle='#ffe89b';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      720,
+      70,
+      38,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+  }else{
+
+    clouds.forEach(
+      c=>cloud({
+        ...c,
+        x:c.x-(t/90)%W
+      })
+    );
+
+  }
+
+  ctx.fillStyle=
+    s==='candy'
+      ?'#f28fba'
+      :'#a5c7d1';
+
+  ctx.beginPath();
+
+  ctx.moveTo(0,292);
+  ctx.lineTo(180,175);
+  ctx.lineTo(350,292);
+  ctx.lineTo(520,145);
+  ctx.lineTo(760,292);
+
+  ctx.fill();
+
+  ctx.fillStyle='#6eae58';
+
+  ctx.fillRect(
+    0,
+    315,
+    W,
+    105
+  );
+
+  ctx.fillStyle='#d79a39';
+
+  ctx.fillRect(
+    0,
+    315,
+    W,
+    8
+  );
+
+  ctx.fillStyle='#c6812b';
+
+  for(
+    let x=0;
+    x<W;
+    x+=65
+  ){
+
+    ctx.fillRect(
+      x+(t/12)%65,
+      350,
+      25,
+      8
+    );
+
+  }
+
+  drawCactus(
+    610,
+    315
+  );
+
+  balloons.forEach((b,i)=>{
+
+    const x=
+      b.x-(t/(i+2))%W;
+
+    ctx.strokeStyle='#555';
+
+    ctx.beginPath();
+
+    ctx.moveTo(x,250);
+    ctx.lineTo(x,315);
+
+    ctx.stroke();
+
+    ctx.fillStyle=b.c;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      x,
+      220-(i%2)*20,
+      18,
+      25,
+      0,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+  });
+
+  drawDino(t);
+
+  ctx.fillStyle='#fff';
+  ctx.font='bold 18px Arial';
+
+  ctx.fillText(
+    'HAPPY BIRTHDAY ASHER!',
+    285,
+    55
+  );
+
+}
+
+
+function music(){
+
+  audio=
+    audio||
+    new AudioContext();
+
+  const notes=[
+    261.63,
+    329.63,
+    392,
+    523.25,
+    659.25,
+    523.25,
+    392,
+    329.63
+  ];
+
+  let i=0;
+
+  clearInterval(timer);
+
+  timer=setInterval(()=>{
+
+    const o=
+      audio.createOscillator();
+
+    const g=
+      audio.createGain();
+
+    o.type='triangle';
+
+    o.frequency.value=
+      notes[i++%notes.length];
+
+    g.gain.setValueAtTime(
+      .04,
+      audio.currentTime
+    );
+
+    g.gain.exponentialRampToValueAtTime(
+      .001,
+      audio.currentTime+.45
+    );
+
+    o.connect(g)
+      .connect(audio.destination);
+
+    o.start();
+
+    o.stop(
+      audio.currentTime+.45
+    );
+
+  },500);
+
+}
+
+
+function frame(t){
+
+  if(!movie)return;
+
+  const elapsed=
+    t-start;
+
+  if(elapsed>=180000){
+
+    movie=false;
+
+    clearInterval(timer);
+
+    $('movieStatus').textContent=
+      'Birthday movie finished!';
+
+    draw(elapsed);
+
+    return;
+
+  }
+
+  draw(elapsed);
+
+  $('movieStatus').textContent=
+    `Birthday movie playing: ${
+      Math.floor(elapsed/1000)
+    } / 180 seconds`;
+
+  raf=
+    requestAnimationFrame(frame);
+
+}
+
+
+$('movieButton').onclick=()=>{
+
+  if(movie){
+
+    movie=false;
+
+    cancelAnimationFrame(raf);
+
+    clearInterval(timer);
+
+    $('movieButton').textContent=
+      '▶ Start Birthday Movie & Music';
+
+    return;
+
+  }
+
+  movie=true;
+
+  start=performance.now();
+
+  $('movieButton').textContent=
+    '■ Stop Movie';
+
+  music();
+
+  raf=
+    requestAnimationFrame(frame);
+
+};
+
+draw(0);
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(
+  auth,
+  user=>{
+
+    currentUser=user;
+
+    const owner=
+      matches(user,OWNER);
+
+    const asher=
+      matches(user,ASHER);
+
+    /*
+      Games are ALWAYS visible.
+      They are no longer restricted
+      to Asher's account.
+    */
+
+    $('gamePanel').style.display='block';
+
+    $('adminPanel').style.display=
+      owner?'block':'none';
+
+    $('questionPanel').style.display=
+      owner?'none':'block';
+
+    $('birthday').style.display=
+      asher?'block':'none';
+
+    if(user){
+
+      $('loginButton').textContent=
+        owner
+          ?'Add Words'
+          :'Logged In';
+
+      $('upgradeButton').style.display=
+        'none';
+
+      loadScores();
+
+    }else{
+
+      $('loginButton').textContent=
+        'Login';
+
+      $('upgradeButton').style.display=
+        'block';
+
+      $('guestScoreMessage')
+        .classList.remove('hidden');
+
+      $('loggedInScores')
+        .classList.add('hidden');
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
