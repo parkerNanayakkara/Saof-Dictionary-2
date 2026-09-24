@@ -23,33 +23,28 @@ header{
   background:linear-gradient(135deg,#6c4cff,#8b6cff)
 }
 
-h1{
-  margin:0;
-  font-size:42px
+h1{margin:0;font-size:42px}
+
+.login-button,
+.upgrade-button{
+  position:absolute;
+  top:20px;
+  padding:10px 18px;
+  border:0;
+  border-radius:10px;
+  font-weight:bold
 }
 
 .login-button{
-  position:absolute;
   right:20px;
-  top:20px;
-  padding:10px 18px;
-  border:0;
-  border-radius:10px;
   background:#fff;
-  color:#6c4cff;
-  font-weight:bold
+  color:#6c4cff
 }
 
 .upgrade-button{
-  position:absolute;
   left:20px;
-  top:20px;
-  padding:10px 18px;
-  border:0;
-  border-radius:10px;
   background:#ffd166;
-  color:#704600;
-  font-weight:bold
+  color:#704600
 }
 
 button{
@@ -59,7 +54,7 @@ button{
 
 button:disabled{
   cursor:not-allowed;
-  opacity:.65
+  opacity:.6
 }
 
 .search{
@@ -98,9 +93,7 @@ button:disabled{
   box-shadow:0 4px 12px #00000014
 }
 
-.card{
-  margin:15px 0
-}
+.card{margin:15px 0}
 
 .word{
   font-size:28px;
@@ -125,9 +118,7 @@ button:disabled{
   font-style:italic
 }
 
-h2{
-  color:#6c4cff
-}
+h2{color:#6c4cff}
 
 .primary{
   width:100%;
@@ -161,19 +152,17 @@ h2{
   font-weight:bold
 }
 
-.question{
-  margin-bottom:25px
-}
+/* GAME MENU */
 
 .game-menu{
   display:grid;
-  grid-template-columns:repeat(2,1fr);
+  grid-template-columns:repeat(3,1fr);
   gap:12px;
-  margin-bottom:20px
+  margin:20px 0
 }
 
 .game-option{
-  padding:18px;
+  padding:18px 10px;
   border:2px solid #ddd;
   border-radius:14px;
   background:#fff;
@@ -183,8 +172,8 @@ h2{
 }
 
 .game-option:hover{
-  border-color:#6c4cff;
-  transform:translateY(-2px)
+  transform:translateY(-2px);
+  border-color:#6c4cff
 }
 
 .game-option.active{
@@ -201,21 +190,62 @@ h2{
   display:block
 }
 
-.game canvas{
+.game-note{
+  text-align:center;
+  color:#666
+}
+
+/* PUZZLE */
+
+.puzzle-wrapper{
+  overflow:hidden;
+  border-radius:14px
+}
+
+#puzzleCanvas{
   display:block;
   width:100%;
   height:auto;
   border:3px solid #29354a;
   border-radius:14px;
-  image-rendering:auto;
-  background:#61bbed;
+  background:#f7f5ff;
   touch-action:none
 }
 
-.game-note{
-  text-align:center;
-  color:#666
+.puzzle-info{
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  padding:10px 0;
+  color:#555;
+  font-size:14px
 }
+
+#puzzleMessage{
+  min-height:25px;
+  text-align:center;
+  font-weight:bold
+}
+
+/* TREX */
+
+#trexCanvas{
+  display:block;
+  width:100%;
+  height:auto;
+  border:3px solid #29354a;
+  border-radius:14px;
+  background:#e8f8ff;
+  touch-action:none
+}
+
+.game-message{
+  min-height:24px;
+  text-align:center;
+  font-weight:bold
+}
+
+/* MOVIE */
 
 .movie-controls{
   display:flex;
@@ -232,33 +262,30 @@ h2{
   min-height:20px
 }
 
+/* SCORES */
+
 .score-box{
-  margin-top:18px;
-  padding:15px;
-  border-radius:12px;
+  margin-top:22px;
+  padding:18px;
+  border-radius:14px;
   background:#f4f1ff
-}
-
-.score-list{
-  margin:10px 0 0;
-  padding-left:25px
-}
-
-.score-list li{
-  margin:6px 0
 }
 
 .high-score{
   color:#6c4cff;
-  font-size:24px;
+  font-size:25px;
   font-weight:bold
 }
 
-.game-message{
-  min-height:24px;
-  text-align:center;
-  font-weight:bold
+.score-list{
+  padding-left:25px
 }
+
+.score-list li{
+  margin:7px 0
+}
+
+/* LOGIN */
 
 #login{
   display:none;
@@ -316,8 +343,7 @@ h2{
   border:0;
   background:none;
   color:#6c4cff;
-  font-weight:bold;
-  cursor:pointer
+  font-weight:bold
 }
 
 .hidden{
@@ -330,10 +356,23 @@ footer{
   color:#777
 }
 
-@media(max-width:600px){
+@media(max-width:700px){
+
   h1{
     font-size:32px;
     padding-top:25px
+  }
+
+  .game-menu{
+    grid-template-columns:1fr
+  }
+
+  .movie-controls{
+    display:block
+  }
+
+  .panel,.dictionary{
+    width:calc(100% - 24px)
   }
 
   .login-button{
@@ -348,16 +387,8 @@ footer{
     padding:8px 12px
   }
 
-  .panel,.dictionary{
-    width:calc(100% - 24px)
-  }
-
-  .movie-controls{
+  .puzzle-info{
     display:block
-  }
-
-  .game-menu{
-    grid-template-columns:1fr
   }
 }
 </style>
@@ -366,36 +397,60 @@ footer{
 <body>
 
 <header>
-  <button class="upgrade-button" id="upgradeButton">⭐ Upgrade for Free</button>
+  <button class="upgrade-button" id="upgradeButton">
+    ⭐ Upgrade for Free
+  </button>
+
   <h1>Saof Dictionary</h1>
-  <button class="login-button" id="loginButton">Login</button>
+
+  <button class="login-button" id="loginButton">
+    Login
+  </button>
 </header>
 
 <div class="search">
   <input id="searchInput" placeholder="Search a word...">
 </div>
 
-<div id="birthday">🎉 Happy Birthday, Asher! 🎂</div>
+<div id="birthday">
+  🎉 Happy Birthday, Asher! 🎂
+</div>
 
 <!-- QUESTIONS -->
+
 <section class="panel question" id="questionPanel">
   <div class="box">
+
     <h2>Ask about a word</h2>
-    <p>Send a question or word suggestion to the dictionary owner.</p>
+
+    <p>
+      Send a question or word suggestion to the dictionary owner.
+    </p>
 
     <input id="questionName" placeholder="Your name (optional)">
-    <textarea id="questionText" placeholder="Your question"></textarea>
 
-    <button class="primary" id="saveQuestion">Save Question</button>
-    <button class="primary" id="openMessages">Open Messages</button>
+    <textarea id="questionText"
+      placeholder="Your question"></textarea>
+
+    <button class="primary" id="saveQuestion">
+      Save Question
+    </button>
+
+    <button class="primary" id="openMessages">
+      Open Messages
+    </button>
 
     <div id="questionStatus"></div>
+
   </div>
 </section>
 
 <!-- ADMIN -->
+
 <section class="panel" id="adminPanel">
+
   <div class="box">
+
     <h2>Add a Word</h2>
 
     <input id="newWord" placeholder="Word">
@@ -403,15 +458,23 @@ footer{
     <input id="newMeaning" placeholder="Meaning">
     <input id="newCredits" placeholder="Credits (optional)">
 
-    <button class="primary" id="addWord">Add Word</button>
+    <button class="primary" id="addWord">
+      Add Word
+    </button>
+
     <br>
 
-    <button class="secondary" id="logout">Logout</button>
+    <button class="secondary" id="logout">
+      Logout
+    </button>
+
   </div>
+
 </section>
 
-<!-- GAMES -->
-<section class="panel game" id="gamePanel">
+<!-- GAME HUB -->
+
+<section class="panel" id="gamePanel">
 
   <div class="box">
 
@@ -432,41 +495,69 @@ footer{
       </button>
 
       <button class="game-option" data-game="movie">
-        🎬 Watch Movie
+        🎬 <span id="movieMenuText">Watch Movie</span>
       </button>
 
     </div>
 
-    <!-- PUZZLE -->
+
+    <!-- ================= PUZZLE ================= -->
+
     <div class="game-area" id="puzzleGame">
 
-      <h2>🧩 Drag Puzzle</h2>
+      <h2>🧩 Ultimate Shape Puzzle</h2>
 
       <p class="game-note">
-        Drag each colored piece onto its matching area.
-        Touch works on phones and mouse works on computers.
+        12 pieces. Irregular shapes. Random positions.
+        Drag each piece onto its matching outline.
       </p>
 
-      <canvas id="puzzleCanvas" width="700" height="450"></canvas>
+      <div class="puzzle-info">
+        <span>
+          Pieces: <strong>12</strong>
+        </span>
 
-      <p id="puzzleMessage" class="game-message"></p>
+        <span>
+          Time: <strong id="puzzleTime">0s</strong>
+        </span>
+
+        <span>
+          Placed: <strong id="puzzleCount">0/12</strong>
+        </span>
+      </div>
+
+      <div class="puzzle-wrapper">
+        <canvas
+          id="puzzleCanvas"
+          width="900"
+          height="600">
+        </canvas>
+      </div>
+
+      <p id="puzzleMessage"></p>
 
       <button class="primary" id="restartPuzzle">
-        Restart Puzzle
+        🔄 New Puzzle
       </button>
 
     </div>
 
-    <!-- TREX -->
+
+    <!-- ================= TREX ================= -->
+
     <div class="game-area" id="trexGame">
 
       <h2>🦖 T-Rex Runner</h2>
 
       <p class="game-note">
-        Press Space, tap the screen, or click to jump.
+        Press Space, click, or tap to jump.
       </p>
 
-      <canvas id="trexCanvas" width="800" height="350"></canvas>
+      <canvas
+        id="trexCanvas"
+        width="800"
+        height="350">
+      </canvas>
 
       <p id="trexMessage" class="game-message">
         Press Space or tap to start.
@@ -478,65 +569,103 @@ footer{
 
     </div>
 
-    <!-- MOVIE -->
+
+    <!-- ================= MOVIE ================= -->
+
     <div class="game-area" id="movieGame">
 
-      <h2>🎂 Asher's Birthday Movie</h2>
+      <h2 id="movieTitle">🎬 Watch Movie</h2>
 
-      <p class="game-note">
-        A richer original three-minute animated birthday adventure.
+      <p class="game-note" id="movieDescription">
+        Sit back and enjoy the movie.
       </p>
 
       <div class="movie-controls">
 
         <select id="scene">
-          <option value="random">Random scenes</option>
-          <option value="day">Sunny party</option>
-          <option value="night">Night party</option>
-          <option value="candy">Candy party</option>
+          <option value="random">
+            Random scenes
+          </option>
+
+          <option value="day">
+            Sunny scene
+          </option>
+
+          <option value="night">
+            Night scene
+          </option>
+
+          <option value="candy">
+            Colorful scene
+          </option>
+
         </select>
 
         <select id="quality">
-          <option value="high">Detailed graphics</option>
-          <option value="pixel">Pixel graphics</option>
+
+          <option value="high">
+            Detailed graphics
+          </option>
+
+          <option value="pixel">
+            Pixel graphics
+          </option>
+
         </select>
 
       </div>
 
-      <canvas id="canvas" width="900" height="420"></canvas>
+      <canvas
+        id="canvas"
+        width="900"
+        height="420">
+      </canvas>
 
       <button class="primary" id="movieButton">
-        ▶ Start Birthday Movie &amp; Music
+        ▶ Start Movie
       </button>
 
-      <p id="movieStatus">Ready to play</p>
+      <p id="movieStatus">
+        Ready to play
+      </p>
 
     </div>
 
-    <!-- HIGH SCORES -->
+
+    <!-- ================= HIGH SCORES ================= -->
+
     <div class="score-box">
 
       <h2>🏆 High Scores</h2>
 
       <div id="guestScoreMessage">
+
         <p>
           You're playing as a guest.
-          <button class="link-button" id="scoreLoginButton">
+          <button
+            class="link-button"
+            id="scoreLoginButton">
             Log in
           </button>
           to save your scores.
         </p>
+
       </div>
 
       <div id="loggedInScores" class="hidden">
 
         <p>
           Your best score:
-          <span class="high-score" id="myBestScore">0</span>
+          <span
+            class="high-score"
+            id="myBestScore">
+            0
+          </span>
         </p>
 
-        <ol class="score-list" id="scoreList">
-          <li>Loading scores...</li>
+        <ol
+          class="score-list"
+          id="scoreList">
         </ol>
 
       </div>
@@ -547,69 +676,109 @@ footer{
 
 </section>
 
+
 <!-- DICTIONARY -->
+
 <main class="dictionary" id="dictionary">
 
   <article class="card">
+
     <div class="word">Recos</div>
+
     <div class="pronunciation">
-      Pronunciation: <strong>reh-coss</strong>
+      Pronunciation:
+      <strong>reh-coss</strong>
     </div>
+
     <div class="meaning">
-      Meaning: <strong>ball</strong>
+      Meaning:
+      <strong>ball</strong>
     </div>
+
     <div class="credits">
       Credits: No credits
     </div>
+
   </article>
 
+
   <article class="card">
+
     <div class="word">Saof</div>
+
     <div class="pronunciation">
-      Pronunciation: <strong>s-ow-f</strong>
+      Pronunciation:
+      <strong>s-ow-f</strong>
     </div>
+
     <div class="meaning">
-      Meaning: <strong>me / and</strong>
+      Meaning:
+      <strong>me / and</strong>
     </div>
+
     <div class="credits">
       Credits: No credits
     </div>
+
   </article>
 
+
   <article class="card">
+
     <div class="word">Thu</div>
+
     <div class="pronunciation">
-      Pronunciation: <strong>th-oo</strong>
+      Pronunciation:
+      <strong>th-oo</strong>
     </div>
+
     <div class="meaning">
-      Meaning: <strong>Depends on the context.</strong>
+      Meaning:
+      <strong>Depends on the context.</strong>
     </div>
+
     <div class="credits">
       Credits: No credits
     </div>
+
   </article>
 
 </main>
+
 
 <footer>
   © 2026 Saof Dictionary
 </footer>
 
-<!-- LOGIN / SIGNUP -->
+
+<!-- LOGIN -->
+
 <div id="login">
 
   <div class="login-box">
 
     <h2 id="authTitle">Login</h2>
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
+    <input
+      id="email"
+      type="email"
+      placeholder="Email">
 
-    <button class="primary" id="loginAction">
+    <input
+      id="password"
+      type="password"
+      placeholder="Password">
+
+    <button
+      class="primary"
+      id="loginAction">
       Login
     </button>
 
-    <div class="error" id="loginError"></div>
+    <div
+      class="error"
+      id="loginError">
+    </div>
 
     <div class="auth-switch">
 
@@ -617,19 +786,24 @@ footer{
         Don't have an account?
       </span>
 
-      <button class="link-button" id="authSwitch">
+      <button
+        class="link-button"
+        id="authSwitch">
         Create one
       </button>
 
     </div>
 
-    <button class="secondary" id="cancelLogin">
+    <button
+      class="secondary"
+      id="cancelLogin">
       Cancel
     </button>
 
   </div>
 
 </div>
+
 
 <script type="module">
 
@@ -662,11 +836,11 @@ import {
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 
-/* =========================
+/* =========================================================
    FIREBASE
-========================= */
+========================================================= */
 
-const config = {
+const config={
   apiKey:'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
   authDomain:'saof-dictionary.firebaseapp.com',
   projectId:'saof-dictionary',
@@ -676,23 +850,30 @@ const config = {
 };
 
 const OWNER='parkernanayakkara@icloud.com';
+
 const ASHER='ashernanayakkara@icloud.com';
 
 const app=initializeApp(config);
-const auth=getAuth(app);
-const db=getFirestore(app);
 
-await setPersistence(auth,browserLocalPersistence);
+const auth=getAuth(app);
+
+const db=getFirestore(app);
 
 const $=id=>document.getElementById(id);
 
-const matches=(u,e)=>
-  u?.email?.toLowerCase()===e.toLowerCase();
+const matches=(user,email)=>
+  user?.email?.toLowerCase()===
+  email.toLowerCase();
+
+await setPersistence(
+  auth,
+  browserLocalPersistence
+);
 
 
-/* =========================
-   AUTH
-========================= */
+/* =========================================================
+   LOGIN / SIGNUP
+========================================================= */
 
 let signupMode=false;
 
@@ -701,23 +882,31 @@ function openAuth(signup=false){
   signupMode=signup;
 
   $('authTitle').textContent=
-    signup?'Create Free Account':'Login';
+    signup
+      ?'Create Free Account'
+      :'Login';
 
   $('loginAction').textContent=
-    signup?'Create Free Account':'Login';
+    signup
+      ?'Create Free Account'
+      :'Login';
 
   $('authSwitchText').textContent=
-    signup?'Already have an account?':
-    "Don't have an account?";
+    signup
+      ?'Already have an account?'
+      :"Don't have an account?";
 
   $('authSwitch').textContent=
-    signup?'Login':'Create one';
+    signup
+      ?'Login'
+      :'Create one';
 
   $('loginError').textContent='';
 
   $('login').style.display='flex';
 
   $('email').focus();
+
 }
 
 
@@ -730,13 +919,18 @@ function setAuthLoading(loading){
   if(loading){
 
     button.innerHTML=
-      '<span class="loading-spinner login-spinner"></span>'+
-      (signupMode?'Creating account...':'Logging in...');
+      `<span class="loading-spinner login-spinner"></span>${
+        signupMode
+          ?'Creating account...'
+          :'Logging in...'
+      }`;
 
   }else{
 
     button.textContent=
-      signupMode?'Create Free Account':'Login';
+      signupMode
+        ?'Create Free Account'
+        :'Login';
 
   }
 
@@ -777,23 +971,25 @@ $('upgradeButton').onclick=()=>{
 };
 
 
-$('scoreLoginButton').onclick=()=>openAuth(false);
+$('scoreLoginButton').onclick=()=>
+  openAuth(false);
 
 
-$('cancelLogin').onclick=()=>{
+$('cancelLogin').onclick=()=>
   $('login').style.display='none';
-};
 
 
-$('authSwitch').onclick=()=>{
+$('authSwitch').onclick=()=>
   openAuth(!signupMode);
-};
 
 
 $('loginAction').onclick=async()=>{
 
-  const email=$('email').value.trim();
-  const password=$('password').value;
+  const email=
+    $('email').value.trim();
+
+  const password=
+    $('password').value;
 
   $('loginError').textContent='';
 
@@ -803,6 +999,7 @@ $('loginAction').onclick=async()=>{
       'Please enter your email and password.';
 
     return;
+
   }
 
   setAuthLoading(true);
@@ -832,24 +1029,43 @@ $('loginAction').onclick=async()=>{
     $('email').value='';
     $('password').value='';
 
-  }catch(e){
+  }catch(error){
 
-    let message='Something went wrong.';
+    let message=
+      'Something went wrong.';
 
-    if(e.code==='auth/email-already-in-use'){
-      message='That email already has an account.';
-    }
+    if(
+      error.code===
+      'auth/email-already-in-use'
+    ){
 
-    if(e.code==='auth/invalid-email'){
-      message='Please enter a valid email address.';
-    }
+      message=
+        'That email already has an account.';
 
-    if(e.code==='auth/weak-password'){
-      message='Password must be at least 6 characters.';
-    }
+    }else if(
+      error.code===
+      'auth/invalid-email'
+    ){
 
-    if(e.code==='auth/invalid-credential'){
-      message='Email or password is incorrect.';
+      message=
+        'Please enter a valid email address.';
+
+    }else if(
+      error.code===
+      'auth/weak-password'
+    ){
+
+      message=
+        'Password must be at least 6 characters.';
+
+    }else if(
+      error.code===
+      'auth/invalid-credential'
+    ){
+
+      message=
+        'Email or password is incorrect.';
+
     }
 
     $('loginError').textContent=message;
@@ -866,36 +1082,45 @@ $('loginAction').onclick=async()=>{
 $('logout').onclick=()=>signOut(auth);
 
 
-/* =========================
+/* =========================================================
    DICTIONARY
-========================= */
+========================================================= */
 
 function addCard(d){
 
-  const c=document.createElement('article');
+  const c=
+    document.createElement('article');
 
   c.className='card live-card';
 
   [
     ['word','',d.word],
-    ['pronunciation','Pronunciation: ',d.pronunciation],
+    ['pronunciation',
+      'Pronunciation: ',
+      d.pronunciation],
     ['meaning','Meaning: ',d.meaning],
-    ['credits','Credits: ',d.credits?.trim()||'No credits']
-  ].forEach(([cl,label,value])=>{
+    ['credits',
+      'Credits: ',
+      d.credits?.trim()||'No credits']
+  ].forEach(
+    ([className,label,value])=>{
 
-    const e=document.createElement('div');
+      const e=
+        document.createElement('div');
 
-    e.className=cl;
-    e.textContent=label;
+      e.className=className;
+      e.textContent=label;
 
-    const strong=document.createElement('strong');
+      const strong=
+        document.createElement('strong');
 
-    strong.textContent=value;
+      strong.textContent=value;
 
-    e.append(strong);
-    c.append(e);
+      e.append(strong);
+      c.append(e);
 
-  });
+    }
+  );
 
   $('dictionary').append(c);
 
@@ -910,9 +1135,9 @@ onSnapshot(
       .querySelectorAll('.live-card')
       .forEach(e=>e.remove());
 
-    snap.forEach(x=>{
+    snap.forEach(doc=>{
 
-      const d=x.data();
+      const d=doc.data();
 
       if(
         d.word&&
@@ -930,48 +1155,69 @@ onSnapshot(
 );
 
 
-$('searchInput').addEventListener('input',e=>{
+$('searchInput').addEventListener(
+  'input',
+  e=>{
 
-  const q=e.target.value.toLowerCase();
+    const q=
+      e.target.value.toLowerCase();
 
-  document
-    .querySelectorAll('#dictionary .card')
-    .forEach(c=>{
+    document
+      .querySelectorAll(
+        '#dictionary .card'
+      )
+      .forEach(card=>{
 
-      c.hidden=
-        !c.textContent
-          .toLowerCase()
-          .includes(q);
+        card.hidden=
+          !card.textContent
+            .toLowerCase()
+            .includes(q);
 
-    });
+      });
 
-});
+  }
+);
 
 
-/* =========================
-   ADD WORD
-========================= */
+/* =========================================================
+   ADMIN
+========================================================= */
 
 $('addWord').onclick=async()=>{
 
   if(!matches(auth.currentUser,OWNER)){
 
-    alert('Only the owner can add words.');
+    alert(
+      'Only the owner can add words.'
+    );
 
     return;
+
   }
 
-  const word=$('newWord').value.trim();
-  const pronunciation=$('newPronunciation').value.trim();
-  const meaning=$('newMeaning').value.trim();
+  const word=
+    $('newWord').value.trim();
 
-  if(!word||!pronunciation||!meaning){
+  const pronunciation=
+    $('newPronunciation')
+      .value.trim();
+
+  const meaning=
+    $('newMeaning')
+      .value.trim();
+
+  if(
+    !word||
+    !pronunciation||
+    !meaning
+  ){
 
     alert(
       'Fill in word, pronunciation and meaning.'
     );
 
     return;
+
   }
 
   await addDoc(
@@ -981,10 +1227,13 @@ $('addWord').onclick=async()=>{
       pronunciation,
       meaning,
       credits:
-        $('newCredits').value.trim()||
+        $('newCredits')
+          .value.trim()||
         'No credits',
-      addedBy:auth.currentUser.email,
-      createdAt:serverTimestamp()
+      addedBy:
+        auth.currentUser.email,
+      createdAt:
+        serverTimestamp()
     }
   );
 
@@ -995,18 +1244,22 @@ $('addWord').onclick=async()=>{
     'newCredits'
   ].forEach(id=>$(id).value='');
 
-  alert('Word added for everyone!');
+  alert(
+    'Word added for everyone!'
+  );
 
 };
 
 
-/* =========================
+/* =========================================================
    QUESTIONS
-========================= */
+========================================================= */
 
 $('saveQuestion').onclick=async()=>{
 
-  const text=$('questionText').value.trim();
+  const text=
+    $('questionText')
+      .value.trim();
 
   if(!text){
 
@@ -1014,6 +1267,7 @@ $('saveQuestion').onclick=async()=>{
       'Type a question first.';
 
     return;
+
   }
 
   try{
@@ -1022,11 +1276,13 @@ $('saveQuestion').onclick=async()=>{
       collection(db,'questions'),
       {
         name:
-          $('questionName').value.trim()||
+          $('questionName')
+            .value.trim()||
           'Anonymous visitor',
         question:text,
         status:'new',
-        createdAt:serverTimestamp()
+        createdAt:
+          serverTimestamp()
       }
     );
 
@@ -1036,11 +1292,11 @@ $('saveQuestion').onclick=async()=>{
     $('questionStatus').textContent=
       'Question saved for the owner.';
 
-  }catch(e){
+  }catch(error){
 
     $('questionStatus').textContent=
       `Could not save question: ${
-        e.code||'Firestore error'
+        error.code||'Firestore error'
       }`;
 
   }
@@ -1050,21 +1306,24 @@ $('saveQuestion').onclick=async()=>{
 
 $('openMessages').onclick=()=>{
 
-  const text=$('questionText').value.trim();
+  const text=
+    $('questionText')
+      .value.trim();
 
   location.href=
     `sms:?&body=${encodeURIComponent(
       `Saof Dictionary question:\n${
-        text||'(type your question first)'
+        text||
+        '(type your question first)'
       }`
     )}`;
 
 };
 
 
-/* =========================
+/* =========================================================
    GAME MENU
-========================= */
+========================================================= */
 
 document
   .querySelectorAll('.game-option')
@@ -1082,13 +1341,11 @@ document
 
       document
         .querySelectorAll('.game-area')
-        .forEach(a=>
-          a.classList.remove('active')
+        .forEach(area=>
+          area.classList.remove('active')
         );
 
-      const game=button.dataset.game;
-
-      $(`${game}Game`)
+      $(`${button.dataset.game}Game`)
         .classList.add('active');
 
     };
@@ -1096,19 +1353,18 @@ document
   });
 
 
-/* =========================
+/* =========================================================
    HIGH SCORES
-========================= */
+========================================================= */
 
 let currentUser=null;
 
+let scoresUnsubscribe=null;
+
+
 async function saveScore(game,score){
 
-  if(!currentUser){
-
-    return;
-
-  }
+  if(!currentUser)return;
 
   try{
 
@@ -1119,17 +1375,16 @@ async function saveScore(game,score){
         email:currentUser.email,
         game,
         score:Number(score),
-        createdAt:serverTimestamp()
+        createdAt:
+          serverTimestamp()
       }
     );
 
-    loadScores();
-
-  }catch(e){
+  }catch(error){
 
     console.error(
       'Could not save score:',
-      e
+      error
     );
 
   }
@@ -1138,6 +1393,13 @@ async function saveScore(game,score){
 
 
 function loadScores(){
+
+  if(scoresUnsubscribe){
+
+    scoresUnsubscribe();
+    scoresUnsubscribe=null;
+
+  }
 
   if(!currentUser){
 
@@ -1157,145 +1419,573 @@ function loadScores(){
   $('loggedInScores')
     .classList.remove('hidden');
 
-  const scoresQuery=query(
+  const scoreQuery=query(
     collection(db,'scores'),
     orderBy('score','desc'),
-    limit(50)
+    limit(100)
   );
 
-  onSnapshot(
-    scoresQuery,
-    snap=>{
+  scoresUnsubscribe=
+    onSnapshot(
+      scoreQuery,
+      snap=>{
 
-      const scores=[];
+        const scores=[];
 
-      snap.forEach(doc=>{
+        snap.forEach(doc=>{
 
-        const d=doc.data();
+          const data=doc.data();
 
-        if(d.uid===currentUser.uid){
+          if(
+            data.uid===
+            currentUser.uid
+          ){
 
-          scores.push(d);
+            scores.push(data);
 
-        }
-
-      });
-
-      scores.sort(
-        (a,b)=>b.score-a.score
-      );
-
-      const best=scores[0]?.score||0;
-
-      $('myBestScore').textContent=best;
-
-      const list=$('scoreList');
-
-      list.innerHTML='';
-
-      if(!scores.length){
-
-        list.innerHTML=
-          '<li>No scores yet. Play a game!</li>';
-
-        return;
-
-      }
-
-      scores
-        .slice(0,10)
-        .forEach((s,index)=>{
-
-          const li=document.createElement('li');
-
-          li.textContent=
-            `${s.game}: ${s.score}`;
-
-          list.append(li);
+          }
 
         });
 
-    },
-    error=>{
+        scores.sort(
+          (a,b)=>b.score-a.score
+        );
 
-      console.error(
-        'Score loading error:',
-        error
-      );
+        $('myBestScore').textContent=
+          scores[0]?.score||0;
 
-    }
-  );
+        const list=
+          $('scoreList');
+
+        list.innerHTML='';
+
+        if(!scores.length){
+
+          list.innerHTML=
+            '<li>No scores yet. Play a game!</li>';
+
+          return;
+
+        }
+
+        scores
+          .slice(0,10)
+          .forEach(score=>{
+
+            const li=
+              document.createElement('li');
+
+            li.textContent=
+              `${score.game}: ${score.score}`;
+
+            list.append(li);
+
+          });
+
+      },
+      error=>{
+
+        console.error(
+          'Score loading error:',
+          error
+        );
+
+      }
+    );
 
 }
 
 
-/* =========================
-   PUZZLE GAME
-========================= */
+/* =========================================================
+   HARD 12-PIECE PUZZLE
+========================================================= */
 
-const puzzleCanvas=$('puzzleCanvas');
-const pctx=puzzleCanvas.getContext('2d');
+const puzzleCanvas=
+  $('puzzleCanvas');
 
-const puzzleW=puzzleCanvas.width;
-const puzzleH=puzzleCanvas.height;
+const pctx=
+  puzzleCanvas.getContext('2d');
 
-const puzzlePieces=[
-  {
-    color:'#ef476f',
-    x:50,
-    y:70,
-    targetX:450,
-    targetY:70,
-    size:100,
-    placed:false
-  },
-  {
-    color:'#ffd166',
-    x:180,
-    y:280,
-    targetX:580,
-    targetY:70,
-    size:100,
-    placed:false
-  },
-  {
-    color:'#06d6a0',
-    x:420,
-    y:280,
-    targetX:450,
-    targetY:250,
-    size:100,
-    placed:false
-  }
-];
+const PW=puzzleCanvas.width;
+const PH=puzzleCanvas.height;
+
+const PUZZLE_ROWS=3;
+const PUZZLE_COLS=4;
+
+const PIECE_W=150;
+const PIECE_H=150;
+
+const BOARD_X=300;
+const BOARD_Y=70;
+
+let pieces=[];
 
 let draggedPiece=null;
-let puzzleOffsetX=0;
-let puzzleOffsetY=0;
-let puzzleStartTime=0;
+
+let dragOffsetX=0;
+let dragOffsetY=0;
+
 let puzzleFinished=false;
+let puzzleStartTime=0;
+let puzzleTimer=null;
 
 
-function resetPuzzle(){
+/*
+  Different shapes.
+  Each shape has a different silhouette.
+*/
 
-  puzzlePieces[0].x=50;
-  puzzlePieces[0].y=70;
+const shapeTypes=[
+  'triangle',
+  'circle',
+  'diamond',
+  'hexagon',
+  'star',
+  'rounded',
+  'cross',
+  'arrow',
+  'octagon',
+  'shield',
+  'heart',
+  'irregular'
+];
 
-  puzzlePieces[1].x=180;
-  puzzlePieces[1].y=280;
+const colors=[
+  '#ef476f',
+  '#ffd166',
+  '#06d6a0',
+  '#118ab2',
+  '#9b5de5',
+  '#f15bb5',
+  '#00bbf9',
+  '#00f5d4',
+  '#ff9f1c',
+  '#e63946',
+  '#8338ec',
+  '#3a86ff'
+];
 
-  puzzlePieces[2].x=420;
-  puzzlePieces[2].y=280;
 
-  puzzlePieces.forEach(p=>
-    p.placed=false
-  );
+function shapePath(
+  ctx,
+  shape,
+  x,
+  y,
+  size
+){
 
-  draggedPiece=null;
+  const cx=x+size/2;
+  const cy=y+size/2;
+  const r=size*.43;
+
+  ctx.beginPath();
+
+  if(shape==='circle'){
+
+    ctx.arc(
+      cx,
+      cy,
+      r,
+      0,
+      Math.PI*2
+    );
+
+  }else if(shape==='triangle'){
+
+    for(let i=0;i<3;i++){
+
+      const a=
+        -Math.PI/2+
+        i*Math.PI*2/3;
+
+      const px=
+        cx+Math.cos(a)*r;
+
+      const py=
+        cy+Math.sin(a)*r;
+
+      if(i===0)
+        ctx.moveTo(px,py);
+      else
+        ctx.lineTo(px,py);
+
+    }
+
+    ctx.closePath();
+
+  }else if(shape==='diamond'){
+
+    ctx.moveTo(cx,cy-r);
+    ctx.lineTo(cx+r,cy);
+    ctx.lineTo(cx,cy+r);
+    ctx.lineTo(cx-r,cy);
+    ctx.closePath();
+
+  }else if(shape==='hexagon'){
+
+    for(let i=0;i<6;i++){
+
+      const a=
+        i*Math.PI/3;
+
+      const px=
+        cx+Math.cos(a)*r;
+
+      const py=
+        cy+Math.sin(a)*r;
+
+      if(i===0)
+        ctx.moveTo(px,py);
+      else
+        ctx.lineTo(px,py);
+
+    }
+
+    ctx.closePath();
+
+  }else if(shape==='star'){
+
+    for(let i=0;i<10;i++){
+
+      const rr=
+        i%2===0?r:r*.45;
+
+      const a=
+        -Math.PI/2+
+        i*Math.PI/5;
+
+      const px=
+        cx+Math.cos(a)*rr;
+
+      const py=
+        cy+Math.sin(a)*rr;
+
+      if(i===0)
+        ctx.moveTo(px,py);
+      else
+        ctx.lineTo(px,py);
+
+    }
+
+    ctx.closePath();
+
+  }else if(shape==='rounded'){
+
+    ctx.roundRect(
+      x+8,
+      y+8,
+      size-16,
+      size-16,
+      28
+    );
+
+  }else if(shape==='cross'){
+
+    const s=size*.28;
+
+    ctx.moveTo(
+      cx-s,
+      y+5
+    );
+
+    ctx.lineTo(
+      cx+s,
+      y+5
+    );
+
+    ctx.lineTo(
+      cx+s,
+      cy-s
+    );
+
+    ctx.lineTo(
+      x+size-5,
+      cy-s
+    );
+
+    ctx.lineTo(
+      x+size-5,
+      cy+s
+    );
+
+    ctx.lineTo(
+      cx+s,
+      cy+s
+    );
+
+    ctx.lineTo(
+      cx+s,
+      y+size-5
+    );
+
+    ctx.lineTo(
+      cx-s,
+      y+size-5
+    );
+
+    ctx.lineTo(
+      cx-s,
+      cy+s
+    );
+
+    ctx.lineTo(
+      x+5,
+      cy+s
+    );
+
+    ctx.lineTo(
+      x+5,
+      cy-s
+    );
+
+    ctx.lineTo(
+      cx-s,
+      cy-s
+    );
+
+    ctx.closePath();
+
+  }else if(shape==='arrow'){
+
+    ctx.moveTo(
+      cx,
+      y+5
+    );
+
+    ctx.lineTo(
+      x+size-5,
+      cy
+    );
+
+    ctx.lineTo(
+      cx+18,
+      cy
+    );
+
+    ctx.lineTo(
+      cx+18,
+      y+size-5
+    );
+
+    ctx.lineTo(
+      cx-18,
+      y+size-5
+    );
+
+    ctx.lineTo(
+      cx-18,
+      cy
+    );
+
+    ctx.lineTo(
+      x+5,
+      cy
+    );
+
+    ctx.closePath();
+
+  }else if(shape==='octagon'){
+
+    const q=size*.3;
+
+    ctx.moveTo(x+q,y+5);
+    ctx.lineTo(x+size-q,y+5);
+    ctx.lineTo(x+size-5,y+q);
+    ctx.lineTo(x+size-5,y+size-q);
+    ctx.lineTo(x+size-q,y+size-5);
+    ctx.lineTo(x+q,y+size-5);
+    ctx.lineTo(x+5,y+size-q);
+    ctx.lineTo(x+5,y+q);
+    ctx.closePath();
+
+  }else if(shape==='shield'){
+
+    ctx.moveTo(cx,y+5);
+    ctx.lineTo(x+size-10,y+25);
+    ctx.lineTo(x+size-18,y+size*.7);
+    ctx.quadraticCurveTo(
+      cx,
+      y+size,
+      x+18,
+      y+size*.7
+    );
+    ctx.lineTo(x+10,y+25);
+    ctx.closePath();
+
+  }else if(shape==='heart'){
+
+    ctx.moveTo(cx,y+size*.85);
+
+    ctx.bezierCurveTo(
+      x-10,
+      y+size*.45,
+      x+size*.05,
+      y,
+      cx,
+      y+size*.28
+    );
+
+    ctx.bezierCurveTo(
+      x+size*.95,
+      y,
+      x+size+10,
+      y+size*.45,
+      cx,
+      y+size*.85
+    );
+
+    ctx.closePath();
+
+  }else{
+
+    /*
+      Irregular shape
+    */
+
+    const points=[
+      [.15,.05],
+      [.55,.12],
+      [.9,.05],
+      [.82,.42],
+      [.97,.75],
+      [.55,.92],
+      [.2,.84],
+      [.05,.52]
+    ];
+
+    points.forEach(
+      ([px,py],i)=>{
+
+        const xx=
+          x+px*size;
+
+        const yy=
+          y+py*size;
+
+        if(i===0)
+          ctx.moveTo(xx,yy);
+        else
+          ctx.lineTo(xx,yy);
+
+      }
+    );
+
+    ctx.closePath();
+
+  }
+
+}
+
+
+function createPuzzle(){
+
+  pieces=[];
+
+  for(let i=0;i<12;i++){
+
+    const row=
+      Math.floor(i/PUZZLE_COLS);
+
+    const col=
+      i%PUZZLE_COLS;
+
+    const targetX=
+      BOARD_X+
+      col*PIECE_W;
+
+    const targetY=
+      BOARD_Y+
+      row*PIECE_H;
+
+    let x;
+    let y;
+
+    /*
+      Pieces start scattered around
+      the entire board.
+    */
+
+    do{
+
+      x=
+        20+
+        Math.random()*
+        (PW-PIECE_W-40);
+
+      y=
+        40+
+        Math.random()*
+        (PH-PIECE_H-60);
+
+    }while(
+      x>BOARD_X-PIECE_W&&
+      x<BOARD_X+
+        PUZZLE_COLS*PIECE_W&&
+      y>BOARD_Y-PIECE_H&&
+      y<BOARD_Y+
+        PUZZLE_ROWS*PIECE_H
+    );
+
+    pieces.push({
+
+      id:i,
+
+      x,
+      y,
+
+      targetX,
+      targetY,
+
+      size:PIECE_W,
+
+      shape:shapeTypes[i],
+
+      color:colors[i],
+
+      rotation:
+        Math.floor(
+          Math.random()*4
+        )*90,
+
+      targetRotation:
+        0,
+
+      placed:false
+
+    });
+
+  }
+
   puzzleFinished=false;
-  puzzleStartTime=performance.now();
+
+  puzzleStartTime=
+    performance.now();
 
   $('puzzleMessage').textContent='';
+
+  $('puzzleCount').textContent='0/12';
+
+  $('puzzleTime').textContent='0s';
+
+  clearInterval(puzzleTimer);
+
+  puzzleTimer=
+    setInterval(()=>{
+
+      if(!puzzleFinished){
+
+        const seconds=
+          Math.floor(
+            (performance.now()-
+              puzzleStartTime)/1000
+          );
+
+        $('puzzleTime').textContent=
+          `${seconds}s`;
+
+      }
+
+    },500);
 
   drawPuzzle();
 
@@ -1307,8 +1997,8 @@ function drawPuzzle(){
   pctx.clearRect(
     0,
     0,
-    puzzleW,
-    puzzleH
+    PW,
+    PH
   );
 
   pctx.fillStyle='#f7f5ff';
@@ -1316,90 +2006,177 @@ function drawPuzzle(){
   pctx.fillRect(
     0,
     0,
-    puzzleW,
-    puzzleH
+    PW,
+    PH
+  );
+
+  /*
+    Target board
+  */
+
+  pctx.fillStyle='#e8e2ff';
+
+  pctx.fillRect(
+    BOARD_X-8,
+    BOARD_Y-8,
+    PUZZLE_COLS*PIECE_W+16,
+    PUZZLE_ROWS*PIECE_H+16
   );
 
   pctx.font='bold 18px Arial';
+
   pctx.fillStyle='#555';
 
   pctx.fillText(
-    'Put the pieces in their matching spots',
-    20,
-    30
+    'MATCH THE SHAPES',
+    BOARD_X+250,
+    45
   );
 
-  /* Targets */
+  /*
+    Draw target outlines
+  */
 
-  puzzlePieces.forEach(p=>{
+  pieces.forEach(piece=>{
 
-    pctx.strokeStyle=p.color;
-    pctx.lineWidth=4;
-    pctx.setLineDash([8,5]);
+    if(piece.placed)return;
 
-    pctx.strokeRect(
-      p.targetX,
-      p.targetY,
-      p.size,
-      p.size
+    pctx.save();
+
+    pctx.translate(
+      piece.targetX+
+      piece.size/2,
+      piece.targetY+
+      piece.size/2
     );
+
+    pctx.rotate(
+      piece.targetRotation*
+      Math.PI/180
+    );
+
+    pctx.translate(
+      -piece.size/2,
+      -piece.size/2
+    );
+
+    shapePath(
+      pctx,
+      piece.shape,
+      0,
+      0,
+      piece.size
+    );
+
+    pctx.strokeStyle=
+      piece.color+'99';
+
+    pctx.lineWidth=5;
+
+    pctx.setLineDash([
+      10,
+      7
+    ]);
+
+    pctx.stroke();
+
+    pctx.setLineDash([]);
+
+    pctx.restore();
 
   });
 
-  pctx.setLineDash([]);
 
-  /* Pieces */
+  /*
+    Pieces
+  */
 
-  puzzlePieces.forEach(p=>{
+  pieces.forEach(piece=>{
 
-    pctx.fillStyle=p.color;
+    pctx.save();
 
-    pctx.beginPath();
-
-    pctx.roundRect(
-      p.x,
-      p.y,
-      p.size,
-      p.size,
-      15
+    pctx.translate(
+      piece.x+
+      piece.size/2,
+      piece.y+
+      piece.size/2
     );
+
+    pctx.rotate(
+      piece.rotation*
+      Math.PI/180
+    );
+
+    pctx.translate(
+      -piece.size/2,
+      -piece.size/2
+    );
+
+    shapePath(
+      pctx,
+      piece.shape,
+      0,
+      0,
+      piece.size
+    );
+
+    pctx.fillStyle=
+      piece.color;
+
+    pctx.shadowColor=
+      '#0005';
+
+    pctx.shadowBlur=8;
 
     pctx.fill();
 
+    pctx.shadowBlur=0;
+
+    pctx.strokeStyle='#fff';
+
+    pctx.lineWidth=3;
+
+    pctx.stroke();
+
     pctx.fillStyle='#ffffffaa';
 
-    pctx.font='bold 25px Arial';
+    pctx.font='bold 16px Arial';
 
     pctx.fillText(
-      'DRAG',
-      p.x+20,
-      p.y+58
+      `#${piece.id+1}`,
+      piece.size/2-9,
+      piece.size/2+6
     );
+
+    pctx.restore();
 
   });
 
 }
 
 
-function pointerPosition(e){
+function puzzlePointer(e){
 
   const rect=
-    puzzleCanvas.getBoundingClientRect();
+    puzzleCanvas
+      .getBoundingClientRect();
 
   const point=
     e.touches?
       e.touches[0]:
       e;
 
-  return {
+  return{
 
     x:
-      (point.clientX-rect.left)*
-      (puzzleCanvas.width/rect.width),
+      (point.clientX-
+       rect.left)*
+      PW/rect.width,
 
     y:
-      (point.clientY-rect.top)*
-      (puzzleCanvas.height/rect.height)
+      (point.clientY-
+       rect.top)*
+      PH/rect.height
 
   };
 
@@ -1412,11 +2189,21 @@ function puzzleDown(e){
 
   if(puzzleFinished)return;
 
-  const pos=pointerPosition(e);
+  const pos=
+    puzzlePointer(e);
 
-  for(let i=puzzlePieces.length-1;i>=0;i--){
+  /*
+    Search backwards so the top piece
+    gets selected first.
+  */
 
-    const p=puzzlePieces[i];
+  for(
+    let i=pieces.length-1;
+    i>=0;
+    i--
+  ){
+
+    const p=pieces[i];
 
     if(p.placed)continue;
 
@@ -1429,11 +2216,20 @@ function puzzleDown(e){
 
       draggedPiece=p;
 
-      puzzleOffsetX=
+      dragOffsetX=
         pos.x-p.x;
 
-      puzzleOffsetY=
+      dragOffsetY=
         pos.y-p.y;
+
+      /*
+        Bring selected piece
+        to the front.
+      */
+
+      pieces.splice(i,1);
+
+      pieces.push(p);
 
       break;
 
@@ -1450,47 +2246,77 @@ function puzzleMove(e){
 
   e.preventDefault();
 
-  const pos=pointerPosition(e);
+  const pos=
+    puzzlePointer(e);
 
   draggedPiece.x=
-    pos.x-puzzleOffsetX;
+    pos.x-dragOffsetX;
 
   draggedPiece.y=
-    pos.y-puzzleOffsetY;
+    pos.y-dragOffsetY;
 
   drawPuzzle();
 
 }
 
 
-function puzzleUp(e){
+function puzzleUp(){
 
   if(!draggedPiece)return;
 
   const p=draggedPiece;
 
-  const centerX=
+  /*
+    A piece must be close to its
+    target AND correctly rotated.
+  */
+
+  const cx=
     p.x+p.size/2;
 
-  const centerY=
+  const cy=
     p.y+p.size/2;
 
-  const targetCenterX=
+  const tx=
     p.targetX+p.size/2;
 
-  const targetCenterY=
+  const ty=
     p.targetY+p.size/2;
 
-  const distance=Math.hypot(
-    centerX-targetCenterX,
-    centerY-targetCenterY
-  );
+  const distance=
+    Math.hypot(
+      cx-tx,
+      cy-ty
+    );
 
-  if(distance<65){
+  const rotationCorrect=
+    p.rotation%360===
+    p.targetRotation;
+
+  if(
+    distance<55&&
+    rotationCorrect
+  ){
 
     p.x=p.targetX;
     p.y=p.targetY;
     p.placed=true;
+
+    const count=
+      pieces.filter(
+        piece=>piece.placed
+      ).length;
+
+    $('puzzleCount').textContent=
+      `${count}/12`;
+
+  }else if(
+    distance<55&&
+    !rotationCorrect
+  ){
+
+    $('puzzleMessage').textContent=
+      'Almost! The shape is in the wrong rotation.';
 
   }
 
@@ -1499,29 +2325,42 @@ function puzzleUp(e){
   drawPuzzle();
 
   if(
-    puzzlePieces.every(p=>p.placed)
+    pieces.every(
+      p=>p.placed
+    )
   ){
 
     puzzleFinished=true;
+
+    clearInterval(puzzleTimer);
 
     const seconds=
       Math.max(
         1,
         Math.floor(
-          (performance.now()-puzzleStartTime)/1000
+          (performance.now()-
+           puzzleStartTime)/1000
         )
       );
+
+    /*
+      Faster = higher score.
+    */
 
     const score=
       Math.max(
         100,
-        10000-seconds*100
+        20000-
+        seconds*150
       );
 
     $('puzzleMessage').textContent=
       `🎉 Puzzle complete! Score: ${score}`;
 
-    saveScore('Puzzle',score);
+    saveScore(
+      'Hard Puzzle',
+      score
+    );
 
   }
 
@@ -1561,24 +2400,26 @@ puzzleCanvas.addEventListener(
   {passive:false}
 );
 
-$('restartPuzzle').onclick=resetPuzzle;
+$('restartPuzzle').onclick=
+  createPuzzle;
 
-resetPuzzle();
+createPuzzle();
 
 
-/* =========================
+/* =========================================================
    T-REX RUNNER
-========================= */
+========================================================= */
 
-const trexCanvas=$('trexCanvas');
-const tctx=trexCanvas.getContext('2d');
+const trexCanvas=
+  $('trexCanvas');
+
+const tctx=
+  trexCanvas.getContext('2d');
 
 let trexRunning=false;
-let trexGameOver=false;
 let trexScore=0;
 let trexLastTime=0;
 let trexObstacleTimer=0;
-let trexAnimation=0;
 
 const trex={
   x:80,
@@ -1595,9 +2436,12 @@ let obstacles=[];
 function resetTrex(){
 
   trexRunning=true;
-  trexGameOver=false;
+
   trexScore=0;
-  trexLastTime=performance.now();
+
+  trexLastTime=
+    performance.now();
+
   trexObstacleTimer=0;
 
   trex.y=255;
@@ -1609,7 +2453,9 @@ function resetTrex(){
   $('trexMessage').textContent=
     'Jump over the obstacles!';
 
-  requestAnimationFrame(trexFrame);
+  requestAnimationFrame(
+    trexFrame
+  );
 
 }
 
@@ -1634,6 +2480,18 @@ function trexJump(){
 }
 
 
+function trexCollision(a,b){
+
+  return(
+    a.x<b.x+b.width&&
+    a.x+a.width>b.x&&
+    a.y<b.y+b.height&&
+    a.y+a.height>b.y
+  );
+
+}
+
+
 function drawTrex(){
 
   tctx.clearRect(
@@ -1642,8 +2500,6 @@ function drawTrex(){
     trexCanvas.width,
     trexCanvas.height
   );
-
-  /* sky */
 
   tctx.fillStyle='#e8f8ff';
 
@@ -1654,8 +2510,6 @@ function drawTrex(){
     trexCanvas.height
   );
 
-  /* clouds */
-
   tctx.fillStyle='#fff';
 
   [
@@ -1665,14 +2519,22 @@ function drawTrex(){
   ].forEach(([x,y])=>{
 
     tctx.beginPath();
-    tctx.arc(x,y,20,0,Math.PI*2);
-    tctx.arc(x+25,y-10,27,0,Math.PI*2);
-    tctx.arc(x+55,y,20,0,Math.PI*2);
+
+    tctx.arc(
+      x,y,20,0,Math.PI*2
+    );
+
+    tctx.arc(
+      x+25,y-10,27,0,Math.PI*2
+    );
+
+    tctx.arc(
+      x+55,y,20,0,Math.PI*2
+    );
+
     tctx.fill();
 
   });
-
-  /* ground */
 
   tctx.fillStyle='#555';
 
@@ -1682,8 +2544,6 @@ function drawTrex(){
     trexCanvas.width,
     5
   );
-
-  /* dino */
 
   tctx.fillStyle='#566573';
 
@@ -1708,8 +2568,6 @@ function drawTrex(){
     18
   );
 
-  /* eye */
-
   tctx.fillStyle='#fff';
 
   tctx.fillRect(
@@ -1728,8 +2586,6 @@ function drawTrex(){
     4
   );
 
-  /* legs */
-
   tctx.fillStyle='#45515d';
 
   tctx.fillRect(
@@ -1745,8 +2601,6 @@ function drawTrex(){
     12,
     25
   );
-
-  /* obstacles */
 
   obstacles.forEach(o=>{
 
@@ -1768,27 +2622,15 @@ function drawTrex(){
 
   });
 
-  /* score */
-
   tctx.fillStyle='#29354a';
-  tctx.font='bold 22px Arial';
+
+  tctx.font=
+    'bold 22px Arial';
 
   tctx.fillText(
     `Score: ${Math.floor(trexScore)}`,
     20,
     35
-  );
-
-}
-
-
-function collision(a,b){
-
-  return(
-    a.x<b.x+b.width&&
-    a.x+a.width>b.x&&
-    a.y<b.y+b.height&&
-    a.y+a.height>b.y
   );
 
 }
@@ -1814,7 +2656,8 @@ function trexFrame(time){
 
   trex.velocityY+=1500*dt;
 
-  trex.y+=trex.velocityY*dt;
+  trex.y+=
+    trex.velocityY*dt;
 
   if(trex.y>=255){
 
@@ -1831,19 +2674,24 @@ function trexFrame(time){
     trexObstacleTimer=0;
 
     obstacles.push({
+
       x:820,
+
       y:270,
+
       width:25,
+
       height:40
+
     });
 
   }
 
-  obstacles.forEach(o=>{
-
-    o.x-=300*dt;
-
-  });
+  obstacles.forEach(
+    obstacle=>{
+      obstacle.x-=300*dt;
+    }
+  );
 
   obstacles=
     obstacles.filter(
@@ -1852,22 +2700,21 @@ function trexFrame(time){
 
   trexScore+=dt*10;
 
-  for(const o of obstacles){
+  for(const obstacle of obstacles){
 
     if(
-      collision(
+      trexCollision(
         {
           x:trex.x+8,
           y:trex.y+5,
           width:trex.width-10,
           height:trex.height-5
         },
-        o
+        obstacle
       )
     ){
 
       trexRunning=false;
-      trexGameOver=true;
 
       const finalScore=
         Math.floor(trexScore);
@@ -1890,12 +2737,15 @@ function trexFrame(time){
 
   drawTrex();
 
-  requestAnimationFrame(trexFrame);
+  requestAnimationFrame(
+    trexFrame
+  );
 
 }
 
 
-$('restartTrex').onclick=resetTrex;
+$('restartTrex').onclick=
+  resetTrex;
 
 trexCanvas.addEventListener(
   'mousedown',
@@ -1931,28 +2781,21 @@ window.addEventListener(
 drawTrex();
 
 
-/* =========================
-   BIRTHDAY MOVIE
-========================= */
+/* =========================================================
+   MOVIE SYSTEM
+========================================================= */
 
 const canvas=$('canvas');
-const ctx=canvas.getContext('2d');
+
+const ctx=
+  canvas.getContext('2d');
 
 const W=canvas.width;
 const H=canvas.height;
 
-const rect=(
-  x,y,w,h,c
-)=>{
-  ctx.fillStyle=c;
-  ctx.fillRect(x,y,w,h);
-};
-
-const dino={
+const dinoMovie={
   x:155,
-  y:280,
-  vy:0,
-  jump:false
+  y:280
 };
 
 const clouds=[
@@ -1967,25 +2810,43 @@ const balloons=[
 ];
 
 let movie=false;
-let start=0;
-let raf;
+let movieStart=0;
+let movieRAF;
 let audio;
-let timer;
+let musicTimer;
 
 
-function round(x,y,w,h,r,c){
+function movieRect(
+  x,y,w,h,c
+){
 
   ctx.fillStyle=c;
+
+  ctx.fillRect(
+    x,y,w,h
+  );
+
+}
+
+
+function movieRound(
+  x,y,w,h,r,c
+){
+
+  ctx.fillStyle=c;
+
   ctx.beginPath();
+
   ctx.roundRect(
     x,y,w,h,r
   );
+
   ctx.fill();
 
 }
 
 
-function cloud(c){
+function drawCloud(c){
 
   ctx.fillStyle='#fff';
 
@@ -2020,21 +2881,16 @@ function cloud(c){
 }
 
 
-function drawDino(t){
+function drawMovieCharacter(t){
 
-  const x=dino.x;
-  const y=dino.y+
+  const x=
+    dinoMovie.x;
+
+  const y=
+    dinoMovie.y+
     Math.sin(t/120)*3;
 
-  const leg=
-    Math.sin(t/70)*5;
-
-  ctx.save();
-
-  ctx.shadowColor='#25324288';
-  ctx.shadowBlur=8;
-
-  round(
+  movieRound(
     x+18,
     y+23,
     48,
@@ -2043,7 +2899,7 @@ function drawDino(t){
     '#647180'
   );
 
-  round(
+  movieRound(
     x+47,
     y-5,
     70,
@@ -2052,7 +2908,7 @@ function drawDino(t){
     '#647180'
   );
 
-  round(
+  movieRound(
     x+106,
     y+12,
     27,
@@ -2061,36 +2917,7 @@ function drawDino(t){
     '#647180'
   );
 
-  round(
-    x+5,
-    y+35,
-    25,
-    45,
-    5,
-    '#647180'
-  );
-
-  round(
-    x+32,
-    y+75+leg,
-    20,
-    28,
-    4,
-    '#647180'
-  );
-
-  round(
-    x+75,
-    y+75-leg,
-    20,
-    28,
-    4,
-    '#647180'
-  );
-
-  ctx.restore();
-
-  rect(
+  movieRect(
     x+65,
     y+15,
     14,
@@ -2098,7 +2925,7 @@ function drawDino(t){
     '#293544'
   );
 
-  rect(
+  movieRect(
     x+109,
     y+8,
     8,
@@ -2106,7 +2933,7 @@ function drawDino(t){
     '#172331'
   );
 
-  rect(
+  movieRect(
     x+112,
     y+10,
     3,
@@ -2114,114 +2941,44 @@ function drawDino(t){
     'white'
   );
 
-  rect(
-    x+37,
-    y+36,
-    13,
-    13,
-    '#8a96a3'
-  );
-
-  rect(
-    x+42,
-    y-22,
-    68,
-    8,
-    '#e63950'
-  );
-
-  rect(
-    x+58,
-    y-42,
-    12,
-    20,
-    '#e63950'
-  );
-
-  rect(
-    x+82,
-    y-32,
-    12,
-    15,
-    '#ffd166'
-  );
-
-  rect(
-    x+30,
-    y-32,
-    12,
-    15,
-    '#06d6a0'
-  );
-
 }
 
 
-function drawCactus(x,ground){
+function drawGenericMovie(t){
 
-  rect(
-    x+20,
-    ground-105,
-    27,
-    105,
-    '#159447'
-  );
-
-  rect(
-    x,
-    ground-70,
-    20,
-    42,
-    '#159447'
-  );
-
-  rect(
-    x-13,
-    ground-57,
-    15,
-    34,
-    '#159447'
-  );
-
-  rect(
-    x+48,
-    ground-82,
-    20,
-    40,
-    '#159447'
-  );
-
-  rect(
-    x+66,
-    ground-69,
-    15,
-    34,
-    '#159447'
-  );
-
-}
-
-
-function draw(t=0){
-
-  const selected=$('scene').value;
+  const selected=
+    $('scene').value;
 
   const scenes=
     selected==='random'
-      ?['day','night','candy']
+      ?[
+        'day',
+        'night',
+        'candy'
+      ]
       :[selected];
 
-  const s=
+  const scene=
     scenes[
-      Math.floor(t/18000)%scenes.length
+      Math.floor(t/18000)%
+      scenes.length
     ];
 
-  let sky=
-    s==='night'
-      ?'#17284d'
-      :s==='candy'
-        ?'#eaa4d1'
-        :'#62c4ed';
+  let sky;
+
+  if(scene==='night'){
+
+    sky='#17284d';
+
+  }else if(scene==='candy'){
+
+    sky='#eaa4d1';
+
+  }else{
+
+    sky='#62c4ed';
+
+  }
 
   ctx.fillStyle=sky;
 
@@ -2229,9 +2986,13 @@ function draw(t=0){
     0,0,W,H
   );
 
-  if(s==='night'){
+  if(scene==='night'){
 
-    for(let i=0;i<45;i++){
+    for(
+      let i=0;
+      i<45;
+      i++
+    ){
 
       ctx.fillStyle='#fff';
 
@@ -2261,7 +3022,7 @@ function draw(t=0){
   }else{
 
     clouds.forEach(
-      c=>cloud({
+      c=>drawCloud({
         ...c,
         x:c.x-(t/90)%W
       })
@@ -2269,8 +3030,12 @@ function draw(t=0){
 
   }
 
+  /*
+    Generic landscape.
+  */
+
   ctx.fillStyle=
-    s==='candy'
+    scene==='candy'
       ?'#f28fba'
       :'#a5c7d1';
 
@@ -2293,6 +3058,58 @@ function draw(t=0){
     105
   );
 
+  /*
+    Character moves through
+    the scene.
+  */
+
+  dinoMovie.x=
+    120+
+    Math.sin(t/2500)*180;
+
+  drawMovieCharacter(t);
+
+  ctx.fillStyle='#fff';
+
+  ctx.font=
+    'bold 22px Arial';
+
+  ctx.fillText(
+    'ANIMATION',
+    380,
+    55
+  );
+
+}
+
+
+function drawBirthdayMovie(t){
+
+  ctx.fillStyle='#62c4ed';
+
+  ctx.fillRect(
+    0,
+    0,
+    W,
+    H
+  );
+
+  clouds.forEach(
+    c=>drawCloud({
+      ...c,
+      x:c.x-(t/90)%W
+    })
+  );
+
+  ctx.fillStyle='#6eae58';
+
+  ctx.fillRect(
+    0,
+    315,
+    W,
+    105
+  );
+
   ctx.fillStyle='#d79a39';
 
   ctx.fillRect(
@@ -2302,75 +3119,57 @@ function draw(t=0){
     8
   );
 
-  ctx.fillStyle='#c6812b';
+  balloons.forEach(
+    (b,i)=>{
 
-  for(
-    let x=0;
-    x<W;
-    x+=65
-  ){
+      const x=
+        b.x-(t/(i+2))%W;
 
-    ctx.fillRect(
-      x+(t/12)%65,
-      350,
-      25,
-      8
-    );
+      ctx.strokeStyle='#555';
 
-  }
+      ctx.beginPath();
 
-  drawCactus(
-    610,
-    315
+      ctx.moveTo(x,250);
+      ctx.lineTo(x,315);
+
+      ctx.stroke();
+
+      ctx.fillStyle=b.c;
+
+      ctx.beginPath();
+
+      ctx.ellipse(
+        x,
+        220-(i%2)*20,
+        18,
+        25,
+        0,
+        0,
+        Math.PI*2
+      );
+
+      ctx.fill();
+
+    }
   );
 
-  balloons.forEach((b,i)=>{
-
-    const x=
-      b.x-(t/(i+2))%W;
-
-    ctx.strokeStyle='#555';
-
-    ctx.beginPath();
-
-    ctx.moveTo(x,250);
-    ctx.lineTo(x,315);
-
-    ctx.stroke();
-
-    ctx.fillStyle=b.c;
-
-    ctx.beginPath();
-
-    ctx.ellipse(
-      x,
-      220-(i%2)*20,
-      18,
-      25,
-      0,
-      0,
-      Math.PI*2
-    );
-
-    ctx.fill();
-
-  });
-
-  drawDino(t);
+  drawMovieCharacter(t);
 
   ctx.fillStyle='#fff';
-  ctx.font='bold 18px Arial';
+
+  ctx.font=
+    'bold 20px Arial';
 
   ctx.fillText(
     'HAPPY BIRTHDAY ASHER!',
-    285,
+    310,
     55
   );
 
 }
 
 
-function music(){
+function playMusic(){
 
   audio=
     audio||
@@ -2387,78 +3186,106 @@ function music(){
     329.63
   ];
 
-  let i=0;
+  let index=0;
 
-  clearInterval(timer);
+  clearInterval(musicTimer);
 
-  timer=setInterval(()=>{
+  musicTimer=
+    setInterval(()=>{
 
-    const o=
-      audio.createOscillator();
+      const oscillator=
+        audio.createOscillator();
 
-    const g=
-      audio.createGain();
+      const gain=
+        audio.createGain();
 
-    o.type='triangle';
+      oscillator.type='triangle';
 
-    o.frequency.value=
-      notes[i++%notes.length];
+      oscillator.frequency.value=
+        notes[
+          index++%
+          notes.length
+        ];
 
-    g.gain.setValueAtTime(
-      .04,
-      audio.currentTime
-    );
+      gain.gain.setValueAtTime(
+        .035,
+        audio.currentTime
+      );
 
-    g.gain.exponentialRampToValueAtTime(
-      .001,
-      audio.currentTime+.45
-    );
+      gain.gain.exponentialRampToValueAtTime(
+        .001,
+        audio.currentTime+.45
+      );
 
-    o.connect(g)
-      .connect(audio.destination);
+      oscillator
+        .connect(gain)
+        .connect(audio.destination);
 
-    o.start();
+      oscillator.start();
 
-    o.stop(
-      audio.currentTime+.45
-    );
+      oscillator.stop(
+        audio.currentTime+.45
+      );
 
-  },500);
+    },500);
 
 }
 
 
-function frame(t){
+function movieFrame(time){
 
   if(!movie)return;
 
   const elapsed=
-    t-start;
+    time-movieStart;
 
   if(elapsed>=180000){
 
     movie=false;
 
-    clearInterval(timer);
+    clearInterval(
+      musicTimer
+    );
 
     $('movieStatus').textContent=
-      'Birthday movie finished!';
-
-    draw(elapsed);
+      'Movie finished!';
 
     return;
 
   }
 
-  draw(elapsed);
+  /*
+    ASHER GETS THE BIRTHDAY
+    VERSION. EVERYONE ELSE
+    GETS THE GENERIC VERSION.
+  */
+
+  if(matches(
+    currentUser,
+    ASHER
+  )){
+
+    drawBirthdayMovie(
+      elapsed
+    );
+
+  }else{
+
+    drawGenericMovie(
+      elapsed
+    );
+
+  }
 
   $('movieStatus').textContent=
-    `Birthday movie playing: ${
+    `Movie playing: ${
       Math.floor(elapsed/1000)
     } / 180 seconds`;
 
-  raf=
-    requestAnimationFrame(frame);
+  movieRAF=
+    requestAnimationFrame(
+      movieFrame
+    );
 
 }
 
@@ -2469,12 +3296,21 @@ $('movieButton').onclick=()=>{
 
     movie=false;
 
-    cancelAnimationFrame(raf);
+    cancelAnimationFrame(
+      movieRAF
+    );
 
-    clearInterval(timer);
+    clearInterval(
+      musicTimer
+    );
 
     $('movieButton').textContent=
-      '▶ Start Birthday Movie & Music';
+      matches(
+        currentUser,
+        ASHER
+      )
+      ?'▶ Start Birthday Movie'
+      :'▶ Start Movie';
 
     return;
 
@@ -2482,24 +3318,25 @@ $('movieButton').onclick=()=>{
 
   movie=true;
 
-  start=performance.now();
+  movieStart=
+    performance.now();
 
   $('movieButton').textContent=
     '■ Stop Movie';
 
-  music();
+  playMusic();
 
-  raf=
-    requestAnimationFrame(frame);
+  movieRAF=
+    requestAnimationFrame(
+      movieFrame
+    );
 
 };
 
-draw(0);
 
-
-/* =========================
+/* =========================================================
    AUTH STATE
-========================= */
+========================================================= */
 
 onAuthStateChanged(
   auth,
@@ -2507,33 +3344,75 @@ onAuthStateChanged(
 
     currentUser=user;
 
-    const owner=
+    const isOwner=
       matches(user,OWNER);
 
-    const asher=
+    const isAsher=
       matches(user,ASHER);
 
     /*
-      Games are ALWAYS visible.
-      They are no longer restricted
-      to Asher's account.
+      Everyone gets the game panel.
     */
 
-    $('gamePanel').style.display='block';
+    $('gamePanel').style.display=
+      'block';
 
     $('adminPanel').style.display=
-      owner?'block':'none';
+      isOwner
+        ?'block'
+        :'none';
 
     $('questionPanel').style.display=
-      owner?'none':'block';
+      isOwner
+        ?'none'
+        :'block';
 
     $('birthday').style.display=
-      asher?'block':'none';
+      isAsher
+        ?'block'
+        :'none';
+
+
+    /*
+      Change the movie specifically
+      for Asher.
+    */
+
+    if(isAsher){
+
+      $('movieMenuText').textContent=
+        "Asher's Birthday Movie";
+
+      $('movieTitle').textContent=
+        "🎂 Asher's Birthday Movie";
+
+      $('movieDescription').textContent=
+        "A special birthday animation made just for you.";
+
+      $('movieButton').textContent=
+        "▶ Start Birthday Movie";
+
+    }else{
+
+      $('movieMenuText').textContent=
+        "Watch Movie";
+
+      $('movieTitle').textContent=
+        "🎬 Watch Movie";
+
+      $('movieDescription').textContent=
+        "Sit back and enjoy the movie.";
+
+      $('movieButton').textContent=
+        "▶ Start Movie";
+
+    }
+
 
     if(user){
 
       $('loginButton').textContent=
-        owner
+        isOwner
           ?'Add Words'
           :'Logged In';
 
@@ -2555,6 +3434,13 @@ onAuthStateChanged(
 
       $('loggedInScores')
         .classList.add('hidden');
+
+      if(scoresUnsubscribe){
+
+        scoresUnsubscribe();
+        scoresUnsubscribe=null;
+
+      }
 
     }
 
