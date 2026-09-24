@@ -12,7 +12,7 @@ body{
   margin:0;
   font-family:Arial,sans-serif;
   background:#f4f1ff;
-  color:#222
+  color:#222;
 }
 
 header{
@@ -20,105 +20,99 @@ header{
   padding:35px 20px;
   text-align:center;
   color:#fff;
-  background:linear-gradient(135deg,#6c4cff,#8b6cff)
+  background:linear-gradient(135deg,#6c4cff,#8b6cff);
 }
 
 h1{margin:0;font-size:42px}
 
-.login-button,
-.upgrade-button{
+.login-button{
   position:absolute;
+  right:20px;
   top:20px;
   padding:10px 18px;
   border:0;
   border-radius:10px;
-  font-weight:bold
-}
-
-.login-button{
-  right:20px;
   background:#fff;
-  color:#6c4cff
-}
-
-.upgrade-button{
-  left:20px;
-  background:#ffd166;
-  color:#704600
+  color:#6c4cff;
+  font-weight:bold;
 }
 
 button{
   cursor:pointer;
-  font:inherit
-}
-
-button:disabled{
-  cursor:not-allowed;
-  opacity:.6
+  font:inherit;
 }
 
 .search{
   text-align:center;
-  padding:25px
+  padding:25px;
 }
 
-.search input,input,textarea,select{
+.search input,
+input,
+textarea,
+select{
   width:100%;
   padding:12px;
   margin:7px 0;
   border:1px solid #ccc;
   border-radius:8px;
-  font:inherit
+  font:inherit;
 }
 
 .search input{
   width:min(80%,500px);
-  border:2px solid #6c4cff
+  border:2px solid #6c4cff;
 }
 
-.panel,.dictionary{
-  width:min(calc(100% - 40px),800px);
-  margin:auto
+.panel,
+.dictionary{
+  width:min(calc(100% - 40px),900px);
+  margin:auto;
 }
 
 .panel{
   display:none;
-  margin-bottom:25px
+  margin-bottom:25px;
 }
 
-.box,.card{
+.box,
+.card{
   padding:22px;
   border-radius:15px;
   background:#fff;
-  box-shadow:0 4px 12px #00000014
+  box-shadow:0 4px 12px #00000014;
 }
 
-.card{margin:15px 0}
+.card{
+  margin:15px 0;
+}
 
 .word{
   font-size:28px;
   font-weight:bold;
-  color:#6c4cff
+  color:#6c4cff;
 }
 
 .pronunciation{
   margin-top:6px;
-  color:#777
+  color:#777;
 }
 
 .meaning{
   margin-top:12px;
-  font-size:18px
+  font-size:18px;
 }
 
 .credits{
   margin-top:12px;
   color:#555;
   font-size:14px;
-  font-style:italic
+  font-style:italic;
 }
 
-h2{color:#6c4cff}
+h2{
+  color:#6c4cff;
+}
 
 .primary{
   width:100%;
@@ -127,7 +121,8 @@ h2{color:#6c4cff}
   border-radius:8px;
   background:#6c4cff;
   color:white;
-  font-weight:bold
+  font-weight:bold;
+  margin-top:8px;
 }
 
 .secondary{
@@ -135,154 +130,57 @@ h2{color:#6c4cff}
   border:0;
   border-radius:8px;
   background:#eee;
-  margin-top:10px
+  margin-top:10px;
 }
 
-#birthday{
-  display:none;
-  margin:20px auto;
-  width:min(calc(100% - 40px),800px);
-  padding:24px;
-  border:3px solid #f0b429;
-  border-radius:18px;
-  background:#ffd166;
-  color:#704600;
-  text-align:center;
-  font-size:30px;
-  font-weight:bold
+.green{
+  background:#19a463;
 }
 
-/* GAME MENU */
+.red{
+  background:#d64545;
+}
 
 .game-menu{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
-  gap:12px;
-  margin:20px 0
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:20px;
 }
 
-.game-option{
-  padding:18px 10px;
-  border:2px solid #ddd;
-  border-radius:14px;
-  background:#fff;
+.game-choice{
+  border:0;
+  border-radius:15px;
+  padding:22px;
+  min-height:130px;
+  background:linear-gradient(135deg,#6c4cff,#947cff);
+  color:white;
   font-weight:bold;
-  color:#444;
-  transition:.15s
+  font-size:18px;
+  box-shadow:0 5px 15px #0002;
 }
 
-.game-option:hover{
+.game-choice:hover{
   transform:translateY(-2px);
-  border-color:#6c4cff
 }
 
-.game-option.active{
-  background:#6c4cff;
-  color:#fff;
-  border-color:#6c4cff
-}
-
-.game-area{
-  display:none
-}
-
-.game-area.active{
-  display:block
-}
-
-.game-note{
-  text-align:center;
-  color:#666
-}
-
-/* PUZZLE */
-
-.puzzle-wrapper{
-  overflow:hidden;
-  border-radius:14px
-}
-
-#puzzleCanvas{
+.game-choice small{
   display:block;
-  width:100%;
-  height:auto;
-  border:3px solid #29354a;
-  border-radius:14px;
-  background:#f7f5ff;
-  touch-action:none
+  margin-top:8px;
+  font-weight:normal;
+  opacity:.9;
 }
 
-.puzzle-info{
-  display:flex;
-  justify-content:space-between;
-  gap:10px;
-  padding:10px 0;
-  color:#555;
-  font-size:14px
+.game-screen{
+  display:none;
+  margin-top:20px;
 }
 
-#puzzleMessage{
-  min-height:25px;
-  text-align:center;
-  font-weight:bold
-}
-
-/* TREX */
-
-#trexCanvas{
-  display:block;
-  width:100%;
-  height:auto;
-  border:3px solid #29354a;
-  border-radius:14px;
-  background:#e8f8ff;
-  touch-action:none
-}
-
-.game-message{
-  min-height:24px;
-  text-align:center;
-  font-weight:bold
-}
-
-/* MOVIE */
-
-.movie-controls{
-  display:flex;
-  gap:10px
-}
-
-.movie-controls select{
-  flex:1
-}
-
-#movieStatus{
-  text-align:center;
-  color:#555;
-  min-height:20px
-}
-
-/* SCORES */
-
-.score-box{
-  margin-top:22px;
-  padding:18px;
-  border-radius:14px;
-  background:#f4f1ff
-}
-
-.high-score{
-  color:#6c4cff;
-  font-size:25px;
-  font-weight:bold
-}
-
-.score-list{
-  padding-left:25px
-}
-
-.score-list li{
-  margin:7px 0
+.back-button{
+  width:auto;
+  background:#eee;
+  color:#333;
+  margin-bottom:12px;
 }
 
 /* LOGIN */
@@ -295,7 +193,7 @@ h2{color:#6c4cff}
   align-items:center;
   justify-content:center;
   padding:20px;
-  background:#0008
+  background:#0008;
 }
 
 .login-box{
@@ -303,92 +201,227 @@ h2{color:#6c4cff}
   padding:30px;
   border-radius:18px;
   background:#fff;
-  text-align:center
+  text-align:center;
 }
 
 .error{
   min-height:20px;
   color:#c33;
-  margin-top:8px
+  margin-top:8px;
 }
 
-.loading-spinner{
-  width:18px;
-  height:18px;
+.loading{
+  display:inline-block;
+  width:17px;
+  height:17px;
   border:3px solid #ffffff66;
   border-top-color:#fff;
   border-radius:50%;
-  display:inline-block;
-  vertical-align:middle;
   animation:spin .7s linear infinite;
-  margin-right:8px
-}
-
-.login-spinner{
-  border-color:#6c4cff44;
-  border-top-color:#6c4cff
+  vertical-align:middle;
+  margin-right:8px;
 }
 
 @keyframes spin{
   to{transform:rotate(360deg)}
 }
 
-.auth-switch{
+/* PUZZLE */
+
+.puzzle-info{
+  text-align:center;
+  color:#555;
+}
+
+.puzzle-layout{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
   margin-top:15px;
-  color:#666;
-  font-size:14px
 }
 
-.link-button{
-  border:0;
-  background:none;
+.puzzle-area{
+  position:relative;
+  width:100%;
+  aspect-ratio:1;
+  min-height:320px;
+  border:4px solid #29354a;
+  border-radius:14px;
+  overflow:hidden;
+  background:
+    linear-gradient(45deg,#ffffff 25%,transparent 25%),
+    linear-gradient(-45deg,#ffffff 25%,transparent 25%),
+    linear-gradient(45deg,transparent 75%,#ffffff 75%),
+    linear-gradient(-45deg,transparent 75%,#ffffff 75%);
+  background-size:30px 30px;
+  background-position:0 0,0 15px,15px -15px,-15px 0;
+}
+
+.puzzle-target{
+  position:absolute;
+  border:2px dashed #8c7bd8;
+  background:#8c7bd820;
+  border-radius:8px;
+}
+
+.piece{
+  position:absolute;
+  width:70px;
+  height:70px;
+  touch-action:none;
+  user-select:none;
+  cursor:grab;
+  transition:transform .15s;
+  z-index:3;
+}
+
+.piece.selected{
+  filter:drop-shadow(0 0 8px #ffb300);
+  z-index:20;
+}
+
+.piece.dragging{
+  cursor:grabbing;
+  z-index:30;
+  transition:none;
+}
+
+.piece svg{
+  width:100%;
+  height:100%;
+  overflow:visible;
+}
+
+.rotate-button{
+  width:100%;
+  background:#ff9f1c;
+  color:#fff;
+  font-size:18px;
+}
+
+.rotate-button:disabled{
+  opacity:.5;
+  cursor:not-allowed;
+}
+
+.puzzle-controls{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:10px;
+  margin-top:12px;
+}
+
+.puzzle-status{
+  text-align:center;
+  min-height:25px;
+  font-weight:bold;
   color:#6c4cff;
-  font-weight:bold
 }
 
-.hidden{
-  display:none!important
+/* HIGH SCORES */
+
+.score-table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:15px;
+}
+
+.score-table th,
+.score-table td{
+  padding:10px;
+  border-bottom:1px solid #ddd;
+  text-align:left;
+}
+
+/* TREX */
+
+#trexCanvas{
+  width:100%;
+  background:#87ceeb;
+  border:4px solid #29354a;
+  border-radius:14px;
+  display:block;
+  touch-action:none;
+}
+
+/* MOVIE */
+
+.movie-frame{
+  width:100%;
+  aspect-ratio:16/9;
+  border-radius:14px;
+  background:#111;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color:white;
+  text-align:center;
+  overflow:hidden;
+}
+
+.movie-placeholder{
+  padding:30px;
+}
+
+.movie-controls{
+  display:flex;
+  gap:10px;
+}
+
+.movie-controls select{
+  flex:1;
+}
+
+/* ASHER */
+
+#birthday{
+  display:none;
+  margin:20px auto;
+  width:min(calc(100% - 40px),900px);
+  padding:24px;
+  border:3px solid #f0b429;
+  border-radius:18px;
+  background:#ffd166;
+  color:#704600;
+  text-align:center;
+  font-size:30px;
+  font-weight:bold;
+}
+
+#birthdayMovie{
+  display:none;
 }
 
 footer{
   text-align:center;
-  padding:20px;
-  color:#777
+  padding:30px;
+  color:#777;
 }
 
-@media(max-width:700px){
+@media(max-width:650px){
+  h1{font-size:32px}
 
-  h1{
-    font-size:32px;
-    padding-top:25px
+  .panel,
+  .dictionary{
+    width:calc(100% - 24px);
   }
 
   .game-menu{
-    grid-template-columns:1fr
+    grid-template-columns:1fr;
+  }
+
+  .puzzle-layout{
+    grid-template-columns:1fr;
   }
 
   .movie-controls{
-    display:block
-  }
-
-  .panel,.dictionary{
-    width:calc(100% - 24px)
+    display:block;
   }
 
   .login-button{
     right:10px;
     top:10px;
-    padding:8px 12px
-  }
-
-  .upgrade-button{
-    left:10px;
-    top:10px;
-    padding:8px 12px
-  }
-
-  .puzzle-info{
-    display:block
+    padding:8px 12px;
   }
 }
 </style>
@@ -397,60 +430,35 @@ footer{
 <body>
 
 <header>
-  <button class="upgrade-button" id="upgradeButton">
-    ⭐ Upgrade for Free
-  </button>
-
   <h1>Saof Dictionary</h1>
-
-  <button class="login-button" id="loginButton">
-    Login
-  </button>
+  <button class="login-button" id="loginButton">Login</button>
 </header>
 
 <div class="search">
   <input id="searchInput" placeholder="Search a word...">
 </div>
 
-<div id="birthday">
-  🎉 Happy Birthday, Asher! 🎂
-</div>
+<div id="birthday">🎉 Happy Birthday, Asher! 🎂</div>
 
 <!-- QUESTIONS -->
-
-<section class="panel question" id="questionPanel">
+<section class="panel" id="questionPanel">
   <div class="box">
-
     <h2>Ask about a word</h2>
-
-    <p>
-      Send a question or word suggestion to the dictionary owner.
-    </p>
+    <p>Send a question or word suggestion to the dictionary owner.</p>
 
     <input id="questionName" placeholder="Your name (optional)">
+    <textarea id="questionText" placeholder="Your question"></textarea>
 
-    <textarea id="questionText"
-      placeholder="Your question"></textarea>
-
-    <button class="primary" id="saveQuestion">
-      Save Question
-    </button>
-
-    <button class="primary" id="openMessages">
-      Open Messages
-    </button>
+    <button class="primary" id="saveQuestion">Save Question</button>
+    <button class="primary" id="openMessages">Open Messages</button>
 
     <div id="questionStatus"></div>
-
   </div>
 </section>
 
 <!-- ADMIN -->
-
 <section class="panel" id="adminPanel">
-
   <div class="box">
-
     <h2>Add a Word</h2>
 
     <input id="newWord" placeholder="Word">
@@ -458,345 +466,264 @@ footer{
     <input id="newMeaning" placeholder="Meaning">
     <input id="newCredits" placeholder="Credits (optional)">
 
-    <button class="primary" id="addWord">
-      Add Word
-    </button>
-
-    <br>
-
-    <button class="secondary" id="logout">
-      Logout
-    </button>
-
+    <button class="primary" id="addWord">Add Word</button>
+    <button class="secondary" id="logout">Logout</button>
   </div>
-
 </section>
 
-<!-- GAME HUB -->
-
+<!-- GAMES -->
 <section class="panel" id="gamePanel">
-
   <div class="box">
 
     <h2>🎮 Games</h2>
-
-    <p class="game-note">
-      Everyone can play. Log in to save your high scores.
-    </p>
+    <p>Choose a game to play.</p>
 
     <div class="game-menu">
 
-      <button class="game-option" data-game="puzzle">
+      <button class="game-choice" id="mobilePuzzleChoice">
         🧩 Puzzle
+        <small>Mobile — drag the pieces together</small>
       </button>
 
-      <button class="game-option" data-game="trex">
+      <button class="game-choice" id="desktopPuzzleChoice">
+        🧩 Puzzle
+        <small>Laptop/iMac — drag with your mouse</small>
+      </button>
+
+      <button class="game-choice" id="trexChoice">
         🦖 T-Rex Runner
+        <small>Run, jump and avoid obstacles</small>
       </button>
 
-      <button class="game-option" data-game="movie">
-        🎬 <span id="movieMenuText">Watch Movie</span>
+      <button class="game-choice" id="watchMovieChoice">
+        🎬 Watch Movie
+        <small>Watch a movie</small>
+      </button>
+
+      <button class="game-choice" id="scoresChoice">
+        🏆 High Scores
+        <small>View your scores</small>
+      </button>
+
+      <button class="game-choice" id="birthdayMovieChoice" style="display:none">
+        🎂 Asher's Birthday Movie
+        <small>Special movie for Asher</small>
       </button>
 
     </div>
 
+    <!-- PUZZLE -->
+    <div class="game-screen" id="puzzleScreen">
 
-    <!-- ================= PUZZLE ================= -->
+      <button class="secondary back-button" data-back>← Back to Games</button>
 
-    <div class="game-area" id="puzzleGame">
+      <h2>🧩 Hard Puzzle</h2>
 
-      <h2>🧩 Ultimate Shape Puzzle</h2>
-
-      <p class="game-note">
-        12 pieces. Irregular shapes. Random positions.
-        Drag each piece onto its matching outline.
+      <p class="puzzle-info">
+        Drag pieces into the matching locations.
+        Select a piece and press <b>↻ Rotate</b> when its orientation is wrong.
       </p>
 
-      <div class="puzzle-info">
-        <span>
-          Pieces: <strong>12</strong>
-        </span>
+      <div class="puzzle-layout">
 
-        <span>
-          Time: <strong id="puzzleTime">0s</strong>
-        </span>
+        <div>
+          <h3>Pieces</h3>
+          <div class="puzzle-area" id="pieceArea"></div>
+        </div>
 
-        <span>
-          Placed: <strong id="puzzleCount">0/12</strong>
-        </span>
+        <div>
+          <h3>Solution Board</h3>
+          <div class="puzzle-area" id="targetArea"></div>
+        </div>
+
       </div>
 
-      <div class="puzzle-wrapper">
-        <canvas
-          id="puzzleCanvas"
-          width="900"
-          height="600">
-        </canvas>
+      <div class="puzzle-status" id="puzzleStatus">
+        Select a piece to rotate it.
       </div>
 
-      <p id="puzzleMessage"></p>
-
-      <button class="primary" id="restartPuzzle">
-        🔄 New Puzzle
+      <button class="primary rotate-button" id="rotatePiece" disabled>
+        ↻ Rotate Selected Piece
       </button>
+
+      <div class="puzzle-controls">
+        <button class="primary" id="newPuzzle">New Hard Puzzle</button>
+        <button class="secondary" id="checkPuzzle">Check Puzzle</button>
+      </div>
 
     </div>
 
+    <!-- TREX -->
+    <div class="game-screen" id="trexScreen">
 
-    <!-- ================= TREX ================= -->
-
-    <div class="game-area" id="trexGame">
+      <button class="secondary back-button" data-back>← Back to Games</button>
 
       <h2>🦖 T-Rex Runner</h2>
 
-      <p class="game-note">
-        Press Space, click, or tap to jump.
+      <p>
+        Press Space, tap the screen, or click to jump.
       </p>
 
-      <canvas
-        id="trexCanvas"
-        width="800"
-        height="350">
-      </canvas>
+      <canvas id="trexCanvas" width="900" height="350"></canvas>
 
-      <p id="trexMessage" class="game-message">
-        Press Space or tap to start.
-      </p>
-
-      <button class="primary" id="restartTrex">
-        Start / Restart
+      <button class="primary" id="startTrex">
+        ▶ Start T-Rex Runner
       </button>
+
+      <p id="trexStatus">Ready!</p>
 
     </div>
 
+    <!-- WATCH MOVIE -->
+    <div class="game-screen" id="watchMovieScreen">
 
-    <!-- ================= MOVIE ================= -->
+      <button class="secondary back-button" data-back>← Back to Games</button>
 
-    <div class="game-area" id="movieGame">
-
-      <h2 id="movieTitle">🎬 Watch Movie</h2>
-
-      <p class="game-note" id="movieDescription">
-        Sit back and enjoy the movie.
-      </p>
+      <h2>🎬 Watch Movie</h2>
 
       <div class="movie-controls">
-
-        <select id="scene">
-          <option value="random">
-            Random scenes
-          </option>
-
-          <option value="day">
-            Sunny scene
-          </option>
-
-          <option value="night">
-            Night scene
-          </option>
-
-          <option value="candy">
-            Colorful scene
-          </option>
-
+        <select id="movieChoice">
+          <option value="movie1">Movie 1</option>
+          <option value="movie2">Movie 2</option>
+          <option value="movie3">Movie 3</option>
         </select>
-
-        <select id="quality">
-
-          <option value="high">
-            Detailed graphics
-          </option>
-
-          <option value="pixel">
-            Pixel graphics
-          </option>
-
-        </select>
-
       </div>
 
-      <canvas
-        id="canvas"
-        width="900"
-        height="420">
-      </canvas>
+      <div class="movie-frame" id="movieFrame">
+        <div class="movie-placeholder">
+          <h2 style="color:white">🎬 Movie</h2>
+          <p>
+            Choose a movie above and add your movie video below in the code.
+          </p>
+          <p>
+            This movie section is completely separate from Asher's birthday movie.
+          </p>
+        </div>
+      </div>
 
-      <button class="primary" id="movieButton">
-        ▶ Start Movie
+      <button class="primary" id="playMovie">
+        ▶ Play Movie
       </button>
-
-      <p id="movieStatus">
-        Ready to play
-      </p>
 
     </div>
 
+    <!-- HIGH SCORES -->
+    <div class="game-screen" id="scoresScreen">
 
-    <!-- ================= HIGH SCORES ================= -->
-
-    <div class="score-box">
+      <button class="secondary back-button" data-back>← Back to Games</button>
 
       <h2>🏆 High Scores</h2>
 
-      <div id="guestScoreMessage">
+      <p>
+        Your scores are saved to Firebase when you are logged in.
+      </p>
 
-        <p>
-          You're playing as a guest.
-          <button
-            class="link-button"
-            id="scoreLoginButton">
-            Log in
-          </button>
-          to save your scores.
-        </p>
+      <table class="score-table">
+        <thead>
+          <tr>
+            <th>Game</th>
+            <th>Score</th>
+            <th>Player</th>
+          </tr>
+        </thead>
+        <tbody id="scoreBody"></tbody>
+      </table>
 
-      </div>
+    </div>
 
-      <div id="loggedInScores" class="hidden">
+    <!-- ASHER BIRTHDAY MOVIE -->
+    <div class="game-screen" id="birthdayMovie">
 
-        <p>
-          Your best score:
-          <span
-            class="high-score"
-            id="myBestScore">
-            0
-          </span>
-        </p>
+      <button class="secondary back-button" data-back>← Back to Games</button>
 
-        <ol
-          class="score-list"
-          id="scoreList">
-        </ol>
+      <h2>🎂 Asher's Birthday Movie</h2>
 
-      </div>
+      <p>
+        This special birthday animation is only available to Asher.
+      </p>
+
+      <canvas id="birthdayCanvas" width="900" height="420"
+        style="width:100%;border-radius:14px;background:#62c4ed">
+      </canvas>
+
+      <button class="primary" id="birthdayButton">
+        ▶ Start Birthday Movie
+      </button>
+
+      <p id="birthdayStatus">Ready to play!</p>
 
     </div>
 
   </div>
-
 </section>
 
-
 <!-- DICTIONARY -->
-
 <main class="dictionary" id="dictionary">
 
   <article class="card">
-
     <div class="word">Recos</div>
-
     <div class="pronunciation">
-      Pronunciation:
-      <strong>reh-coss</strong>
+      Pronunciation: <strong>reh-coss</strong>
     </div>
-
     <div class="meaning">
-      Meaning:
-      <strong>ball</strong>
+      Meaning: <strong>ball</strong>
     </div>
-
     <div class="credits">
       Credits: No credits
     </div>
-
   </article>
 
-
   <article class="card">
-
     <div class="word">Saof</div>
-
     <div class="pronunciation">
-      Pronunciation:
-      <strong>s-ow-f</strong>
+      Pronunciation: <strong>s-ow-f</strong>
     </div>
-
     <div class="meaning">
-      Meaning:
-      <strong>me / and</strong>
+      Meaning: <strong>me / and</strong>
     </div>
-
     <div class="credits">
       Credits: No credits
     </div>
-
   </article>
 
-
   <article class="card">
-
     <div class="word">Thu</div>
-
     <div class="pronunciation">
-      Pronunciation:
-      <strong>th-oo</strong>
+      Pronunciation: <strong>th-oo</strong>
     </div>
-
     <div class="meaning">
-      Meaning:
-      <strong>Depends on the context.</strong>
+      Meaning: <strong>Depends on the context.</strong>
     </div>
-
     <div class="credits">
       Credits: No credits
     </div>
-
   </article>
 
 </main>
 
+<footer>© 2026 Saof Dictionary</footer>
 
-<footer>
-  © 2026 Saof Dictionary
-</footer>
-
-
-<!-- LOGIN -->
-
+<!-- LOGIN / SIGNUP -->
 <div id="login">
 
   <div class="login-box">
 
-    <h2 id="authTitle">Login</h2>
+    <h2 id="loginTitle">Login</h2>
 
-    <input
-      id="email"
-      type="email"
-      placeholder="Email">
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
 
-    <input
-      id="password"
-      type="password"
-      placeholder="Password">
-
-    <button
-      class="primary"
-      id="loginAction">
+    <button class="primary" id="loginAction">
       Login
     </button>
 
-    <div
-      class="error"
-      id="loginError">
-    </div>
+    <button class="primary green" id="upgradeAction">
+      Upgrade for Free
+    </button>
 
-    <div class="auth-switch">
+    <div class="error" id="loginError"></div>
 
-      <span id="authSwitchText">
-        Don't have an account?
-      </span>
-
-      <button
-        class="link-button"
-        id="authSwitch">
-        Create one
-      </button>
-
-    </div>
-
-    <button
-      class="secondary"
-      id="cancelLogin">
+    <button class="secondary" id="cancelLogin">
       Cancel
     </button>
 
@@ -804,8 +731,11 @@ footer{
 
 </div>
 
-
 <script type="module">
+
+/* =========================================================
+   FIREBASE
+========================================================= */
 
 import {
   initializeApp
@@ -815,7 +745,7 @@ import {
 import {
   getAuth,
   setPersistence,
-  browserLocalPersistence,
+  inMemoryPersistence,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -827,18 +757,13 @@ import {
   getFirestore,
   collection,
   addDoc,
-  onSnapshot,
-  serverTimestamp,
+  getDocs,
   query,
   orderBy,
-  limit
+  limit,
+  serverTimestamp
 } from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
-
-
-/* =========================================================
-   FIREBASE
-========================================================= */
 
 const config={
   apiKey:'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
@@ -850,92 +775,85 @@ const config={
 };
 
 const OWNER='parkernanayakkara@icloud.com';
-
 const ASHER='ashernanayakkara@icloud.com';
 
 const app=initializeApp(config);
-
 const auth=getAuth(app);
-
 const db=getFirestore(app);
 
 const $=id=>document.getElementById(id);
 
-const matches=(user,email)=>
-  user?.email?.toLowerCase()===
-  email.toLowerCase();
+await setPersistence(auth,inMemoryPersistence);
 
-await setPersistence(
-  auth,
-  browserLocalPersistence
-);
+const matches=(user,email)=>
+  user?.email?.toLowerCase()===email.toLowerCase();
 
 
 /* =========================================================
-   LOGIN / SIGNUP
+   DICTIONARY
 ========================================================= */
 
-let signupMode=false;
+function addCard(d){
 
-function openAuth(signup=false){
+  const c=document.createElement('article');
 
-  signupMode=signup;
+  c.className='card live-card';
 
-  $('authTitle').textContent=
-    signup
-      ?'Create Free Account'
-      :'Login';
+  const fields=[
+    ['word','',d.word],
+    ['pronunciation','Pronunciation: ',d.pronunciation],
+    ['meaning','Meaning: ',d.meaning],
+    ['credits','Credits: ',d.credits?.trim()||'No credits']
+  ];
 
-  $('loginAction').textContent=
-    signup
-      ?'Create Free Account'
-      :'Login';
+  fields.forEach(([cl,label,value])=>{
 
-  $('authSwitchText').textContent=
-    signup
-      ?'Already have an account?'
-      :"Don't have an account?";
+    const e=document.createElement('div');
 
-  $('authSwitch').textContent=
-    signup
-      ?'Login'
-      :'Create one';
+    e.className=cl;
+    e.textContent=label;
 
-  $('loginError').textContent='';
+    const strong=document.createElement('strong');
+
+    strong.textContent=value;
+
+    e.append(strong);
+    c.append(e);
+
+  });
+
+  $('dictionary').append(c);
+}
+
+
+/* =========================================================
+   WORD SEARCH
+========================================================= */
+
+$('searchInput').addEventListener('input',e=>{
+
+  const q=e.target.value.toLowerCase();
+
+  document
+    .querySelectorAll('#dictionary .card')
+    .forEach(c=>{
+      c.hidden=!c.textContent.toLowerCase().includes(q);
+    });
+
+});
+
+
+/* =========================================================
+   LOGIN
+========================================================= */
+
+function showLogin(){
 
   $('login').style.display='flex';
-
+  $('loginError').textContent='';
   $('email').focus();
 
 }
-
-
-function setAuthLoading(loading){
-
-  const button=$('loginAction');
-
-  button.disabled=loading;
-
-  if(loading){
-
-    button.innerHTML=
-      `<span class="loading-spinner login-spinner"></span>${
-        signupMode
-          ?'Creating account...'
-          :'Logging in...'
-      }`;
-
-  }else{
-
-    button.textContent=
-      signupMode
-        ?'Create Free Account'
-        :'Login';
-
-  }
-
-}
-
 
 $('loginButton').onclick=()=>{
 
@@ -947,295 +865,163 @@ $('loginButton').onclick=()=>{
 
   }else{
 
-    openAuth(false);
+    showLogin();
 
   }
 
 };
 
+$('cancelLogin').onclick=()=>{
 
-$('upgradeButton').onclick=()=>{
-
-  if(auth.currentUser){
-
-    $('gamePanel').scrollIntoView({
-      behavior:'smooth'
-    });
-
-  }else{
-
-    openAuth(true);
-
-  }
-
-};
-
-
-$('scoreLoginButton').onclick=()=>
-  openAuth(false);
-
-
-$('cancelLogin').onclick=()=>
   $('login').style.display='none';
 
+};
 
-$('authSwitch').onclick=()=>
-  openAuth(!signupMode);
 
+/* LOGIN WITH LOADING */
 
 $('loginAction').onclick=async()=>{
 
-  const email=
-    $('email').value.trim();
-
-  const password=
-    $('password').value;
-
-  $('loginError').textContent='';
+  const email=$('email').value.trim();
+  const password=$('password').value;
 
   if(!email||!password){
 
     $('loginError').textContent=
-      'Please enter your email and password.';
+      'Enter your email and password.';
 
     return;
-
   }
 
-  setAuthLoading(true);
+  const button=$('loginAction');
+
+  button.disabled=true;
+
+  button.innerHTML=
+    '<span class="loading"></span>Logging in...';
+
+  $('loginError').textContent='';
 
   try{
 
-    if(signupMode){
-
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    }else{
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-    }
+    await signInWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
     $('login').style.display='none';
 
-    $('email').value='';
-    $('password').value='';
+  }catch(e){
 
-  }catch(error){
-
-    let message=
-      'Something went wrong.';
-
-    if(
-      error.code===
-      'auth/email-already-in-use'
-    ){
-
-      message=
-        'That email already has an account.';
-
-    }else if(
-      error.code===
-      'auth/invalid-email'
-    ){
-
-      message=
-        'Please enter a valid email address.';
-
-    }else if(
-      error.code===
-      'auth/weak-password'
-    ){
-
-      message=
-        'Password must be at least 6 characters.';
-
-    }else if(
-      error.code===
-      'auth/invalid-credential'
-    ){
-
-      message=
-        'Email or password is incorrect.';
-
-    }
-
-    $('loginError').textContent=message;
+    $('loginError').textContent=
+      `Login failed: ${e.code||'check your details'}`;
 
   }finally{
 
-    setAuthLoading(false);
+    button.disabled=false;
+    button.textContent='Login';
 
   }
 
 };
 
 
-$('logout').onclick=()=>signOut(auth);
-
-
 /* =========================================================
-   DICTIONARY
+   FREE ACCOUNT CREATION
 ========================================================= */
 
-function addCard(d){
+$('upgradeAction').onclick=async()=>{
 
-  const c=
-    document.createElement('article');
+  const email=$('email').value.trim();
+  const password=$('password').value;
 
-  c.className='card live-card';
+  if(!email||!password){
 
-  [
-    ['word','',d.word],
-    ['pronunciation',
-      'Pronunciation: ',
-      d.pronunciation],
-    ['meaning','Meaning: ',d.meaning],
-    ['credits',
-      'Credits: ',
-      d.credits?.trim()||'No credits']
-  ].forEach(
-    ([className,label,value])=>{
+    $('loginError').textContent=
+      'Enter an email and password first.';
 
-      const e=
-        document.createElement('div');
+    return;
+  }
 
-      e.className=className;
-      e.textContent=label;
+  if(password.length<6){
 
-      const strong=
-        document.createElement('strong');
+    $('loginError').textContent=
+      'Firebase passwords must be at least 6 characters.';
 
-      strong.textContent=value;
+    return;
+  }
 
-      e.append(strong);
-      c.append(e);
+  const button=$('upgradeAction');
 
-    }
-  );
+  button.disabled=true;
 
-  $('dictionary').append(c);
+  button.innerHTML=
+    '<span class="loading"></span>Creating account...';
 
-}
+  $('loginError').textContent='';
 
+  try{
 
-onSnapshot(
-  collection(db,'words'),
-  snap=>{
+    await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
 
-    document
-      .querySelectorAll('.live-card')
-      .forEach(e=>e.remove());
+    $('login').style.display='none';
 
-    snap.forEach(doc=>{
+  }catch(e){
 
-      const d=doc.data();
+    $('loginError').textContent=
+      `Could not create account: ${e.code||'unknown error'}`;
 
-      if(
-        d.word&&
-        d.pronunciation&&
-        d.meaning
-      ){
+  }finally{
 
-        addCard(d);
-
-      }
-
-    });
+    button.disabled=false;
+    button.textContent='Upgrade for Free';
 
   }
-);
 
-
-$('searchInput').addEventListener(
-  'input',
-  e=>{
-
-    const q=
-      e.target.value.toLowerCase();
-
-    document
-      .querySelectorAll(
-        '#dictionary .card'
-      )
-      .forEach(card=>{
-
-        card.hidden=
-          !card.textContent
-            .toLowerCase()
-            .includes(q);
-
-      });
-
-  }
-);
+};
 
 
 /* =========================================================
    ADMIN
 ========================================================= */
 
+$('logout').onclick=()=>signOut(auth);
+
 $('addWord').onclick=async()=>{
 
   if(!matches(auth.currentUser,OWNER)){
 
-    alert(
-      'Only the owner can add words.'
-    );
-
+    alert('Only the owner can add words.');
     return;
 
   }
 
-  const word=
-    $('newWord').value.trim();
+  const word=$('newWord').value.trim();
+  const pronunciation=$('newPronunciation').value.trim();
+  const meaning=$('newMeaning').value.trim();
 
-  const pronunciation=
-    $('newPronunciation')
-      .value.trim();
+  if(!word||!pronunciation||!meaning){
 
-  const meaning=
-    $('newMeaning')
-      .value.trim();
-
-  if(
-    !word||
-    !pronunciation||
-    !meaning
-  ){
-
-    alert(
-      'Fill in word, pronunciation and meaning.'
-    );
-
+    alert('Fill in word, pronunciation and meaning.');
     return;
 
   }
 
-  await addDoc(
-    collection(db,'words'),
-    {
-      word,
-      pronunciation,
-      meaning,
-      credits:
-        $('newCredits')
-          .value.trim()||
-        'No credits',
-      addedBy:
-        auth.currentUser.email,
-      createdAt:
-        serverTimestamp()
-    }
-  );
+  await addDoc(collection(db,'words'),{
+
+    word,
+    pronunciation,
+    meaning,
+    credits:$('newCredits').value.trim()||'No credits',
+    addedBy:auth.currentUser.email,
+    createdAt:serverTimestamp()
+
+  });
 
   [
     'newWord',
@@ -1244,9 +1030,7 @@ $('addWord').onclick=async()=>{
     'newCredits'
   ].forEach(id=>$(id).value='');
 
-  alert(
-    'Word added for everyone!'
-  );
+  alert('Word added for everyone!');
 
 };
 
@@ -1257,9 +1041,7 @@ $('addWord').onclick=async()=>{
 
 $('saveQuestion').onclick=async()=>{
 
-  const text=
-    $('questionText')
-      .value.trim();
+  const text=$('questionText').value.trim();
 
   if(!text){
 
@@ -1272,19 +1054,16 @@ $('saveQuestion').onclick=async()=>{
 
   try{
 
-    await addDoc(
-      collection(db,'questions'),
-      {
-        name:
-          $('questionName')
-            .value.trim()||
-          'Anonymous visitor',
-        question:text,
-        status:'new',
-        createdAt:
-          serverTimestamp()
-      }
-    );
+    await addDoc(collection(db,'questions'),{
+
+      name:$('questionName').value.trim()||
+        'Anonymous visitor',
+
+      question:text,
+      status:'new',
+      createdAt:serverTimestamp()
+
+    });
 
     $('questionText').value='';
     $('questionName').value='';
@@ -1292,29 +1071,23 @@ $('saveQuestion').onclick=async()=>{
     $('questionStatus').textContent=
       'Question saved for the owner.';
 
-  }catch(error){
+  }catch(e){
 
     $('questionStatus').textContent=
-      `Could not save question: ${
-        error.code||'Firestore error'
-      }`;
+      `Could not save question: ${e.code||'Firestore error'}`;
 
   }
 
 };
 
-
 $('openMessages').onclick=()=>{
 
-  const text=
-    $('questionText')
-      .value.trim();
+  const text=$('questionText').value.trim();
 
   location.href=
     `sms:?&body=${encodeURIComponent(
       `Saof Dictionary question:\n${
-        text||
-        '(type your question first)'
+        text||'(type your question first)'
       }`
     )}`;
 
@@ -1322,1412 +1095,786 @@ $('openMessages').onclick=()=>{
 
 
 /* =========================================================
-   GAME MENU
+   GAME SCREEN SYSTEM
 ========================================================= */
 
+const screens=[
+  'puzzleScreen',
+  'trexScreen',
+  'watchMovieScreen',
+  'scoresScreen',
+  'birthdayMovie'
+];
+
+function hideScreens(){
+
+  screens.forEach(id=>{
+    $(id).style.display='none';
+  });
+
+}
+
+function openScreen(id){
+
+  hideScreens();
+
+  $('gamePanel').style.display='block';
+  $(id).style.display='block';
+
+  $('gamePanel').scrollIntoView({
+    behavior:'smooth'
+  });
+
+}
+
+function backToGames(){
+
+  hideScreens();
+
+  $('gamePanel').scrollIntoView({
+    behavior:'smooth'
+  });
+
+}
+
 document
-  .querySelectorAll('.game-option')
-  .forEach(button=>{
+  .querySelectorAll('[data-back]')
+  .forEach(b=>b.onclick=backToGames);
 
-    button.onclick=()=>{
+$('mobilePuzzleChoice').onclick=()=>{
+  startPuzzle();
+  openScreen('puzzleScreen');
+};
 
-      document
-        .querySelectorAll('.game-option')
-        .forEach(b=>
-          b.classList.remove('active')
-        );
+$('desktopPuzzleChoice').onclick=()=>{
+  startPuzzle();
+  openScreen('puzzleScreen');
+};
 
-      button.classList.add('active');
+$('trexChoice').onclick=()=>{
+  openScreen('trexScreen');
+};
 
-      document
-        .querySelectorAll('.game-area')
-        .forEach(area=>
-          area.classList.remove('active')
-        );
+$('watchMovieChoice').onclick=()=>{
+  openScreen('watchMovieScreen');
+};
 
-      $(`${button.dataset.game}Game`)
-        .classList.add('active');
+$('scoresChoice').onclick=()=>{
+  loadScores();
+  openScreen('scoresScreen');
+};
 
-    };
+$('birthdayMovieChoice').onclick=()=>{
+  openScreen('birthdayMovie');
+};
+
+
+/* =========================================================
+   HARD ROTATABLE PUZZLE
+========================================================= */
+
+const pieceArea=$('pieceArea');
+const targetArea=$('targetArea');
+
+let pieces=[];
+let selectedPiece=null;
+let puzzleSolved=false;
+
+const PUZZLE_SIZE=4;
+const PIECE_COUNT=16;
+
+const colors=[
+  '#ff595e',
+  '#ffca3a',
+  '#8ac926',
+  '#1982c4',
+  '#6a4c93',
+  '#ff924c',
+  '#2ec4b6',
+  '#e76f51',
+  '#457b9d',
+  '#f72585',
+  '#7209b7',
+  '#06d6a0',
+  '#118ab2',
+  '#ef476f',
+  '#8338ec',
+  '#3a86ff'
+];
+
+function randomInt(max){
+  return Math.floor(Math.random()*max);
+}
+
+
+/* Create irregular SVG puzzle shape */
+
+function makePieceSVG(index){
+
+  const color=colors[index%colors.length];
+
+  const tab=(index%4)-1;
+
+  let path=
+    'M 8 8 '+
+    'L 62 8 '+
+    'L 62 20 '+
+    'C 82 16 82 42 62 38 '+
+    'L 62 62 '+
+    'L 42 62 '+
+    'C 46 82 18 82 22 62 '+
+    'L 8 62 Z';
+
+  if(index%3===0){
+
+    path=
+      'M 8 8 L 62 8 '+
+      'C 54 18 78 24 64 35 '+
+      'L 64 62 L 40 62 '+
+      'C 46 48 17 48 23 62 '+
+      'L 8 62 Z';
+
+  }else if(index%3===1){
+
+    path=
+      'M 8 8 L 35 8 '+
+      'C 20 18 24 35 40 28 '+
+      'C 52 22 66 30 62 42 '+
+      'L 62 62 L 8 62 Z';
+
+  }
+
+  return `
+    <svg viewBox="0 0 70 70">
+      <path
+        d="${path}"
+        fill="${color}"
+        stroke="#202938"
+        stroke-width="3"
+      />
+      <circle
+        cx="${15+(index*17)%40}"
+        cy="${20+(index*11)%30}"
+        r="3"
+        fill="#ffffff55"
+      />
+    </svg>
+  `;
+
+}
+
+
+function startPuzzle(){
+
+  pieceArea.innerHTML='';
+  targetArea.innerHTML='';
+
+  pieces=[];
+  selectedPiece=null;
+  puzzleSolved=false;
+
+  $('rotatePiece').disabled=true;
+
+  $('puzzleStatus').textContent=
+    'Select a piece and rotate it if necessary.';
+
+  const areaWidth=
+    pieceArea.clientWidth||350;
+
+  const cell=
+    Math.min(
+      72,
+      Math.floor((areaWidth-20)/PUZZLE_SIZE)
+    );
+
+  /*
+    Create the target board.
+    Every piece has a precise target position.
+  */
+
+  for(let i=0;i<PIECE_COUNT;i++){
+
+    const row=Math.floor(i/PUZZLE_SIZE);
+    const col=i%PUZZLE_SIZE;
+
+    const target=document.createElement('div');
+
+    target.className='puzzle-target';
+
+    target.style.width=`${cell}px`;
+    target.style.height=`${cell}px`;
+
+    target.style.left=`${col*cell+5}px`;
+    target.style.top=`${row*cell+5}px`;
+
+    targetArea.append(target);
+
+  }
+
+
+  /*
+    Create shuffled pieces.
+    Every piece begins with a random rotation.
+  */
+
+  for(let i=0;i<PIECE_COUNT;i++){
+
+    const piece=document.createElement('div');
+
+    piece.className='piece';
+
+    piece.dataset.index=i;
+
+    piece.innerHTML=makePieceSVG(i);
+
+    const maxX=
+      Math.max(
+        5,
+        pieceArea.clientWidth-78
+      );
+
+    const maxY=
+      Math.max(
+        5,
+        pieceArea.clientHeight-78
+      );
+
+    const rotation=
+      [0,90,180,270][randomInt(4)];
+
+    piece.style.left=
+      `${5+Math.random()*maxX}px`;
+
+    piece.style.top=
+      `${5+Math.random()*maxY}px`;
+
+    piece.dataset.rotation=rotation;
+
+    piece.style.transform=
+      `rotate(${rotation}deg)`;
+
+    piece.addEventListener(
+      'pointerdown',
+      beginDrag
+    );
+
+    piece.addEventListener(
+      'click',
+      ()=>{
+        selectPiece(piece);
+      }
+    );
+
+    pieceArea.append(piece);
+
+    pieces.push(piece);
+
+  }
+
+}
+
+
+/* SELECT */
+
+function selectPiece(piece){
+
+  pieces.forEach(p=>
+    p.classList.remove('selected')
+  );
+
+  selectedPiece=piece;
+
+  piece.classList.add('selected');
+
+  $('rotatePiece').disabled=false;
+
+  $('puzzleStatus').textContent=
+    `Piece ${Number(piece.dataset.index)+1} selected.`;
+
+}
+
+
+/* ROTATE FUNCTION */
+
+$('rotatePiece').onclick=()=>{
+
+  if(!selectedPiece)return;
+
+  let rotation=
+    Number(selectedPiece.dataset.rotation);
+
+  rotation=(rotation+90)%360;
+
+  selectedPiece.dataset.rotation=rotation;
+
+  selectedPiece.style.transform=
+    `rotate(${rotation}deg)`;
+
+  $('puzzleStatus').textContent=
+    `Piece ${Number(selectedPiece.dataset.index)+1} rotated ${rotation}°.`;
+
+};
+
+
+/* DRAGGING */
+
+let dragData=null;
+
+function beginDrag(e){
+
+  e.preventDefault();
+
+  const piece=e.currentTarget;
+
+  selectPiece(piece);
+
+  const rect=piece.getBoundingClientRect();
+
+  dragData={
+    piece,
+    offsetX:e.clientX-rect.left,
+    offsetY:e.clientY-rect.top
+  };
+
+  piece.classList.add('dragging');
+
+  piece.setPointerCapture(e.pointerId);
+
+  piece.addEventListener(
+    'pointermove',
+    dragMove
+  );
+
+  piece.addEventListener(
+    'pointerup',
+    endDrag,
+    {once:true}
+  );
+
+}
+
+
+function dragMove(e){
+
+  if(!dragData)return;
+
+  const piece=dragData.piece;
+
+  const area=pieceArea.getBoundingClientRect();
+
+  let x=
+    e.clientX-area.left-
+    dragData.offsetX;
+
+  let y=
+    e.clientY-area.top-
+    dragData.offsetY;
+
+  x=Math.max(
+    0,
+    Math.min(
+      pieceArea.clientWidth-piece.offsetWidth,
+      x
+    )
+  );
+
+  y=Math.max(
+    0,
+    Math.min(
+      pieceArea.clientHeight-piece.offsetHeight,
+      y
+    )
+  );
+
+  piece.style.left=`${x}px`;
+  piece.style.top=`${y}px`;
+
+}
+
+
+function endDrag(){
+
+  if(!dragData)return;
+
+  const piece=dragData.piece;
+
+  piece.classList.remove('dragging');
+
+  piece.removeEventListener(
+    'pointermove',
+    dragMove
+  );
+
+  dragData=null;
+
+}
+
+
+/* CHECK PUZZLE */
+
+$('checkPuzzle').onclick=async()=>{
+
+  let correct=0;
+
+  pieces.forEach(piece=>{
+
+    const i=Number(piece.dataset.index);
+
+    const row=Math.floor(i/PUZZLE_SIZE);
+    const col=i%PUZZLE_SIZE;
+
+    const targetX=
+      col*(targetArea.clientWidth/PUZZLE_SIZE);
+
+    const targetY=
+      row*(targetArea.clientHeight/PUZZLE_SIZE);
+
+    const x=parseFloat(piece.style.left);
+    const y=parseFloat(piece.style.top);
+
+    const expectedRotation=0;
+
+    /*
+      We deliberately require the correct rotation.
+    */
+
+    const rotation=
+      Number(piece.dataset.rotation)%360;
+
+    const correctPosition=
+      Math.abs(x-targetX)<35 &&
+      Math.abs(y-targetY)<35;
+
+    if(correctPosition && rotation===expectedRotation){
+
+      correct++;
+
+      piece.style.left=`${targetX}px`;
+      piece.style.top=`${targetY}px`;
+
+    }
 
   });
+
+  $('puzzleStatus').textContent=
+    `${correct} / ${PIECE_COUNT} pieces are correctly placed and rotated.`;
+
+  if(correct===PIECE_COUNT&&!puzzleSolved){
+
+    puzzleSolved=true;
+
+    $('puzzleStatus').textContent=
+      '🎉 Puzzle solved! Great job!';
+
+    await saveScore(
+      'Hard Puzzle',
+      1000
+    );
+
+  }
+
+};
+
+$('newPuzzle').onclick=startPuzzle;
 
 
 /* =========================================================
    HIGH SCORES
 ========================================================= */
 
-let currentUser=null;
-
-let scoresUnsubscribe=null;
-
-
 async function saveScore(game,score){
 
-  if(!currentUser)return;
+  if(!auth.currentUser)return;
 
   try{
 
     await addDoc(
-      collection(db,'scores'),
+      collection(db,'highScores'),
       {
-        uid:currentUser.uid,
-        email:currentUser.email,
         game,
-        score:Number(score),
-        createdAt:
-          serverTimestamp()
+        score,
+        player:auth.currentUser.email,
+        uid:auth.currentUser.uid,
+        createdAt:serverTimestamp()
       }
     );
 
-  }catch(error){
+  }catch(e){
 
-    console.error(
-      'Could not save score:',
-      error
-    );
+    console.error('Could not save score',e);
 
   }
 
 }
 
 
-function loadScores(){
+async function loadScores(){
 
-  if(scoresUnsubscribe){
+  const body=$('scoreBody');
 
-    scoresUnsubscribe();
-    scoresUnsubscribe=null;
+  body.innerHTML=
+    '<tr><td colspan="3">Loading...</td></tr>';
 
-  }
+  try{
 
-  if(!currentUser){
-
-    $('guestScoreMessage')
-      .classList.remove('hidden');
-
-    $('loggedInScores')
-      .classList.add('hidden');
-
-    return;
-
-  }
-
-  $('guestScoreMessage')
-    .classList.add('hidden');
-
-  $('loggedInScores')
-    .classList.remove('hidden');
-
-  const scoreQuery=query(
-    collection(db,'scores'),
-    orderBy('score','desc'),
-    limit(100)
-  );
-
-  scoresUnsubscribe=
-    onSnapshot(
-      scoreQuery,
-      snap=>{
-
-        const scores=[];
-
-        snap.forEach(doc=>{
-
-          const data=doc.data();
-
-          if(
-            data.uid===
-            currentUser.uid
-          ){
-
-            scores.push(data);
-
-          }
-
-        });
-
-        scores.sort(
-          (a,b)=>b.score-a.score
-        );
-
-        $('myBestScore').textContent=
-          scores[0]?.score||0;
-
-        const list=
-          $('scoreList');
-
-        list.innerHTML='';
-
-        if(!scores.length){
-
-          list.innerHTML=
-            '<li>No scores yet. Play a game!</li>';
-
-          return;
-
-        }
-
-        scores
-          .slice(0,10)
-          .forEach(score=>{
-
-            const li=
-              document.createElement('li');
-
-            li.textContent=
-              `${score.game}: ${score.score}`;
-
-            list.append(li);
-
-          });
-
-      },
-      error=>{
-
-        console.error(
-          'Score loading error:',
-          error
-        );
-
-      }
+    const q=query(
+      collection(db,'highScores'),
+      orderBy('score','desc'),
+      limit(50)
     );
 
-}
+    const snap=await getDocs(q);
 
+    body.innerHTML='';
 
-/* =========================================================
-   HARD 12-PIECE PUZZLE
-========================================================= */
+    snap.forEach(doc=>{
 
-const puzzleCanvas=
-  $('puzzleCanvas');
+      const d=doc.data();
 
-const pctx=
-  puzzleCanvas.getContext('2d');
+      const tr=document.createElement('tr');
 
-const PW=puzzleCanvas.width;
-const PH=puzzleCanvas.height;
+      const game=document.createElement('td');
+      game.textContent=d.game||'Game';
 
-const PUZZLE_ROWS=3;
-const PUZZLE_COLS=4;
+      const score=document.createElement('td');
+      score.textContent=d.score||0;
 
-const PIECE_W=150;
-const PIECE_H=150;
+      const player=document.createElement('td');
 
-const BOARD_X=300;
-const BOARD_Y=70;
+      /*
+        Show only a shortened email in the public
+        score table.
+      */
 
-let pieces=[];
+      const email=d.player||'Player';
 
-let draggedPiece=null;
+      const at=email.indexOf('@');
 
-let dragOffsetX=0;
-let dragOffsetY=0;
+      player.textContent=
+        at>2
+          ? email.slice(0,2)+'***'+email.slice(at)
+          : 'Player';
 
-let puzzleFinished=false;
-let puzzleStartTime=0;
-let puzzleTimer=null;
+      tr.append(game,score,player);
 
-
-/*
-  Different shapes.
-  Each shape has a different silhouette.
-*/
-
-const shapeTypes=[
-  'triangle',
-  'circle',
-  'diamond',
-  'hexagon',
-  'star',
-  'rounded',
-  'cross',
-  'arrow',
-  'octagon',
-  'shield',
-  'heart',
-  'irregular'
-];
-
-const colors=[
-  '#ef476f',
-  '#ffd166',
-  '#06d6a0',
-  '#118ab2',
-  '#9b5de5',
-  '#f15bb5',
-  '#00bbf9',
-  '#00f5d4',
-  '#ff9f1c',
-  '#e63946',
-  '#8338ec',
-  '#3a86ff'
-];
-
-
-function shapePath(
-  ctx,
-  shape,
-  x,
-  y,
-  size
-){
-
-  const cx=x+size/2;
-  const cy=y+size/2;
-  const r=size*.43;
-
-  ctx.beginPath();
-
-  if(shape==='circle'){
-
-    ctx.arc(
-      cx,
-      cy,
-      r,
-      0,
-      Math.PI*2
-    );
-
-  }else if(shape==='triangle'){
-
-    for(let i=0;i<3;i++){
-
-      const a=
-        -Math.PI/2+
-        i*Math.PI*2/3;
-
-      const px=
-        cx+Math.cos(a)*r;
-
-      const py=
-        cy+Math.sin(a)*r;
-
-      if(i===0)
-        ctx.moveTo(px,py);
-      else
-        ctx.lineTo(px,py);
-
-    }
-
-    ctx.closePath();
-
-  }else if(shape==='diamond'){
-
-    ctx.moveTo(cx,cy-r);
-    ctx.lineTo(cx+r,cy);
-    ctx.lineTo(cx,cy+r);
-    ctx.lineTo(cx-r,cy);
-    ctx.closePath();
-
-  }else if(shape==='hexagon'){
-
-    for(let i=0;i<6;i++){
-
-      const a=
-        i*Math.PI/3;
-
-      const px=
-        cx+Math.cos(a)*r;
-
-      const py=
-        cy+Math.sin(a)*r;
-
-      if(i===0)
-        ctx.moveTo(px,py);
-      else
-        ctx.lineTo(px,py);
-
-    }
-
-    ctx.closePath();
-
-  }else if(shape==='star'){
-
-    for(let i=0;i<10;i++){
-
-      const rr=
-        i%2===0?r:r*.45;
-
-      const a=
-        -Math.PI/2+
-        i*Math.PI/5;
-
-      const px=
-        cx+Math.cos(a)*rr;
-
-      const py=
-        cy+Math.sin(a)*rr;
-
-      if(i===0)
-        ctx.moveTo(px,py);
-      else
-        ctx.lineTo(px,py);
-
-    }
-
-    ctx.closePath();
-
-  }else if(shape==='rounded'){
-
-    ctx.roundRect(
-      x+8,
-      y+8,
-      size-16,
-      size-16,
-      28
-    );
-
-  }else if(shape==='cross'){
-
-    const s=size*.28;
-
-    ctx.moveTo(
-      cx-s,
-      y+5
-    );
-
-    ctx.lineTo(
-      cx+s,
-      y+5
-    );
-
-    ctx.lineTo(
-      cx+s,
-      cy-s
-    );
-
-    ctx.lineTo(
-      x+size-5,
-      cy-s
-    );
-
-    ctx.lineTo(
-      x+size-5,
-      cy+s
-    );
-
-    ctx.lineTo(
-      cx+s,
-      cy+s
-    );
-
-    ctx.lineTo(
-      cx+s,
-      y+size-5
-    );
-
-    ctx.lineTo(
-      cx-s,
-      y+size-5
-    );
-
-    ctx.lineTo(
-      cx-s,
-      cy+s
-    );
-
-    ctx.lineTo(
-      x+5,
-      cy+s
-    );
-
-    ctx.lineTo(
-      x+5,
-      cy-s
-    );
-
-    ctx.lineTo(
-      cx-s,
-      cy-s
-    );
-
-    ctx.closePath();
-
-  }else if(shape==='arrow'){
-
-    ctx.moveTo(
-      cx,
-      y+5
-    );
-
-    ctx.lineTo(
-      x+size-5,
-      cy
-    );
-
-    ctx.lineTo(
-      cx+18,
-      cy
-    );
-
-    ctx.lineTo(
-      cx+18,
-      y+size-5
-    );
-
-    ctx.lineTo(
-      cx-18,
-      y+size-5
-    );
-
-    ctx.lineTo(
-      cx-18,
-      cy
-    );
-
-    ctx.lineTo(
-      x+5,
-      cy
-    );
-
-    ctx.closePath();
-
-  }else if(shape==='octagon'){
-
-    const q=size*.3;
-
-    ctx.moveTo(x+q,y+5);
-    ctx.lineTo(x+size-q,y+5);
-    ctx.lineTo(x+size-5,y+q);
-    ctx.lineTo(x+size-5,y+size-q);
-    ctx.lineTo(x+size-q,y+size-5);
-    ctx.lineTo(x+q,y+size-5);
-    ctx.lineTo(x+5,y+size-q);
-    ctx.lineTo(x+5,y+q);
-    ctx.closePath();
-
-  }else if(shape==='shield'){
-
-    ctx.moveTo(cx,y+5);
-    ctx.lineTo(x+size-10,y+25);
-    ctx.lineTo(x+size-18,y+size*.7);
-    ctx.quadraticCurveTo(
-      cx,
-      y+size,
-      x+18,
-      y+size*.7
-    );
-    ctx.lineTo(x+10,y+25);
-    ctx.closePath();
-
-  }else if(shape==='heart'){
-
-    ctx.moveTo(cx,y+size*.85);
-
-    ctx.bezierCurveTo(
-      x-10,
-      y+size*.45,
-      x+size*.05,
-      y,
-      cx,
-      y+size*.28
-    );
-
-    ctx.bezierCurveTo(
-      x+size*.95,
-      y,
-      x+size+10,
-      y+size*.45,
-      cx,
-      y+size*.85
-    );
-
-    ctx.closePath();
-
-  }else{
-
-    /*
-      Irregular shape
-    */
-
-    const points=[
-      [.15,.05],
-      [.55,.12],
-      [.9,.05],
-      [.82,.42],
-      [.97,.75],
-      [.55,.92],
-      [.2,.84],
-      [.05,.52]
-    ];
-
-    points.forEach(
-      ([px,py],i)=>{
-
-        const xx=
-          x+px*size;
-
-        const yy=
-          y+py*size;
-
-        if(i===0)
-          ctx.moveTo(xx,yy);
-        else
-          ctx.lineTo(xx,yy);
-
-      }
-    );
-
-    ctx.closePath();
-
-  }
-
-}
-
-
-function createPuzzle(){
-
-  pieces=[];
-
-  for(let i=0;i<12;i++){
-
-    const row=
-      Math.floor(i/PUZZLE_COLS);
-
-    const col=
-      i%PUZZLE_COLS;
-
-    const targetX=
-      BOARD_X+
-      col*PIECE_W;
-
-    const targetY=
-      BOARD_Y+
-      row*PIECE_H;
-
-    let x;
-    let y;
-
-    /*
-      Pieces start scattered around
-      the entire board.
-    */
-
-    do{
-
-      x=
-        20+
-        Math.random()*
-        (PW-PIECE_W-40);
-
-      y=
-        40+
-        Math.random()*
-        (PH-PIECE_H-60);
-
-    }while(
-      x>BOARD_X-PIECE_W&&
-      x<BOARD_X+
-        PUZZLE_COLS*PIECE_W&&
-      y>BOARD_Y-PIECE_H&&
-      y<BOARD_Y+
-        PUZZLE_ROWS*PIECE_H
-    );
-
-    pieces.push({
-
-      id:i,
-
-      x,
-      y,
-
-      targetX,
-      targetY,
-
-      size:PIECE_W,
-
-      shape:shapeTypes[i],
-
-      color:colors[i],
-
-      rotation:
-        Math.floor(
-          Math.random()*4
-        )*90,
-
-      targetRotation:
-        0,
-
-      placed:false
+      body.append(tr);
 
     });
 
-  }
+    if(!body.children.length){
 
-  puzzleFinished=false;
-
-  puzzleStartTime=
-    performance.now();
-
-  $('puzzleMessage').textContent='';
-
-  $('puzzleCount').textContent='0/12';
-
-  $('puzzleTime').textContent='0s';
-
-  clearInterval(puzzleTimer);
-
-  puzzleTimer=
-    setInterval(()=>{
-
-      if(!puzzleFinished){
-
-        const seconds=
-          Math.floor(
-            (performance.now()-
-              puzzleStartTime)/1000
-          );
-
-        $('puzzleTime').textContent=
-          `${seconds}s`;
-
-      }
-
-    },500);
-
-  drawPuzzle();
-
-}
-
-
-function drawPuzzle(){
-
-  pctx.clearRect(
-    0,
-    0,
-    PW,
-    PH
-  );
-
-  pctx.fillStyle='#f7f5ff';
-
-  pctx.fillRect(
-    0,
-    0,
-    PW,
-    PH
-  );
-
-  /*
-    Target board
-  */
-
-  pctx.fillStyle='#e8e2ff';
-
-  pctx.fillRect(
-    BOARD_X-8,
-    BOARD_Y-8,
-    PUZZLE_COLS*PIECE_W+16,
-    PUZZLE_ROWS*PIECE_H+16
-  );
-
-  pctx.font='bold 18px Arial';
-
-  pctx.fillStyle='#555';
-
-  pctx.fillText(
-    'MATCH THE SHAPES',
-    BOARD_X+250,
-    45
-  );
-
-  /*
-    Draw target outlines
-  */
-
-  pieces.forEach(piece=>{
-
-    if(piece.placed)return;
-
-    pctx.save();
-
-    pctx.translate(
-      piece.targetX+
-      piece.size/2,
-      piece.targetY+
-      piece.size/2
-    );
-
-    pctx.rotate(
-      piece.targetRotation*
-      Math.PI/180
-    );
-
-    pctx.translate(
-      -piece.size/2,
-      -piece.size/2
-    );
-
-    shapePath(
-      pctx,
-      piece.shape,
-      0,
-      0,
-      piece.size
-    );
-
-    pctx.strokeStyle=
-      piece.color+'99';
-
-    pctx.lineWidth=5;
-
-    pctx.setLineDash([
-      10,
-      7
-    ]);
-
-    pctx.stroke();
-
-    pctx.setLineDash([]);
-
-    pctx.restore();
-
-  });
-
-
-  /*
-    Pieces
-  */
-
-  pieces.forEach(piece=>{
-
-    pctx.save();
-
-    pctx.translate(
-      piece.x+
-      piece.size/2,
-      piece.y+
-      piece.size/2
-    );
-
-    pctx.rotate(
-      piece.rotation*
-      Math.PI/180
-    );
-
-    pctx.translate(
-      -piece.size/2,
-      -piece.size/2
-    );
-
-    shapePath(
-      pctx,
-      piece.shape,
-      0,
-      0,
-      piece.size
-    );
-
-    pctx.fillStyle=
-      piece.color;
-
-    pctx.shadowColor=
-      '#0005';
-
-    pctx.shadowBlur=8;
-
-    pctx.fill();
-
-    pctx.shadowBlur=0;
-
-    pctx.strokeStyle='#fff';
-
-    pctx.lineWidth=3;
-
-    pctx.stroke();
-
-    pctx.fillStyle='#ffffffaa';
-
-    pctx.font='bold 16px Arial';
-
-    pctx.fillText(
-      `#${piece.id+1}`,
-      piece.size/2-9,
-      piece.size/2+6
-    );
-
-    pctx.restore();
-
-  });
-
-}
-
-
-function puzzlePointer(e){
-
-  const rect=
-    puzzleCanvas
-      .getBoundingClientRect();
-
-  const point=
-    e.touches?
-      e.touches[0]:
-      e;
-
-  return{
-
-    x:
-      (point.clientX-
-       rect.left)*
-      PW/rect.width,
-
-    y:
-      (point.clientY-
-       rect.top)*
-      PH/rect.height
-
-  };
-
-}
-
-
-function puzzleDown(e){
-
-  e.preventDefault();
-
-  if(puzzleFinished)return;
-
-  const pos=
-    puzzlePointer(e);
-
-  /*
-    Search backwards so the top piece
-    gets selected first.
-  */
-
-  for(
-    let i=pieces.length-1;
-    i>=0;
-    i--
-  ){
-
-    const p=pieces[i];
-
-    if(p.placed)continue;
-
-    if(
-      pos.x>=p.x&&
-      pos.x<=p.x+p.size&&
-      pos.y>=p.y&&
-      pos.y<=p.y+p.size
-    ){
-
-      draggedPiece=p;
-
-      dragOffsetX=
-        pos.x-p.x;
-
-      dragOffsetY=
-        pos.y-p.y;
-
-      /*
-        Bring selected piece
-        to the front.
-      */
-
-      pieces.splice(i,1);
-
-      pieces.push(p);
-
-      break;
+      body.innerHTML=
+        '<tr><td colspan="3">No scores yet.</td></tr>';
 
     }
 
-  }
+  }catch(e){
 
-}
-
-
-function puzzleMove(e){
-
-  if(!draggedPiece)return;
-
-  e.preventDefault();
-
-  const pos=
-    puzzlePointer(e);
-
-  draggedPiece.x=
-    pos.x-dragOffsetX;
-
-  draggedPiece.y=
-    pos.y-dragOffsetY;
-
-  drawPuzzle();
-
-}
-
-
-function puzzleUp(){
-
-  if(!draggedPiece)return;
-
-  const p=draggedPiece;
-
-  /*
-    A piece must be close to its
-    target AND correctly rotated.
-  */
-
-  const cx=
-    p.x+p.size/2;
-
-  const cy=
-    p.y+p.size/2;
-
-  const tx=
-    p.targetX+p.size/2;
-
-  const ty=
-    p.targetY+p.size/2;
-
-  const distance=
-    Math.hypot(
-      cx-tx,
-      cy-ty
-    );
-
-  const rotationCorrect=
-    p.rotation%360===
-    p.targetRotation;
-
-  if(
-    distance<55&&
-    rotationCorrect
-  ){
-
-    p.x=p.targetX;
-    p.y=p.targetY;
-    p.placed=true;
-
-    const count=
-      pieces.filter(
-        piece=>piece.placed
-      ).length;
-
-    $('puzzleCount').textContent=
-      `${count}/12`;
-
-  }else if(
-    distance<55&&
-    !rotationCorrect
-  ){
-
-    $('puzzleMessage').textContent=
-      'Almost! The shape is in the wrong rotation.';
-
-  }
-
-  draggedPiece=null;
-
-  drawPuzzle();
-
-  if(
-    pieces.every(
-      p=>p.placed
-    )
-  ){
-
-    puzzleFinished=true;
-
-    clearInterval(puzzleTimer);
-
-    const seconds=
-      Math.max(
-        1,
-        Math.floor(
-          (performance.now()-
-           puzzleStartTime)/1000
-        )
-      );
-
-    /*
-      Faster = higher score.
-    */
-
-    const score=
-      Math.max(
-        100,
-        20000-
-        seconds*150
-      );
-
-    $('puzzleMessage').textContent=
-      `🎉 Puzzle complete! Score: ${score}`;
-
-    saveScore(
-      'Hard Puzzle',
-      score
-    );
+    body.innerHTML=
+      `<tr><td colspan="3">Could not load scores.</td></tr>`;
 
   }
 
 }
-
-
-puzzleCanvas.addEventListener(
-  'mousedown',
-  puzzleDown
-);
-
-puzzleCanvas.addEventListener(
-  'mousemove',
-  puzzleMove
-);
-
-window.addEventListener(
-  'mouseup',
-  puzzleUp
-);
-
-puzzleCanvas.addEventListener(
-  'touchstart',
-  puzzleDown,
-  {passive:false}
-);
-
-puzzleCanvas.addEventListener(
-  'touchmove',
-  puzzleMove,
-  {passive:false}
-);
-
-puzzleCanvas.addEventListener(
-  'touchend',
-  puzzleUp,
-  {passive:false}
-);
-
-$('restartPuzzle').onclick=
-  createPuzzle;
-
-createPuzzle();
 
 
 /* =========================================================
    T-REX RUNNER
 ========================================================= */
 
-const trexCanvas=
-  $('trexCanvas');
-
-const tctx=
-  trexCanvas.getContext('2d');
+const trexCanvas=$('trexCanvas');
+const trexCtx=trexCanvas.getContext('2d');
 
 let trexRunning=false;
+let trexRAF=null;
 let trexScore=0;
-let trexLastTime=0;
-let trexObstacleTimer=0;
-
-const trex={
-  x:80,
-  y:255,
-  width:45,
-  height:55,
-  velocityY:0,
+let trexPlayer={
+  x:100,
+  y:270,
+  w:45,
+  h:55,
+  vy:0,
   jumping:false
 };
 
 let obstacles=[];
 
-
-function resetTrex(){
-
-  trexRunning=true;
-
-  trexScore=0;
-
-  trexLastTime=
-    performance.now();
-
-  trexObstacleTimer=0;
-
-  trex.y=255;
-  trex.velocityY=0;
-  trex.jumping=false;
-
-  obstacles=[];
-
-  $('trexMessage').textContent=
-    'Jump over the obstacles!';
-
-  requestAnimationFrame(
-    trexFrame
-  );
-
-}
-
-
 function trexJump(){
 
-  if(!trexRunning){
+  if(!trexRunning)return;
 
-    resetTrex();
+  if(!trexPlayer.jumping){
 
-    return;
-
-  }
-
-  if(!trex.jumping){
-
-    trex.velocityY=-620;
-    trex.jumping=true;
+    trexPlayer.vy=-14;
+    trexPlayer.jumping=true;
 
   }
 
 }
 
+function startTrex(){
 
-function trexCollision(a,b){
+  trexRunning=true;
+  trexScore=0;
+  obstacles=[];
 
-  return(
-    a.x<b.x+b.width&&
-    a.x+a.width>b.x&&
-    a.y<b.y+b.height&&
-    a.y+a.height>b.y
-  );
+  trexPlayer.y=270;
+  trexPlayer.vy=0;
+  trexPlayer.jumping=false;
+
+  $('trexStatus').textContent='Running!';
+
+  cancelAnimationFrame(trexRAF);
+
+  trexFrame();
 
 }
 
+function trexFrame(){
 
-function drawTrex(){
+  if(!trexRunning)return;
 
-  tctx.clearRect(
+  const ctx=trexCtx;
+
+  ctx.clearRect(
     0,
     0,
     trexCanvas.width,
     trexCanvas.height
   );
 
-  tctx.fillStyle='#e8f8ff';
+  /* sky */
 
-  tctx.fillRect(
-    0,
-    0,
+  ctx.fillStyle='#87ceeb';
+
+  ctx.fillRect(
+    0,0,
     trexCanvas.width,
     trexCanvas.height
   );
 
-  tctx.fillStyle='#fff';
+  /* clouds */
 
-  [
-    [130,70],
-    [480,90],
-    [700,55]
-  ].forEach(([x,y])=>{
+  ctx.fillStyle='#fff';
 
-    tctx.beginPath();
+  ctx.beginPath();
+  ctx.arc(200,70,30,0,Math.PI*2);
+  ctx.arc(240,65,40,0,Math.PI*2);
+  ctx.arc(285,75,28,0,Math.PI*2);
+  ctx.fill();
 
-    tctx.arc(
-      x,y,20,0,Math.PI*2
-    );
+  /* ground */
 
-    tctx.arc(
-      x+25,y-10,27,0,Math.PI*2
-    );
-
-    tctx.arc(
-      x+55,y,20,0,Math.PI*2
-    );
-
-    tctx.fill();
-
-  });
-
-  tctx.fillStyle='#555';
-
-  tctx.fillRect(
+  ctx.fillStyle='#555';
+  ctx.fillRect(
     0,
-    310,
+    325,
     trexCanvas.width,
-    5
-  );
-
-  tctx.fillStyle='#566573';
-
-  tctx.fillRect(
-    trex.x,
-    trex.y,
-    trex.width,
-    trex.height
-  );
-
-  tctx.fillRect(
-    trex.x+30,
-    trex.y-25,
-    40,
-    35
-  );
-
-  tctx.fillRect(
-    trex.x+55,
-    trex.y-10,
-    30,
-    18
-  );
-
-  tctx.fillStyle='#fff';
-
-  tctx.fillRect(
-    trex.x+55,
-    trex.y-18,
-    8,
-    8
-  );
-
-  tctx.fillStyle='#111';
-
-  tctx.fillRect(
-    trex.x+59,
-    trex.y-17,
-    4,
-    4
-  );
-
-  tctx.fillStyle='#45515d';
-
-  tctx.fillRect(
-    trex.x+8,
-    trex.y+45,
-    12,
     25
   );
 
-  tctx.fillRect(
-    trex.x+30,
-    trex.y+45,
-    12,
-    25
+  /* player physics */
+
+  trexPlayer.vy+=0.7;
+  trexPlayer.y+=trexPlayer.vy;
+
+  if(trexPlayer.y>=270){
+
+    trexPlayer.y=270;
+    trexPlayer.vy=0;
+    trexPlayer.jumping=false;
+
+  }
+
+  /* dinosaur */
+
+  ctx.fillStyle='#29354a';
+
+  ctx.fillRect(
+    trexPlayer.x,
+    trexPlayer.y,
+    trexPlayer.w,
+    trexPlayer.h
   );
 
-  obstacles.forEach(o=>{
-
-    tctx.fillStyle='#159447';
-
-    tctx.fillRect(
-      o.x,
-      o.y,
-      o.width,
-      o.height
-    );
-
-    tctx.fillRect(
-      o.x-10,
-      o.y+20,
-      10,
-      12
-    );
-
-  });
-
-  tctx.fillStyle='#29354a';
-
-  tctx.font=
-    'bold 22px Arial';
-
-  tctx.fillText(
-    `Score: ${Math.floor(trexScore)}`,
-    20,
+  ctx.fillRect(
+    trexPlayer.x+30,
+    trexPlayer.y-15,
+    35,
     35
   );
 
-}
+  ctx.fillStyle='#fff';
 
+  ctx.fillRect(
+    trexPlayer.x+50,
+    trexPlayer.y-8,
+    6,
+    6
+  );
 
-function trexFrame(time){
+  /* obstacles */
 
-  if(!trexRunning){
-
-    drawTrex();
-
-    return;
-
-  }
-
-  const dt=
-    Math.min(
-      .035,
-      (time-trexLastTime)/1000
-    );
-
-  trexLastTime=time;
-
-  trex.velocityY+=1500*dt;
-
-  trex.y+=
-    trex.velocityY*dt;
-
-  if(trex.y>=255){
-
-    trex.y=255;
-    trex.velocityY=0;
-    trex.jumping=false;
-
-  }
-
-  trexObstacleTimer+=dt;
-
-  if(trexObstacleTimer>1.2){
-
-    trexObstacleTimer=0;
+  if(
+    obstacles.length===0||
+    obstacles[obstacles.length-1].x<600
+  ){
 
     obstacles.push({
-
-      x:820,
-
-      y:270,
-
-      width:25,
-
-      height:40
-
+      x:900,
+      y:285,
+      w:25+Math.random()*20,
+      h:40+Math.random()*25
     });
 
   }
 
-  obstacles.forEach(
-    obstacle=>{
-      obstacle.x-=300*dt;
-    }
-  );
+  obstacles.forEach(o=>{
 
-  obstacles=
-    obstacles.filter(
-      o=>o.x>-50
+    o.x-=7;
+
+    ctx.fillStyle='#218c45';
+
+    ctx.fillRect(
+      o.x,
+      o.y-o.h,
+      o.w,
+      o.h
     );
 
-  trexScore+=dt*10;
+    ctx.fillRect(
+      o.x-10,
+      o.y-o.h+20,
+      12,
+      25
+    );
 
-  for(const obstacle of obstacles){
+  });
 
-    if(
-      trexCollision(
-        {
-          x:trex.x+8,
-          y:trex.y+5,
-          width:trex.width-10,
-          height:trex.height-5
-        },
-        obstacle
-      )
-    ){
+  obstacles=
+    obstacles.filter(o=>o.x>-100);
+
+  /* collision */
+
+  for(const o of obstacles){
+
+    const hit=
+      trexPlayer.x<o.x+o.w &&
+      trexPlayer.x+trexPlayer.w>o.x &&
+      trexPlayer.y<o.y &&
+      trexPlayer.y+trexPlayer.h>o.y-o.h;
+
+    if(hit){
 
       trexRunning=false;
 
-      const finalScore=
-        Math.floor(trexScore);
-
-      $('trexMessage').textContent=
-        `💥 Game Over! Score: ${finalScore}`;
+      $('trexStatus').textContent=
+        `Game Over! Score: ${trexScore}`;
 
       saveScore(
         'T-Rex Runner',
-        finalScore
+        trexScore
       );
-
-      drawTrex();
 
       return;
 
@@ -2735,601 +1882,321 @@ function trexFrame(time){
 
   }
 
-  drawTrex();
+  trexScore++;
 
-  requestAnimationFrame(
-    trexFrame
-  );
+  $('trexStatus').textContent=
+    `Score: ${trexScore}`;
+
+  trexRAF=requestAnimationFrame(trexFrame);
 
 }
 
+$('startTrex').onclick=()=>{
 
-$('restartTrex').onclick=
-  resetTrex;
+  if(trexRunning){
+
+    trexRunning=false;
+    cancelAnimationFrame(trexRAF);
+
+    $('trexStatus').textContent=
+      'Paused.';
+
+  }else{
+
+    startTrex();
+
+  }
+
+};
 
 trexCanvas.addEventListener(
-  'mousedown',
+  'pointerdown',
   trexJump
-);
-
-trexCanvas.addEventListener(
-  'touchstart',
-  e=>{
-    e.preventDefault();
-    trexJump();
-  },
-  {passive:false}
 );
 
 window.addEventListener(
   'keydown',
   e=>{
-
-    if(
-      e.code==='Space'&&
-      !e.repeat
-    ){
+    if(e.code==='Space'){
 
       e.preventDefault();
       trexJump();
 
     }
-
   }
 );
 
-drawTrex();
-
 
 /* =========================================================
-   MOVIE SYSTEM
+   WATCH MOVIE
 ========================================================= */
 
-const canvas=$('canvas');
+/*
+  Put your own movie URLs here.
 
-const ctx=
-  canvas.getContext('2d');
+  Example:
+  movie1: "https://your-site.com/movie.mp4"
 
-const W=canvas.width;
-const H=canvas.height;
+  This section is intentionally NOT connected
+  to Asher's birthday movie.
+*/
 
-const dinoMovie={
-  x:155,
-  y:280
+const MOVIES={
+  movie1:'',
+  movie2:'',
+  movie3:''
 };
 
-const clouds=[
-  {x:80,y:76,s:1.1},
-  {x:650,y:112,s:.8}
-];
+$('playMovie').onclick=()=>{
 
-const balloons=[
-  {x:620,y:210,c:'#ef476f'},
-  {x:685,y:235,c:'#ffd166'},
-  {x:750,y:190,c:'#06d6a0'}
-];
+  const selected=$('movieChoice').value;
+  const url=MOVIES[selected];
 
-let movie=false;
-let movieStart=0;
-let movieRAF;
-let audio;
-let musicTimer;
+  if(!url){
 
+    $('movieFrame').innerHTML=`
+      <div class="movie-placeholder">
+        <h2 style="color:white">🎬 Movie not added yet</h2>
+        <p>
+          Add the movie's video URL to the MOVIES
+          section in the code.
+        </p>
+      </div>
+    `;
 
-function movieRect(
-  x,y,w,h,c
-){
-
-  ctx.fillStyle=c;
-
-  ctx.fillRect(
-    x,y,w,h
-  );
-
-}
-
-
-function movieRound(
-  x,y,w,h,r,c
-){
-
-  ctx.fillStyle=c;
-
-  ctx.beginPath();
-
-  ctx.roundRect(
-    x,y,w,h,r
-  );
-
-  ctx.fill();
-
-}
-
-
-function drawCloud(c){
-
-  ctx.fillStyle='#fff';
-
-  ctx.beginPath();
-
-  ctx.arc(
-    c.x,
-    c.y,
-    22*c.s,
-    0,
-    Math.PI*2
-  );
-
-  ctx.arc(
-    c.x+26*c.s,
-    c.y-12*c.s,
-    30*c.s,
-    0,
-    Math.PI*2
-  );
-
-  ctx.arc(
-    c.x+60*c.s,
-    c.y,
-    22*c.s,
-    0,
-    Math.PI*2
-  );
-
-  ctx.fill();
-
-}
-
-
-function drawMovieCharacter(t){
-
-  const x=
-    dinoMovie.x;
-
-  const y=
-    dinoMovie.y+
-    Math.sin(t/120)*3;
-
-  movieRound(
-    x+18,
-    y+23,
-    48,
-    63,
-    10,
-    '#647180'
-  );
-
-  movieRound(
-    x+47,
-    y-5,
-    70,
-    52,
-    7,
-    '#647180'
-  );
-
-  movieRound(
-    x+106,
-    y+12,
-    27,
-    25,
-    3,
-    '#647180'
-  );
-
-  movieRect(
-    x+65,
-    y+15,
-    14,
-    18,
-    '#293544'
-  );
-
-  movieRect(
-    x+109,
-    y+8,
-    8,
-    8,
-    '#172331'
-  );
-
-  movieRect(
-    x+112,
-    y+10,
-    3,
-    3,
-    'white'
-  );
-
-}
-
-
-function drawGenericMovie(t){
-
-  const selected=
-    $('scene').value;
-
-  const scenes=
-    selected==='random'
-      ?[
-        'day',
-        'night',
-        'candy'
-      ]
-      :[selected];
-
-  const scene=
-    scenes[
-      Math.floor(t/18000)%
-      scenes.length
-    ];
-
-  let sky;
-
-  if(scene==='night'){
-
-    sky='#17284d';
-
-  }else if(scene==='candy'){
-
-    sky='#eaa4d1';
-
-  }else{
-
-    sky='#62c4ed';
+    return;
 
   }
 
-  ctx.fillStyle=sky;
+  $('movieFrame').innerHTML=`
+    <video
+      controls
+      autoplay
+      style="width:100%;height:100%;object-fit:contain"
+    >
+      <source src="${url}" type="video/mp4">
+      Your browser does not support video playback.
+    </video>
+  `;
 
-  ctx.fillRect(
-    0,0,W,H
-  );
+};
 
-  if(scene==='night'){
 
-    for(
-      let i=0;
-      i<45;
-      i++
-    ){
+/* =========================================================
+   ASHER'S SPECIAL BIRTHDAY MOVIE
+========================================================= */
 
-      ctx.fillStyle='#fff';
+const birthdayCanvas=$('birthdayCanvas');
+const bctx=birthdayCanvas.getContext('2d');
 
-      ctx.fillRect(
-        (i*83)%W,
-        (i*47)%190,
+let birthdayPlaying=false;
+let birthdayStart=0;
+let birthdayRAF=null;
+
+function birthdayDraw(t){
+
+  const W=birthdayCanvas.width;
+  const H=birthdayCanvas.height;
+
+  bctx.fillStyle=
+    t%10000<5000
+      ? '#62c4ed'
+      : '#18284c';
+
+  bctx.fillRect(0,0,W,H);
+
+  /* stars */
+
+  if(t%10000>=5000){
+
+    for(let i=0;i<60;i++){
+
+      bctx.fillStyle='#fff';
+
+      bctx.fillRect(
+        (i*73)%W,
+        (i*47)%220,
         3,
         3
       );
 
     }
 
-    ctx.fillStyle='#ffe89b';
+  }
 
-    ctx.beginPath();
+  /* ground */
 
-    ctx.arc(
-      720,
-      70,
-      38,
+  bctx.fillStyle='#6eae58';
+
+  bctx.fillRect(
+    0,
+    315,
+    W,
+    105
+  );
+
+  /* balloons */
+
+  const balloons=[
+    [620,190,'#ef476f'],
+    [690,220,'#ffd166'],
+    [760,180,'#06d6a0']
+  ];
+
+  balloons.forEach(([x,y,c])=>{
+
+    bctx.strokeStyle='#555';
+
+    bctx.beginPath();
+    bctx.moveTo(x,y+25);
+    bctx.lineTo(x,315);
+    bctx.stroke();
+
+    bctx.fillStyle=c;
+
+    bctx.beginPath();
+
+    bctx.ellipse(
+      x,
+      y,
+      20,
+      28,
+      0,
       0,
       Math.PI*2
     );
 
-    ctx.fill();
+    bctx.fill();
 
-  }else{
+  });
 
-    clouds.forEach(
-      c=>drawCloud({
-        ...c,
-        x:c.x-(t/90)%W
-      })
-    );
+  /* dinosaur */
 
-  }
+  const bob=
+    Math.sin(t/180)*4;
 
-  /*
-    Generic landscape.
-  */
+  bctx.fillStyle='#647180';
 
-  ctx.fillStyle=
-    scene==='candy'
-      ?'#f28fba'
-      :'#a5c7d1';
-
-  ctx.beginPath();
-
-  ctx.moveTo(0,292);
-  ctx.lineTo(180,175);
-  ctx.lineTo(350,292);
-  ctx.lineTo(520,145);
-  ctx.lineTo(760,292);
-
-  ctx.fill();
-
-  ctx.fillStyle='#6eae58';
-
-  ctx.fillRect(
-    0,
-    315,
-    W,
-    105
+  bctx.fillRect(
+    160,
+    245+bob,
+    55,
+    70
   );
 
-  /*
-    Character moves through
-    the scene.
-  */
-
-  dinoMovie.x=
-    120+
-    Math.sin(t/2500)*180;
-
-  drawMovieCharacter(t);
-
-  ctx.fillStyle='#fff';
-
-  ctx.font=
-    'bold 22px Arial';
-
-  ctx.fillText(
-    'ANIMATION',
-    380,
+  bctx.fillRect(
+    205,
+    220+bob,
+    70,
     55
   );
 
-}
-
-
-function drawBirthdayMovie(t){
-
-  ctx.fillStyle='#62c4ed';
-
-  ctx.fillRect(
-    0,
-    0,
-    W,
-    H
+  bctx.fillRect(
+    145,
+    260+bob,
+    30,
+    55
   );
 
-  clouds.forEach(
-    c=>drawCloud({
-      ...c,
-      x:c.x-(t/90)%W
-    })
+  bctx.fillRect(
+    190,
+    305+bob,
+    20,
+    30
   );
 
-  ctx.fillStyle='#6eae58';
-
-  ctx.fillRect(
-    0,
-    315,
-    W,
-    105
+  bctx.fillRect(
+    235,
+    305+bob,
+    20,
+    30
   );
 
-  ctx.fillStyle='#d79a39';
+  /* eye */
 
-  ctx.fillRect(
-    0,
-    315,
-    W,
+  bctx.fillStyle='#111';
+
+  bctx.fillRect(
+    250,
+    230+bob,
+    8,
     8
   );
 
-  balloons.forEach(
-    (b,i)=>{
+  /* birthday text */
 
-      const x=
-        b.x-(t/(i+2))%W;
+  bctx.fillStyle='#fff';
 
-      ctx.strokeStyle='#555';
+  bctx.font='bold 34px Arial';
 
-      ctx.beginPath();
+  bctx.textAlign='center';
 
-      ctx.moveTo(x,250);
-      ctx.lineTo(x,315);
-
-      ctx.stroke();
-
-      ctx.fillStyle=b.c;
-
-      ctx.beginPath();
-
-      ctx.ellipse(
-        x,
-        220-(i%2)*20,
-        18,
-        25,
-        0,
-        0,
-        Math.PI*2
-      );
-
-      ctx.fill();
-
-    }
-  );
-
-  drawMovieCharacter(t);
-
-  ctx.fillStyle='#fff';
-
-  ctx.font=
-    'bold 20px Arial';
-
-  ctx.fillText(
+  bctx.fillText(
     'HAPPY BIRTHDAY ASHER!',
-    310,
-    55
+    W/2,
+    65
+  );
+
+  bctx.font='bold 22px Arial';
+
+  bctx.fillText(
+    '🎂 🎈 🎉',
+    W/2,
+    105
   );
 
 }
 
+function birthdayFrame(t){
 
-function playMusic(){
+  if(!birthdayPlaying)return;
 
-  audio=
-    audio||
-    new AudioContext();
+  const elapsed=t-birthdayStart;
 
-  const notes=[
-    261.63,
-    329.63,
-    392,
-    523.25,
-    659.25,
-    523.25,
-    392,
-    329.63
-  ];
-
-  let index=0;
-
-  clearInterval(musicTimer);
-
-  musicTimer=
-    setInterval(()=>{
-
-      const oscillator=
-        audio.createOscillator();
-
-      const gain=
-        audio.createGain();
-
-      oscillator.type='triangle';
-
-      oscillator.frequency.value=
-        notes[
-          index++%
-          notes.length
-        ];
-
-      gain.gain.setValueAtTime(
-        .035,
-        audio.currentTime
-      );
-
-      gain.gain.exponentialRampToValueAtTime(
-        .001,
-        audio.currentTime+.45
-      );
-
-      oscillator
-        .connect(gain)
-        .connect(audio.destination);
-
-      oscillator.start();
-
-      oscillator.stop(
-        audio.currentTime+.45
-      );
-
-    },500);
-
-}
-
-
-function movieFrame(time){
-
-  if(!movie)return;
-
-  const elapsed=
-    time-movieStart;
+  birthdayDraw(elapsed);
 
   if(elapsed>=180000){
 
-    movie=false;
+    birthdayPlaying=false;
 
-    clearInterval(
-      musicTimer
-    );
-
-    $('movieStatus').textContent=
-      'Movie finished!';
+    $('birthdayStatus').textContent=
+      'Birthday movie finished! 🎉';
 
     return;
 
   }
 
-  /*
-    ASHER GETS THE BIRTHDAY
-    VERSION. EVERYONE ELSE
-    GETS THE GENERIC VERSION.
-  */
+  $('birthdayStatus').textContent=
+    `Birthday movie playing: ${Math.floor(elapsed/1000)} / 180 seconds`;
 
-  if(matches(
-    currentUser,
-    ASHER
-  )){
-
-    drawBirthdayMovie(
-      elapsed
-    );
-
-  }else{
-
-    drawGenericMovie(
-      elapsed
-    );
-
-  }
-
-  $('movieStatus').textContent=
-    `Movie playing: ${
-      Math.floor(elapsed/1000)
-    } / 180 seconds`;
-
-  movieRAF=
-    requestAnimationFrame(
-      movieFrame
-    );
+  birthdayRAF=
+    requestAnimationFrame(birthdayFrame);
 
 }
 
+$('birthdayButton').onclick=()=>{
 
-$('movieButton').onclick=()=>{
+  if(birthdayPlaying){
 
-  if(movie){
+    birthdayPlaying=false;
 
-    movie=false;
+    cancelAnimationFrame(birthdayRAF);
 
-    cancelAnimationFrame(
-      movieRAF
-    );
-
-    clearInterval(
-      musicTimer
-    );
-
-    $('movieButton').textContent=
-      matches(
-        currentUser,
-        ASHER
-      )
-      ?'▶ Start Birthday Movie'
-      :'▶ Start Movie';
+    $('birthdayButton').textContent=
+      '▶ Start Birthday Movie';
 
     return;
 
   }
 
-  movie=true;
+  birthdayPlaying=true;
+  birthdayStart=performance.now();
 
-  movieStart=
-    performance.now();
+  $('birthdayButton').textContent=
+    '■ Stop Birthday Movie';
 
-  $('movieButton').textContent=
-    '■ Stop Movie';
-
-  playMusic();
-
-  movieRAF=
-    requestAnimationFrame(
-      movieFrame
-    );
+  birthdayRAF=
+    requestAnimationFrame(birthdayFrame);
 
 };
 
@@ -3338,114 +2205,51 @@ $('movieButton').onclick=()=>{
    AUTH STATE
 ========================================================= */
 
-onAuthStateChanged(
-  auth,
-  user=>{
+onAuthStateChanged(auth,user=>{
 
-    currentUser=user;
+  const owner=matches(user,OWNER);
+  const asher=matches(user,ASHER);
 
-    const isOwner=
-      matches(user,OWNER);
+  $('adminPanel').style.display=
+    owner?'block':'none';
 
-    const isAsher=
-      matches(user,ASHER);
+  $('questionPanel').style.display=
+    owner?'none':'block';
 
-    /*
-      Everyone gets the game panel.
-    */
+  $('gamePanel').style.display=
+    user?'block':'none';
 
-    $('gamePanel').style.display=
-      'block';
+  $('birthday').style.display=
+    asher?'block':'none';
 
-    $('adminPanel').style.display=
-      isOwner
-        ?'block'
-        :'none';
+  $('birthdayMovieChoice').style.display=
+    asher?'block':'none';
 
-    $('questionPanel').style.display=
-      isOwner
-        ?'none'
-        :'block';
+  $('loginButton').textContent=
+    user
+      ? (owner?'Add Words':'Games')
+      : 'Login';
 
-    $('birthday').style.display=
-      isAsher
-        ?'block'
-        :'none';
+  if(asher){
 
+    $('birthdayMovieChoice').style.display='block';
 
-    /*
-      Change the movie specifically
-      for Asher.
-    */
+  }else{
 
-    if(isAsher){
-
-      $('movieMenuText').textContent=
-        "Asher's Birthday Movie";
-
-      $('movieTitle').textContent=
-        "🎂 Asher's Birthday Movie";
-
-      $('movieDescription').textContent=
-        "A special birthday animation made just for you.";
-
-      $('movieButton').textContent=
-        "▶ Start Birthday Movie";
-
-    }else{
-
-      $('movieMenuText').textContent=
-        "Watch Movie";
-
-      $('movieTitle').textContent=
-        "🎬 Watch Movie";
-
-      $('movieDescription').textContent=
-        "Sit back and enjoy the movie.";
-
-      $('movieButton').textContent=
-        "▶ Start Movie";
-
-    }
-
-
-    if(user){
-
-      $('loginButton').textContent=
-        isOwner
-          ?'Add Words'
-          :'Logged In';
-
-      $('upgradeButton').style.display=
-        'none';
-
-      loadScores();
-
-    }else{
-
-      $('loginButton').textContent=
-        'Login';
-
-      $('upgradeButton').style.display=
-        'block';
-
-      $('guestScoreMessage')
-        .classList.remove('hidden');
-
-      $('loggedInScores')
-        .classList.add('hidden');
-
-      if(scoresUnsubscribe){
-
-        scoresUnsubscribe();
-        scoresUnsubscribe=null;
-
-      }
-
-    }
+    $('birthdayMovieChoice').style.display='none';
 
   }
-);
+
+});
+
+
+/* =========================================================
+   INITIAL PUZZLE DRAW
+========================================================= */
+
+setTimeout(()=>{
+  startPuzzle();
+},300);
 
 </script>
 
