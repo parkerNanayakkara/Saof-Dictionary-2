@@ -74,6 +74,25 @@ select{
   border:2px solid #6c4cff;
 }
 
+.games-toggle-btn{
+  width:min(80%,300px);
+  margin-top:15px;
+  border-radius:25px;
+  padding:12px;
+  border:0;
+  background:#6c4cff;
+  color:white;
+  font-weight:bold;
+  font-size:16px;
+  box-shadow:0 4px 10px #6c4cff66;
+  transition:0.2s;
+}
+
+.games-toggle-btn:hover{
+  transform:scale(1.05);
+  background:#5a3dd6;
+}
+
 .panel,
 .dictionary{
   width:min(calc(100% - 40px),900px);
@@ -219,24 +238,6 @@ h2{
   margin-top:8px;
 }
 
-.loading{
-  display:inline-block;
-  width:17px;
-  height:17px;
-  border:3px solid #ffffff66;
-  border-top-color:#fff;
-  border-radius:50%;
-  animation:spin .7s linear infinite;
-  vertical-align:middle;
-  margin-right:8px;
-}
-
-@keyframes spin{
-  to{
-    transform:rotate(360deg);
-  }
-}
-
 /* PUZZLE */
 
 .puzzle-info{
@@ -359,13 +360,6 @@ h2{
   text-align:center;
 }
 
-.movie-source{
-  margin-top:10px;
-  color:#777;
-  font-size:13px;
-  text-align:center;
-}
-
 /* SCORES */
 
 .score-table{
@@ -428,6 +422,9 @@ footer{
 
 <div class="search">
   <input id="searchInput" placeholder="Search a word...">
+  <br>
+  <!-- THE NEW GAMES BUTTON -->
+  <button class="games-toggle-btn" id="showGamesBtn">🎮 Open Games</button>
 </div>
 
 
@@ -515,53 +512,29 @@ footer{
     <h2>🎮 Games</h2>
 
     <p>
-      Everyone can play. Log in if you want your high scores
-      saved to this browser.
+      Everyone can play. Log in if you want your high scores saved.
     </p>
 
-    <div class="game-menu">
+    <div class="game-menu" id="gameMenu">
 
       <button class="game-choice" id="puzzleChoice">
-
         🧩 Picture Puzzle
-
-        <small>
-          Put the pieces together to reveal the picture.
-        </small>
-
+        <small>Put the pieces together to reveal the picture.</small>
       </button>
-
 
       <button class="game-choice" id="trexChoice">
-
         🦖 T-Rex Runner
-
-        <small>
-          Run, jump and avoid the obstacles.
-        </small>
-
+        <small>Run, jump and avoid the obstacles.</small>
       </button>
-
 
       <button class="game-choice" id="watchMovieChoice">
-
         🎬 Real Mini Movies
-
-        <small>
-          Watch real, non-scary animated short films.
-        </small>
-
+        <small>Watch real, non-scary animated short films.</small>
       </button>
 
-
       <button class="game-choice" id="scoresChoice">
-
         🏆 High Scores
-
-        <small>
-          View scores saved on this website.
-        </small>
-
+        <small>View scores saved on this website.</small>
       </button>
 
     </div>
@@ -583,55 +556,29 @@ footer{
       </p>
 
       <div class="puzzle-layout">
-
         <div>
-
           <h3>Mixed Pieces</h3>
-
-          <div
-            class="puzzle-area"
-            id="pieceArea"
-          ></div>
-
+          <div class="puzzle-area" id="pieceArea"></div>
         </div>
-
 
         <div>
-
           <h3>Solution Board</h3>
-
-          <div
-            class="puzzle-area"
-            id="targetArea"
-          ></div>
-
+          <div class="puzzle-area" id="targetArea"></div>
         </div>
-
       </div>
 
-      <div
-        class="puzzle-status"
-        id="puzzleStatus"
-      >
+      <div class="puzzle-status" id="puzzleStatus">
         Loading puzzle...
       </div>
 
       <div class="puzzle-controls">
-
-        <button
-          class="primary"
-          id="newPuzzle"
-        >
+        <button class="primary" id="newPuzzle">
           New Puzzle
         </button>
 
-        <button
-          class="secondary"
-          id="checkPuzzle"
-        >
+        <button class="secondary" id="checkPuzzle">
           Check Puzzle
         </button>
-
       </div>
 
     </div>
@@ -657,10 +604,7 @@ footer{
         height="350"
       ></canvas>
 
-      <button
-        class="primary"
-        id="startTrex"
-      >
+      <button class="primary" id="startTrex">
         ▶ Start T-Rex Runner
       </button>
 
@@ -686,7 +630,6 @@ footer{
       </p>
 
       <div class="movie-frame">
-
         <video
           class="real-movie"
           id="realMovie"
@@ -696,23 +639,18 @@ footer{
         >
           Your browser does not support video playback.
         </video>
-
       </div>
 
       <div class="movie-buttons">
-
         <button class="primary movie-button" id="movie1Button">
           🐰 Big Bunny
         </button>
-
         <button class="primary movie-button" id="movie2Button">
           🌺 Blooming Flower
         </button>
-
         <button class="primary movie-button" id="movie3Button">
           🌍 Earth Scenery
         </button>
-
       </div>
 
       <p class="movie-description" id="movieDescription">
@@ -734,10 +672,7 @@ footer{
 
     <div class="game-screen" id="scoresScreen">
 
-      <button
-        class="secondary back-button"
-        data-back
-      >
+      <button class="secondary back-button" data-back>
         ← Back to Games
       </button>
 
@@ -749,25 +684,17 @@ footer{
       </p>
 
       <table class="score-table">
-
         <thead>
-
           <tr>
             <th>Game</th>
             <th>Score</th>
             <th>Player</th>
           </tr>
-
         </thead>
-
         <tbody id="scoreBody"></tbody>
-
       </table>
 
-      <button
-        class="secondary"
-        id="clearScores"
-      >
+      <button class="secondary" id="clearScores">
         Clear Scores on This Device
       </button>
 
@@ -780,77 +707,27 @@ footer{
 
 <!-- DICTIONARY -->
 
-<main
-  class="dictionary"
-  id="dictionary"
->
+<main class="dictionary" id="dictionary">
 
   <article class="card">
-
-    <div class="word">
-      Recos
-    </div>
-
-    <div class="pronunciation">
-      Pronunciation:
-      <strong>reh-coss</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning:
-      <strong>ball</strong>
-    </div>
-
-    <div class="credits">
-      Credits: No credits
-    </div>
-
+    <div class="word">Recos</div>
+    <div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div>
+    <div class="meaning">Meaning: <strong>ball</strong></div>
+    <div class="credits">Credits: No credits</div>
   </article>
 
-
   <article class="card">
-
-    <div class="word">
-      Saof
-    </div>
-
-    <div class="pronunciation">
-      Pronunciation:
-      <strong>s-ow-f</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning:
-      <strong>me / and</strong>
-    </div>
-
-    <div class="credits">
-      Credits: No credits
-    </div>
-
+    <div class="word">Saof</div>
+    <div class="pronunciation">Pronunciation: <strong>s-ow-f</strong></div>
+    <div class="meaning">Meaning: <strong>me / and</strong></div>
+    <div class="credits">Credits: No credits</div>
   </article>
 
-
   <article class="card">
-
-    <div class="word">
-      Thu
-    </div>
-
-    <div class="pronunciation">
-      Pronunciation:
-      <strong>th-oo</strong>
-    </div>
-
-    <div class="meaning">
-      Meaning:
-      <strong>Depends on the context.</strong>
-    </div>
-
-    <div class="credits">
-      Credits: No credits
-    </div>
-
+    <div class="word">Thu</div>
+    <div class="pronunciation">Pronunciation: <strong>th-oo</strong></div>
+    <div class="meaning">Meaning: <strong>Depends on the context.</strong></div>
+    <div class="credits">Credits: No credits</div>
   </article>
 
 </main>
@@ -864,51 +741,15 @@ footer{
 <!-- LOGIN -->
 
 <div id="login">
-
   <div class="login-box">
-
     <h2>Login</h2>
-
-    <input
-      id="email"
-      type="email"
-      placeholder="Email"
-    >
-
-    <input
-      id="password"
-      type="password"
-      placeholder="Password"
-    >
-
-    <button
-      class="primary"
-      id="loginAction"
-    >
-      Login
-    </button>
-
-    <button
-      class="primary green"
-      id="upgradeAction"
-    >
-      Upgrade for Free
-    </button>
-
-    <div
-      class="error"
-      id="loginError"
-    ></div>
-
-    <button
-      class="secondary"
-      id="cancelLogin"
-    >
-      Cancel
-    </button>
-
+    <input id="email" type="email" placeholder="Email">
+    <input id="password" type="password" placeholder="Password">
+    <button class="primary" id="loginAction">Login</button>
+    <button class="primary green" id="upgradeAction">Upgrade for Free</button>
+    <div class="error" id="loginError"></div>
+    <button class="secondary" id="cancelLogin">Cancel</button>
   </div>
-
 </div>
 
 
@@ -920,8 +761,7 @@ footer{
 
 import {
   initializeApp
-} from
-'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
 
 import {
   getAuth,
@@ -931,8 +771,7 @@ import {
   createUserWithEmailAndPassword,
   signOut,
   onAuthStateChanged
-} from
-'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 
 import {
   getFirestore,
@@ -940,56 +779,50 @@ import {
   addDoc,
   onSnapshot,
   serverTimestamp
-} from
-'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
+} from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 
 const config = {
-  apiKey:
-    'AIzaSyaAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
-  authDomain:
-    'saof-dictionary.firebaseapp.com',
-  projectId:
-    'saof-dictionary',
-  storageBucket:
-    'saof-dictionary.firebasestorage.app',
-  messagingSenderId:
-    '1054693760278',
-  appId:
-    '1:1054693760278:web:5f8f9c090fbc737dfc4437'
+  apiKey: 'AIzaSyaAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
+  authDomain: 'saof-dictionary.firebaseapp.com',
+  projectId: 'saof-dictionary',
+  storageBucket: 'saof-dictionary.firebasestorage.app',
+  messagingSenderId: '1054693760278',
+  appId: '1:1054693760278:web:5f8f9c090fbc737dfc4437'
 };
 
 
-const OWNER =
-  'parkernanayakkara@icloud.com';
+const OWNER = 'parkernanayakkara@icloud.com';
+const app = initializeApp(config);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const $ = id => document.getElementById(id);
+
+await setPersistence(auth, inMemoryPersistence);
+
+const matches = (user,email) =>
+  user?.email?.toLowerCase() === email.toLowerCase();
 
 
-const app =
-  initializeApp(config);
+/* =========================================================
+   TOGGLE GAMES BUTTON
+========================================================= */
 
-
-const auth =
-  getAuth(app);
-
-
-const db =
-  getFirestore(app);
-
-
-const $ =
-  id => document.getElementById(id);
-
-
-await setPersistence(
-  auth,
-  inMemoryPersistence
-);
-
-
-const matches =
-  (user,email) =>
-    user?.email?.toLowerCase() ===
-    email.toLowerCase();
+$('showGamesBtn').onclick = () => {
+  const gp = $('gamePanel');
+  if (gp.style.display === 'block') {
+    // Hide games
+    gp.style.display = 'none';
+    $('showGamesBtn').textContent = '🎮 Open Games';
+  } else {
+    // Show games
+    gp.style.display = 'block';
+    $('gameMenu').style.display = 'grid'; // Ensure menu is visible
+    hideScreens(); 
+    $('showGamesBtn').textContent = '❌ Close Games';
+    gp.scrollIntoView({ behavior: 'smooth' });
+  }
+};
 
 
 /* =========================================================
@@ -997,136 +830,54 @@ const matches =
 ========================================================= */
 
 function addCard(d){
+  const c = document.createElement('article');
+  c.className = 'card live-card';
 
-  const c =
-    document.createElement('article');
+  const word = document.createElement('div');
+  word.className = 'word';
+  word.textContent = d.word;
 
-  c.className =
-    'card live-card';
-
-  const word =
-    document.createElement('div');
-
-  word.className =
-    'word';
-
-  word.textContent =
-    d.word;
-
-  const pronunciation =
-    document.createElement('div');
-
-  pronunciation.className =
-    'pronunciation';
-
-  pronunciation.innerHTML =
-    'Pronunciation: ';
-
-  const pStrong =
-    document.createElement('strong');
-
-  pStrong.textContent =
-    d.pronunciation;
-
+  const pronunciation = document.createElement('div');
+  pronunciation.className = 'pronunciation';
+  pronunciation.innerHTML = 'Pronunciation: ';
+  const pStrong = document.createElement('strong');
+  pStrong.textContent = d.pronunciation;
   pronunciation.append(pStrong);
 
-
-  const meaning =
-    document.createElement('div');
-
-  meaning.className =
-    'meaning';
-
-  meaning.innerHTML =
-    'Meaning: ';
-
-  const mStrong =
-    document.createElement('strong');
-
-  mStrong.textContent =
-    d.meaning;
-
+  const meaning = document.createElement('div');
+  meaning.className = 'meaning';
+  meaning.innerHTML = 'Meaning: ';
+  const mStrong = document.createElement('strong');
+  mStrong.textContent = d.meaning;
   meaning.append(mStrong);
 
+  const credits = document.createElement('div');
+  credits.className = 'credits';
+  credits.textContent = 'Credits: ' + (d.credits?.trim() || 'No credits');
 
-  const credits =
-    document.createElement('div');
-
-  credits.className =
-    'credits';
-
-  credits.textContent =
-    'Credits: ' +
-    (d.credits?.trim() || 'No credits');
-
-
-  c.append(
-    word,
-    pronunciation,
-    meaning,
-    credits
-  );
-
+  c.append(word, pronunciation, meaning, credits);
   $('dictionary').append(c);
-
 }
 
-
-onSnapshot(
-  collection(db,'words'),
-  snap => {
-
-    document
-      .querySelectorAll('.live-card')
-      .forEach(e => e.remove());
-
-    snap.forEach(x => {
-
-      const d =
-        x.data();
-
-      if(
-        d.word &&
-        d.pronunciation &&
-        d.meaning
-      ){
-
-        addCard(d);
-
-      }
-
-    });
-
-  }
-);
+onSnapshot(collection(db,'words'), snap => {
+  document.querySelectorAll('.live-card').forEach(e => e.remove());
+  snap.forEach(x => {
+    const d = x.data();
+    if(d.word && d.pronunciation && d.meaning) addCard(d);
+  });
+});
 
 
 /* =========================================================
    SEARCH
 ========================================================= */
 
-$('searchInput').addEventListener(
-  'input',
-  e => {
-
-    const q =
-      e.target.value.toLowerCase();
-
-    document
-      .querySelectorAll(
-        '#dictionary .card'
-      )
-      .forEach(c => {
-
-        c.hidden =
-          !c.textContent
-            .toLowerCase()
-            .includes(q);
-
-      });
-
-  }
-);
+$('searchInput').addEventListener('input', e => {
+  const q = e.target.value.toLowerCase();
+  document.querySelectorAll('#dictionary .card').forEach(c => {
+    c.hidden = !c.textContent.toLowerCase().includes(q);
+  });
+});
 
 
 /* =========================================================
@@ -1134,323 +885,147 @@ $('searchInput').addEventListener(
 ========================================================= */
 
 $('loginButton').onclick = () => {
-
   if(auth.currentUser){
-
-    $('gamePanel').scrollIntoView({
-      behavior:'smooth'
-    });
-
+    // Automatically show games if already logged in
+    $('gamePanel').style.display = 'block';$('gameMenu').style.display = 'grid'; 
+    hideScreens();
+    $('showGamesBtn').textContent = '❌ Close Games';
+    $('gamePanel').scrollIntoView({ behavior:'smooth' });
   }else{
+    $('login').style.display = 'flex';
+  }
+};
 
-    $('login').style.display =
-      'flex';
+$('cancelLogin').onclick = () => {$('login').style.display = 'none';
+};
 
+$('loginAction').onclick = async () => {
+  const email = $('email').value.trim();
+  const password = $('password').value;
+
+  if(!email || !password){
+    $('loginError').textContent = 'Enter your email and password.';
+    return;
   }
 
+  const button = $('loginAction');
+  button.disabled = true;
+  button.textContent = 'Logging in...';
+
+  try{
+    await signInWithEmailAndPassword(auth, email, password);
+    $('login').style.display = 'none';
+  }catch(e){
+    $('loginError').textContent = 'Login failed: ' + (e.code || 'check your details');
+  }finally{
+    button.disabled = false;
+    button.textContent = 'Login';
+  }
 };
-
-
-$('cancelLogin').onclick = () => {
-
-  $('login').style.display =
-    'none';
-
-};
-
-
-$('loginAction').onclick =
-  async () => {
-
-    const email =
-      $('email').value.trim();
-
-    const password =
-      $('password').value;
-
-    if(!email || !password){
-
-      $('loginError').textContent =
-        'Enter your email and password.';
-
-      return;
-
-    }
-
-    const button =
-      $('loginAction');
-
-    button.disabled = true;
-
-    button.textContent =
-      'Logging in...';
-
-    try{
-
-      await signInWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      $('login').style.display =
-        'none';
-
-    }catch(e){
-
-      $('loginError').textContent =
-        'Login failed: ' +
-        (e.code || 'check your details');
-
-    }finally{
-
-      button.disabled = false;
-
-      button.textContent =
-        'Login';
-
-    }
-
-  };
 
 
 /* =========================================================
    CREATE ACCOUNT
 ========================================================= */
 
-$('upgradeAction').onclick =
-  async () => {
+$('upgradeAction').onclick = async () => {
+  const email = $('email').value.trim();
+  const password = $('password').value;
 
-    const email =
-      $('email').value.trim();
+  if(!email || !password){
+    $('loginError').textContent = 'Enter an email and password first.';
+    return;
+  }
 
-    const password =
-      $('password').value;
+  if(password.length < 6){
+    $('loginError').textContent = 'Password must be at least 6 characters.';
+    return;
+  }
 
-    if(!email || !password){
+  const button = $('upgradeAction');
+  button.disabled = true;
+  button.textContent = 'Creating account...';
 
-      $('loginError').textContent =
-        'Enter an email and password first.';
-
-      return;
-
-    }
-
-    if(password.length < 6){
-
-      $('loginError').textContent =
-        'Password must be at least 6 characters.';
-
-      return;
-
-    }
-
-    const button =
-      $('upgradeAction');
-
-    button.disabled = true;
-
-    button.textContent =
-      'Creating account...';
-
-    try{
-
-      await createUserWithEmailAndPassword(
-        auth,
-        email,
-        password
-      );
-
-      $('login').style.display =
-        'none';
-
-    }catch(e){
-
-      $('loginError').textContent =
-        'Could not create account: ' +
-        (e.code || 'unknown error');
-
-    }finally{
-
-      button.disabled = false;
-
-      button.textContent =
-        'Upgrade for Free';
-
-    }
-
-  };
+  try{
+    await createUserWithEmailAndPassword(auth, email, password);
+    $('login').style.display = 'none';
+  }catch(e){
+    $('loginError').textContent = 'Could not create account: ' + (e.code || 'unknown error');
+  }finally{
+    button.disabled = false;
+    button.textContent = 'Upgrade for Free';
+  }
+};
 
 
 /* =========================================================
    ADMIN
 ========================================================= */
 
-$('logout').onclick =
-  () => signOut(auth);
+$('logout').onclick = () => signOut(auth);
 
+$('addWord').onclick = async () => {
+  if(!matches(auth.currentUser,OWNER)){
+    alert('Only the owner can add words.');
+    return;
+  }
 
-$('addWord').onclick =
-  async () => {
+  const word = $('newWord').value.trim();
+  const pronunciation = $('newPronunciation').value.trim();
+  const meaning = $('newMeaning').value.trim();
 
-    if(!matches(auth.currentUser,OWNER)){
+  if(!word || !pronunciation || !meaning){
+    alert('Fill in word, pronunciation and meaning.');
+    return;
+  }
 
-      alert(
-        'Only the owner can add words.'
-      );
+  await addDoc(collection(db,'words'), {
+    word,
+    pronunciation,
+    meaning,
+    credits: $('newCredits').value.trim() || 'No credits',
+    addedBy: auth.currentUser.email,
+    createdAt: serverTimestamp()
+  });
 
-      return;
-
-    }
-
-    const word =
-      $('newWord').value.trim();
-
-    const pronunciation =
-      $('newPronunciation')
-        .value
-        .trim();
-
-    const meaning =
-      $('newMeaning')
-        .value
-        .trim();
-
-    if(
-      !word ||
-      !pronunciation ||
-      !meaning
-    ){
-
-      alert(
-        'Fill in word, pronunciation and meaning.'
-      );
-
-      return;
-
-    }
-
-    await addDoc(
-      collection(db,'words'),
-      {
-
-        word,
-
-        pronunciation,
-
-        meaning,
-
-        credits:
-          $('newCredits')
-            .value
-            .trim() ||
-          'No credits',
-
-        addedBy:
-          auth.currentUser.email,
-
-        createdAt:
-          serverTimestamp()
-
-      }
-    );
-
-    [
-      'newWord',
-      'newPronunciation',
-      'newMeaning',
-      'newCredits'
-    ].forEach(
-      id => $(id).value = ''
-    );
-
-    alert(
-      'Word added for everyone!'
-    );
-
-  };
+  ['newWord', 'newPronunciation', 'newMeaning', 'newCredits'].forEach(
+    id => $(id).value = ''
+  );
+  alert('Word added for everyone!');
+};
 
 
 /* =========================================================
    QUESTIONS
 ========================================================= */
 
-$('saveQuestion').onclick =
-  async () => {
+$('saveQuestion').onclick = async () => {
+  const text = $('questionText').value.trim();
+  if(!text){
+    $('questionStatus').textContent = 'Type a question first.';
+    return;
+  }
 
-    const text =
-      $('questionText')
-        .value
-        .trim();
+  try{
+    await addDoc(collection(db,'questions'), {
+      name: $('questionName').value.trim() || 'Anonymous visitor',
+      question: text,
+      status: 'new',
+      createdAt: serverTimestamp()
+    });
+    $('questionText').value = '';
+    $('questionName').value = '';$('questionStatus').textContent = 'Question saved for the owner.';
+  }catch(e){
+    $('questionStatus').textContent = 'Could not save question.';
+  }
+};
 
-    if(!text){
-
-      $('questionStatus').textContent =
-        'Type a question first.';
-
-      return;
-
-    }
-
-    try{
-
-      await addDoc(
-        collection(db,'questions'),
-        {
-
-          name:
-            $('questionName')
-              .value
-              .trim() ||
-            'Anonymous visitor',
-
-          question:
-            text,
-
-          status:
-            'new',
-
-          createdAt:
-            serverTimestamp()
-
-        }
-      );
-
-      $('questionText').value =
-        '';
-
-      $('questionName').value =
-        '';
-
-      $('questionStatus').textContent =
-        'Question saved for the owner.';
-
-    }catch(e){
-
-      $('questionStatus').textContent =
-        'Could not save question.';
-
-    }
-
-  };
-
-
-$('openMessages').onclick =
-  () => {
-
-    const text =
-      $('questionText')
-        .value
-        .trim();
-
-    location.href =
-      `sms:?&body=${encodeURIComponent(
-        `Saof Dictionary question:\n${
-          text || '(type your question first)'
-        }`
-      )}`;
-
-  };
+$('openMessages').onclick = () => {
+  const text = $('questionText').value.trim();
+  location.href = `sms:?&body=${encodeURIComponent(
+    `Saof Dictionary question:\n${text || '(type your question first)'}`
+  )}`;
+};
 
 
 /* =========================================================
@@ -1464,614 +1039,207 @@ const screens = [
   'scoresScreen'
 ];
 
-
 function hideScreens(){
-
-  screens.forEach(
-    id => {
-      $(id).style.display =
-        'none';
-    }
-  );
-
+  screens.forEach(id => {
+    $(id).style.display = 'none';
+  });
 }
-
 
 function openScreen(id){
-
   hideScreens();
-
-  $('gamePanel').style.display =
-    'block';
-
-  $(id).style.display =
-    'block';
-
-  $('gamePanel').scrollIntoView({
-    behavior:'smooth'
-  });
-
+  $('gamePanel').style.display = 'block';$('gameMenu').style.display = 'none'; // Hides main menu so it's not cluttered
+  $(id).style.display = 'block';$('gamePanel').scrollIntoView({behavior:'smooth'});
 }
 
+function backToMenu() {
+  hideScreens();
+  $('gameMenu').style.display = 'grid'; // Brings main menu back$('gamePanel').scrollIntoView({behavior:'smooth'});
+}
 
-document
-  .querySelectorAll('[data-back]')
-  .forEach(
-    button => {
+document.querySelectorAll('[data-back]').forEach(button => {
+  button.onclick = backToMenu;
+});
 
-      button.onclick =
-        hideScreens;
+$('puzzleChoice').onclick = () => {
+  startPuzzle();
+  openScreen('puzzleScreen');
+};
 
-    }
-  );
+$('trexChoice').onclick = () => {
+  openScreen('trexScreen');
+};
 
+$('watchMovieChoice').onclick = () => {
+  openScreen('watchMovieScreen');
+};
 
-$('puzzleChoice').onclick =
-  () => {
-
-    startPuzzle();
-
-    openScreen(
-      'puzzleScreen'
-    );
-
-  };
-
-
-$('trexChoice').onclick =
-  () => {
-
-    openScreen(
-      'trexScreen'
-    );
-
-  };
-
-
-$('watchMovieChoice').onclick =
-  () => {
-
-    openScreen(
-      'watchMovieScreen'
-    );
-
-  };
-
-
-$('scoresChoice').onclick =
-  () => {
-
-    loadScores();
-
-    openScreen(
-      'scoresScreen'
-    );
-
-  };
+$('scoresChoice').onclick = () => {
+  loadScores();
+  openScreen('scoresScreen');
+};
 
 
 /* =========================================================
    PICTURE PUZZLE
 ========================================================= */
 
-const PUZZLE_IMAGE =
-  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23d9f6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff1a8'/%3E%3Cpath d='M0 510 Q130 390 260 510 T520 510 T780 510 V800 H0Z' fill='%2368b35d'/%3E%3Cpath d='M0 600 Q140 500 280 600 T560 600 T840 600 V800 H0Z' fill='%234b914e'/%3E%3Ccircle cx='610' cy='330' r='82' fill='%23ff595e'/%3E%3Ccircle cx='580' cy='305' r='10' fill='%2329384a'/%3E%3Ccircle cx='640' cy='305' r='10' fill='%2329384a'/%3E%3Cpath d='M580 350 Q610 380 645 350' fill='none' stroke='%2329384a' stroke-width='9'/%3E%3Crect x='170' y='450' width='200' height='170' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='150,450 270,350 390,450' fill='%236c4cff'/%3E%3Crect x='245' y='515' width='55' height='105' fill='%23ffd166'/%3E%3Crect x='195' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Crect x='315' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Cpath d='M450 650 Q500 580 550 650' fill='none' stroke='%23ffffff' stroke-width='18'/%3E%3C/svg%3E";
+const PUZZLE_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23d9f6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff1a8'/%3E%3Cpath d='M0 510 Q130 390 260 510 T520 510 T780 510 V800 H0Z' fill='%2368b35d'/%3E%3Cpath d='M0 600 Q140 500 280 600 T560 600 T840 600 V800 H0Z' fill='%234b914e'/%3E%3Ccircle cx='610' cy='330' r='82' fill='%23ff595e'/%3E%3Ccircle cx='580' cy='305' r='10' fill='%2329384a'/%3E%3Ccircle cx='640' cy='305' r='10' fill='%2329384a'/%3E%3Cpath d='M580 350 Q610 380 645 350' fill='none' stroke='%2329384a' stroke-width='9'/%3E%3Crect x='170' y='450' width='200' height='170' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='150,450 270,350 390,450' fill='%236c4cff'/%3E%3Crect x='245' y='515' width='55' height='105' fill='%23ffd166'/%3E%3Crect x='195' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Crect x='315' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Cpath d='M450 650 Q500 580 550 650' fill='none' stroke='%23ffffff' stroke-width='18'/%3E%3C/svg%3E";
 
-
-const pieceArea =
-  $('pieceArea');
-
-const targetArea =
-  $('targetArea');
-
-const PUZZLE_SIZE =
-  4;
-
-const PIECE_COUNT =
-  16;
+const pieceArea = $('pieceArea');
+const targetArea = $('targetArea');
+const PUZZLE_SIZE = 4;
+const PIECE_COUNT = 16;
 
 let pieces = [];
-
-let puzzleSolved =
-  false;
-
-let puzzleStartTime =
-  0;
-
-let activeDrag =
-  null;
-
+let puzzleSolved = false;
+let puzzleStartTime = 0;
+let activeDrag = null;
 
 function startPuzzle(){
-
-  pieceArea.innerHTML =
-    '';
-
-  targetArea.innerHTML =
-    '';
-
+  pieceArea.innerHTML = '';
+  targetArea.innerHTML = '';
   pieces = [];
+  puzzleSolved = false;
+  puzzleStartTime = performance.now();
+  $('puzzleStatus').textContent = 'Drag every piece onto its matching position.';
 
-  puzzleSolved =
-    false;
+  requestAnimationFrame(() => {
+    const width = pieceArea.clientWidth;
+    const height = pieceArea.clientHeight;
+    const pieceWidth = width / PUZZLE_SIZE;
+    const pieceHeight = height / PUZZLE_SIZE;
 
-  puzzleStartTime =
-    performance.now();
+    for(let i = 0; i < PIECE_COUNT; i++){
+      const row = Math.floor(i / PUZZLE_SIZE);
+      const col = i % PUZZLE_SIZE;
 
-  $('puzzleStatus').textContent =
-    'Drag every piece onto its matching position.';
-
-
-  requestAnimationFrame(
-    () => {
-
-      const width =
-        pieceArea.clientWidth;
-
-      const height =
-        pieceArea.clientHeight;
-
-      const pieceWidth =
-        width / PUZZLE_SIZE;
-
-      const pieceHeight =
-        height / PUZZLE_SIZE;
-
-
-      for(
-        let i = 0;
-        i < PIECE_COUNT;
-        i++
-      ){
-
-        const row =
-          Math.floor(
-            i / PUZZLE_SIZE
-          );
-
-        const col =
-          i % PUZZLE_SIZE;
-
-        const target =
-          document.createElement(
-            'div'
-          );
-
-        target.className =
-          'puzzle-target';
-
-        target.style.width =
-          `${pieceWidth}px`;
-
-        target.style.height =
-          `${pieceHeight}px`;
-
-        target.style.left =
-          `${col * pieceWidth}px`;
-
-        target.style.top =
-          `${row * pieceHeight}px`;
-
-        targetArea.append(
-          target
-        );
-
-      }
-
-
-      for(
-        let i = 0;
-        i < PIECE_COUNT;
-        i++
-      ){
-
-        const row =
-          Math.floor(
-            i / PUZZLE_SIZE
-          );
-
-        const col =
-          i % PUZZLE_SIZE;
-
-
-        const piece =
-          document.createElement(
-            'div'
-          );
-
-        piece.className =
-          'puzzle-piece';
-
-        piece.dataset.index =
-          i;
-
-
-        piece.style.width =
-          `${pieceWidth}px`;
-
-        piece.style.height =
-          `${pieceHeight}px`;
-
-        piece.style.backgroundImage =
-          `url("${PUZZLE_IMAGE}")`;
-
-        piece.style.backgroundSize =
-          `${width}px ${height}px`;
-
-        piece.style.backgroundPosition =
-          `-${col * pieceWidth}px -${row * pieceHeight}px`;
-
-
-        const maxX =
-          Math.max(
-            0,
-            width - pieceWidth
-          );
-
-        const maxY =
-          Math.max(
-            0,
-            height - pieceHeight
-          );
-
-
-        piece.style.left =
-          `${Math.random() * maxX}px`;
-
-        piece.style.top =
-          `${Math.random() * maxY}px`;
-
-
-        piece.addEventListener(
-          'pointerdown',
-          beginPieceDrag
-        );
-
-
-        pieceArea.append(
-          piece
-        );
-
-        pieces.push(
-          piece
-        );
-
-      }
-
+      const target = document.createElement('div');
+      target.className = 'puzzle-target';
+      target.style.width = `${pieceWidth}px`;
+      target.style.height = `${pieceHeight}px`;
+      target.style.left = `${col * pieceWidth}px`;
+      target.style.top = `${row * pieceHeight}px`;
+      targetArea.append(target);
     }
-  );
 
+    for(let i = 0; i < PIECE_COUNT; i++){
+      const row = Math.floor(i / PUZZLE_SIZE);
+      const col = i % PUZZLE_SIZE;
+
+      const piece = document.createElement('div');
+      piece.className = 'puzzle-piece';
+      piece.dataset.index = i;
+      piece.style.width = `${pieceWidth}px`;
+      piece.style.height = `${pieceHeight}px`;
+      piece.style.backgroundImage = `url("${PUZZLE_IMAGE}")`;
+      piece.style.backgroundSize = `${width}px ${height}px`;
+      piece.style.backgroundPosition = `-${col * pieceWidth}px -${row * pieceHeight}px`;
+
+      const maxX = Math.max(0, width - pieceWidth);
+      const maxY = Math.max(0, height - pieceHeight);
+      piece.style.left = `${Math.random() * maxX}px`;
+      piece.style.top = `${Math.random() * maxY}px`;
+
+      piece.addEventListener('pointerdown', beginPieceDrag);
+      pieceArea.append(piece);
+      pieces.push(piece);
+    }
+  });
 }
-
 
 function beginPieceDrag(e){
-
   e.preventDefault();
+  const piece = e.currentTarget;
+  pieces.forEach(p => p.classList.remove('selected'));
+  piece.classList.add('selected');
 
-  const piece =
-    e.currentTarget;
-
-
-  pieces.forEach(
-    p =>
-      p.classList.remove(
-        'selected'
-      )
-  );
-
-
-  piece.classList.add(
-    'selected'
-  );
-
-
-  const rect =
-    piece.getBoundingClientRect();
-
-  const area =
-    pieceArea.getBoundingClientRect();
-
+  const rect = piece.getBoundingClientRect();
+  const area = pieceArea.getBoundingClientRect();
 
   activeDrag = {
-
     piece,
-
-    pointerId:
-      e.pointerId,
-
-    offsetX:
-      e.clientX - rect.left,
-
-    offsetY:
-      e.clientY - rect.top,
-
-    areaLeft:
-      area.left,
-
-    areaTop:
-      area.top
-
+    pointerId: e.pointerId,
+    offsetX: e.clientX - rect.left,
+    offsetY: e.clientY - rect.top,
+    areaLeft: area.left,
+    areaTop: area.top
   };
 
+  piece.classList.add('dragging');
+  piece.setPointerCapture(e.pointerId);
 
-  piece.classList.add(
-    'dragging'
-  );
-
-
-  piece.setPointerCapture(
-    e.pointerId
-  );
-
-
-  piece.addEventListener(
-    'pointermove',
-    movePiece
-  );
-
-  piece.addEventListener(
-    'pointerup',
-    endPieceDrag
-  );
-
-  piece.addEventListener(
-    'pointercancel',
-    endPieceDrag
-  );
-
+  piece.addEventListener('pointermove', movePiece);
+  piece.addEventListener('pointerup', endPieceDrag);
+  piece.addEventListener('pointercancel', endPieceDrag);
 }
-
 
 function movePiece(e){
+  if(!activeDrag) return;
+  const piece = activeDrag.piece;
+  let x = e.clientX - activeDrag.areaLeft - activeDrag.offsetX;
+  let y = e.clientY - activeDrag.areaTop - activeDrag.offsetY;
 
-  if(!activeDrag){
-    return;
-  }
+  const maxX = pieceArea.clientWidth - piece.offsetWidth;
+  const maxY = pieceArea.clientHeight - piece.offsetHeight;
 
-  const piece =
-    activeDrag.piece;
+  x = Math.max(0, Math.min(maxX, x));
+  y = Math.max(0, Math.min(maxY, y));
 
-
-  let x =
-    e.clientX -
-    activeDrag.areaLeft -
-    activeDrag.offsetX;
-
-  let y =
-    e.clientY -
-    activeDrag.areaTop -
-    activeDrag.offsetY;
-
-
-  const maxX =
-    pieceArea.clientWidth -
-    piece.offsetWidth;
-
-  const maxY =
-    pieceArea.clientHeight -
-    piece.offsetHeight;
-
-
-  x =
-    Math.max(
-      0,
-      Math.min(
-        maxX,
-        x
-      )
-    );
-
-
-  y =
-    Math.max(
-      0,
-      Math.min(
-        maxY,
-        y
-      )
-    );
-
-
-  piece.style.left =
-    `${x}px`;
-
-  piece.style.top =
-    `${y}px`;
-
+  piece.style.left = `${x}px`;
+  piece.style.top = `${y}px`;
 }
-
 
 function endPieceDrag(){
+  if(!activeDrag) return;
+  const piece = activeDrag.piece;
+  piece.classList.remove('dragging');
+  piece.removeEventListener('pointermove', movePiece);
+  piece.removeEventListener('pointerup', endPieceDrag);
+  piece.removeEventListener('pointercancel', endPieceDrag);
+  activeDrag = null;
+}
 
-  if(!activeDrag){
+$('checkPuzzle').onclick = () => {
+  if(!pieces.length){
+    $('puzzleStatus').textContent = 'Start the puzzle first.';
     return;
   }
 
-  const piece =
-    activeDrag.piece;
+  const width = pieceArea.clientWidth;
+  const height = pieceArea.clientHeight;
+  const pieceWidth = width / PUZZLE_SIZE;
+  const pieceHeight = height / PUZZLE_SIZE;
+  let correct = 0;
 
+  pieces.forEach(piece => {
+    const index = Number(piece.dataset.index);
+    const row = Math.floor(index / PUZZLE_SIZE);
+    const col = index % PUZZLE_SIZE;
+    const targetX = col * pieceWidth;
+    const targetY = row * pieceHeight;
+    const currentX = parseFloat(piece.style.left);
+    const currentY = parseFloat(piece.style.top);
+    const tolerance = 35;
 
-  piece.classList.remove(
-    'dragging'
-  );
-
-
-  piece.removeEventListener(
-    'pointermove',
-    movePiece
-  );
-
-  piece.removeEventListener(
-    'pointerup',
-    endPieceDrag
-  );
-
-  piece.removeEventListener(
-    'pointercancel',
-    endPieceDrag
-  );
-
-
-  activeDrag =
-    null;
-
-}
-
-
-$('checkPuzzle').onclick =
-  () => {
-
-    if(!pieces.length){
-
-      $('puzzleStatus').textContent =
-        'Start the puzzle first.';
-
-      return;
-
+    if(Math.abs(currentX - targetX) <= tolerance && Math.abs(currentY - targetY) <= tolerance){
+      correct++;
+      piece.style.left = `${targetX}px`;
+      piece.style.top = `${targetY}px`;
     }
+  });
 
+  if(correct === PIECE_COUNT && !puzzleSolved){
+    puzzleSolved = true;
+    const seconds = Math.max(1, Math.floor((performance.now() - puzzleStartTime) / 1000));
+    const score = Math.max(100, 5000 - seconds * 20);
+    $('puzzleStatus').textContent = `🎉 Puzzle complete! Time: ${seconds} seconds. Score: ${score}`;
+    saveScore('Picture Puzzle', score);
+  }else{
+    $('puzzleStatus').textContent = `${correct} / ${PIECE_COUNT} pieces are correctly placed.`;
+  }
+};
 
-    const width =
-      pieceArea.clientWidth;
-
-    const height =
-      pieceArea.clientHeight;
-
-    const pieceWidth =
-      width / PUZZLE_SIZE;
-
-    const pieceHeight =
-      height / PUZZLE_SIZE;
-
-
-    let correct =
-      0;
-
-
-    pieces.forEach(
-      piece => {
-
-        const index =
-          Number(
-            piece.dataset.index
-          );
-
-
-        const row =
-          Math.floor(
-            index / PUZZLE_SIZE
-          );
-
-        const col =
-          index %
-          PUZZLE_SIZE;
-
-
-        const targetX =
-          col * pieceWidth;
-
-        const targetY =
-          row * pieceHeight;
-
-
-        const currentX =
-          parseFloat(
-            piece.style.left
-          );
-
-        const currentY =
-          parseFloat(
-            piece.style.top
-          );
-
-
-        const tolerance =
-          35;
-
-
-        if(
-          Math.abs(
-            currentX - targetX
-          ) <= tolerance &&
-          Math.abs(
-            currentY - targetY
-          ) <= tolerance
-        ){
-
-          correct++;
-
-
-          piece.style.left =
-            `${targetX}px`;
-
-          piece.style.top =
-            `${targetY}px`;
-
-        }
-
-      }
-    );
-
-
-    if(
-      correct === PIECE_COUNT &&
-      !puzzleSolved
-    ){
-
-      puzzleSolved =
-        true;
-
-
-      const seconds =
-        Math.max(
-          1,
-          Math.floor(
-            (
-              performance.now() -
-              puzzleStartTime
-            ) / 1000
-          )
-        );
-
-
-      const score =
-        Math.max(
-          100,
-          5000 -
-          seconds * 20
-        );
-
-
-      $('puzzleStatus').textContent =
-        `🎉 Puzzle complete! Time: ${
-          seconds
-        } seconds. Score: ${
-          score
-        }`;
-
-
-      saveScore(
-        'Picture Puzzle',
-        score
-      );
-
-
-    }else{
-
-      $('puzzleStatus').textContent =
-        `${
-          correct
-        } / ${
-          PIECE_COUNT
-        } pieces are correctly placed.`;
-
-    }
-
-  };
-
-
-$('newPuzzle').onclick =
-  startPuzzle;
+$('newPuzzle').onclick = startPuzzle;
 
 
 /* =========================================================
@@ -2080,11 +1248,7 @@ $('newPuzzle').onclick =
 
 function getScores(){
   try{
-    return JSON.parse(
-      localStorage.getItem(
-        'saofHighScores'
-      ) || '[]'
-    );
+    return JSON.parse(localStorage.getItem('saofHighScores') || '[]');
   }catch(e){
     return [];
   }
@@ -2093,27 +1257,15 @@ function getScores(){
 function saveScore(game, score){
   const scores = getScores();
   const player = auth.currentUser?.email || 'Guest';
-
-  scores.push({
-    game,
-    score,
-    player,
-    date: new Date().toLocaleString()
-  });
-
+  scores.push({ game, score, player, date: new Date().toLocaleString() });
   scores.sort((a,b) => b.score - a.score);
   const best = scores.slice(0, 50);
-
-  localStorage.setItem(
-    'saofHighScores',
-    JSON.stringify(best)
-  );
+  localStorage.setItem('saofHighScores', JSON.stringify(best));
 }
 
 function loadScores(){
   const body = $('scoreBody');
   body.innerHTML = '';
-  
   const scores = getScores();
   
   if(scores.length === 0){
@@ -2173,15 +1325,15 @@ function playMovie(id) {
   realMovie.src = data.src;
   movieDesc.textContent = data.desc;
   movieStatus.textContent = `Now playing: ${data.title}`;
-  realMovie.play(); // Auto-starts the video
+  realMovie.play();
 }
 
 $('movie1Button').onclick = () => playMovie(1);
 $('movie2Button').onclick = () => playMovie(2);$('movie3Button').onclick = () => playMovie(3);
 
 $('stopMovie').onclick = () => {
-  realMovie.pause(); // Pauses the video
-  realMovie.currentTime = 0; // Rewinds to the start
+  realMovie.pause();
+  realMovie.currentTime = 0;
   movieStatus.textContent = 'Movie stopped.';
 };
 
