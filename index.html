@@ -319,7 +319,7 @@ h2{
   touch-action:none;
 }
 
-/* MOVIES */
+/* REAL MOVIES */
 
 .movie-frame{
   width:100%;
@@ -329,16 +329,16 @@ h2{
   display:flex;
   align-items:center;
   justify-content:center;
-  color:white;
-  text-align:center;
   overflow:hidden;
   position:relative;
 }
 
-.movie-canvas{
+.real-movie{
   width:100%;
   height:100%;
   display:block;
+  background:#000;
+  border-radius:14px;
 }
 
 .movie-buttons{
@@ -347,6 +347,26 @@ h2{
   gap:10px;
   margin-top:12px;
 }
+
+.movie-button{
+  min-height:70px;
+}
+
+.movie-description{
+  margin:10px 0;
+  color:#666;
+  font-size:14px;
+  text-align:center;
+}
+
+.movie-source{
+  margin-top:10px;
+  color:#777;
+  font-size:13px;
+  text-align:center;
+}
+
+/* SCORES */
 
 .score-table{
   width:100%;
@@ -414,6 +434,7 @@ footer{
 <!-- QUESTIONS -->
 
 <section class="panel" id="questionPanel">
+
   <div class="box">
 
     <h2>Ask about a word</h2>
@@ -443,6 +464,7 @@ footer{
     <div id="questionStatus"></div>
 
   </div>
+
 </section>
 
 
@@ -523,10 +545,10 @@ footer{
 
       <button class="game-choice" id="watchMovieChoice">
 
-        🎬 Mini Movies
+        🎬 Real Mini Movies
 
         <small>
-          Watch three built-in animated movies.
+          Watch real, non-scary animated short films.
         </small>
 
       </button>
@@ -649,7 +671,7 @@ footer{
     </div>
 
 
-    <!-- MOVIES -->
+    <!-- REAL MOVIES -->
 
     <div
       class="game-screen"
@@ -663,48 +685,58 @@ footer{
         ← Back to Games
       </button>
 
-      <h2>🎬 Mini Movies</h2>
+      <h2>🎬 Real Mini Movies</h2>
 
       <p>
-        These movies are built directly into the website.
-        You don't need to add any video URLs.
+        Choose a movie below. These are real classic animated
+        short films hosted on Wikimedia Commons.
       </p>
 
       <div class="movie-frame">
 
-        <canvas
-          class="movie-canvas"
-          id="movieCanvas"
-          width="900"
-          height="500"
-        ></canvas>
+        <video
+          class="real-movie"
+          id="realMovie"
+          controls
+          playsinline
+          preload="metadata"
+        >
+          Your browser does not support video playback.
+        </video>
 
       </div>
 
       <div class="movie-buttons">
 
         <button
-          class="primary"
+          class="primary movie-button"
           id="movie1Button"
         >
-          🌅 Sunset Adventure
+          🦆 The Ugly Duckling
         </button>
 
         <button
-          class="primary"
+          class="primary movie-button"
           id="movie2Button"
         >
-          🚀 Space Journey
+          🌸 Spring Is Here
         </button>
 
         <button
-          class="primary"
+          class="primary movie-button"
           id="movie3Button"
         >
-          🌲 Forest Adventure
+          🎵 I Ain't Got Nobody
         </button>
 
       </div>
+
+      <p
+        class="movie-description"
+        id="movieDescription"
+      >
+        Choose a movie to start watching.
+      </p>
 
       <button
         class="secondary"
@@ -715,6 +747,10 @@ footer{
 
       <p id="movieStatus">
         Choose a movie.
+      </p>
+
+      <p class="movie-source">
+        Videos are loaded from Wikimedia Commons.
       </p>
 
     </div>
@@ -937,7 +973,7 @@ import {
 const config = {
 
   apiKey:
-    'AIzaSyAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
+    'AIzaSyaAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
 
   authDomain:
     'saof-dictionary.firebaseapp.com',
@@ -1551,12 +1587,6 @@ $('scoresChoice').onclick =
    PICTURE PUZZLE
 ========================================================= */
 
-
-/*
-  This is a complete picture built into
-  the website. No external image URL needed.
-*/
-
 const PUZZLE_IMAGE =
   "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23d9f6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff1a8'/%3E%3Cpath d='M0 510 Q130 390 260 510 T520 510 T780 510 V800 H0Z' fill='%2368b35d'/%3E%3Cpath d='M0 600 Q140 500 280 600 T560 600 T840 600 V800 H0Z' fill='%234b914e'/%3E%3Ccircle cx='610' cy='330' r='82' fill='%23ff595e'/%3E%3Ccircle cx='580' cy='305' r='10' fill='%2329384a'/%3E%3Ccircle cx='640' cy='305' r='10' fill='%2329384a'/%3E%3Cpath d='M580 350 Q610 380 645 350' fill='none' stroke='%2329384a' stroke-width='9'/%3E%3Crect x='170' y='450' width='200' height='170' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='150,450 270,350 390,450' fill='%236c4cff'/%3E%3Crect x='245' y='515' width='55' height='105' fill='%23ffd166'/%3E%3Crect x='195' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Crect x='315' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Cpath d='M450 650 Q500 580 550 650' fill='none' stroke='%23ffffff' stroke-width='18'/%3E%3C/svg%3E";
 
@@ -1581,18 +1611,9 @@ let puzzleSolved =
 let puzzleStartTime =
   0;
 
-
-/*
-  Drag state.
-*/
-
 let activeDrag =
   null;
 
-
-/*
-  Start puzzle.
-*/
 
 function startPuzzle(){
 
@@ -1629,10 +1650,6 @@ function startPuzzle(){
       const pieceHeight =
         height / PUZZLE_SIZE;
 
-
-      /*
-        Create target spaces.
-      */
 
       for(
         let i = 0;
@@ -1675,10 +1692,6 @@ function startPuzzle(){
       }
 
 
-      /*
-        Create pieces.
-      */
-
       for(
         let i = 0;
         i < PIECE_COUNT;
@@ -1706,11 +1719,6 @@ function startPuzzle(){
           i;
 
 
-        /*
-          Every piece shows a different
-          quarter of the same picture.
-        */
-
         piece.style.width =
           `${pieceWidth}px`;
 
@@ -1726,10 +1734,6 @@ function startPuzzle(){
         piece.style.backgroundPosition =
           `-${col * pieceWidth}px -${row * pieceHeight}px`;
 
-
-        /*
-          Scatter the pieces.
-        */
 
         const maxX =
           Math.max(
@@ -1750,12 +1754,6 @@ function startPuzzle(){
         piece.style.top =
           `${Math.random() * maxY}px`;
 
-
-        /*
-          This is the important part:
-          Pointer Events allow mouse,
-          finger and stylus dragging.
-        */
 
         piece.addEventListener(
           'pointerdown',
@@ -1778,10 +1776,6 @@ function startPuzzle(){
 
 }
 
-
-/*
-  Begin dragging.
-*/
 
 function beginPieceDrag(e){
 
@@ -1861,10 +1855,6 @@ function beginPieceDrag(e){
 }
 
 
-/*
-  Move piece.
-*/
-
 function movePiece(e){
 
   if(!activeDrag){
@@ -1915,11 +1905,6 @@ function movePiece(e){
     );
 
 
-  /*
-    IMPORTANT:
-    Pixel positions are used here.
-  */
-
   piece.style.left =
     `${x}px`;
 
@@ -1928,10 +1913,6 @@ function movePiece(e){
 
 }
 
-
-/*
-  Stop dragging.
-*/
 
 function endPieceDrag(){
 
@@ -1969,10 +1950,6 @@ function endPieceDrag(){
 
 }
 
-
-/*
-  Check puzzle.
-*/
 
 $('checkPuzzle').onclick =
   () => {
@@ -2132,7 +2109,6 @@ $('newPuzzle').onclick =
 
 /* =========================================================
    HIGH SCORES
-   SAVED LOCALLY — NOT FIREBASE
 ========================================================= */
 
 function getScores(){
@@ -2181,10 +2157,6 @@ function saveScore(
 
   });
 
-
-  /*
-    Keep the best 50 scores.
-  */
 
   scores.sort(
     (a,b) =>
@@ -2453,8 +2425,6 @@ function trexFrame(){
   );
 
 
-  /* SKY */
-
   ctx.fillStyle =
     '#87ceeb';
 
@@ -2465,8 +2435,6 @@ function trexFrame(){
     trexCanvas.height
   );
 
-
-  /* CLOUDS */
 
   ctx.fillStyle =
     '#fff';
@@ -2500,8 +2468,6 @@ function trexFrame(){
   ctx.fill();
 
 
-  /* GROUND */
-
   ctx.fillStyle =
     '#555';
 
@@ -2512,8 +2478,6 @@ function trexFrame(){
     25
   );
 
-
-  /* PHYSICS */
 
   trexPlayer.vy +=
     0.7;
@@ -2537,8 +2501,6 @@ function trexFrame(){
 
   }
 
-
-  /* DINO */
 
   ctx.fillStyle =
     '#29354a';
@@ -2568,8 +2530,6 @@ function trexFrame(){
     6
   );
 
-
-  /* OBSTACLES */
 
   if(
     obstacles.length === 0 ||
@@ -2633,8 +2593,6 @@ function trexFrame(){
         o.x > -100
     );
 
-
-  /* COLLISION */
 
   for(
     const o of obstacles
@@ -2747,60 +2705,123 @@ window.addEventListener(
 
 
 /* =========================================================
-   BUILT-IN MOVIES
+   REAL MOVIES
 ========================================================= */
 
-const movieCanvas =
-  $('movieCanvas');
+/*
+  These are direct Wikimedia Commons video files.
+  They are real classic animated shorts and are not
+  scary/horror movies.
+*/
 
-const movieCtx =
-  movieCanvas.getContext(
-    '2d'
-  );
+const movieURLs = {
+
+  1:
+    'https://commons.wikimedia.org/wiki/Special:Redirect/file/The_Ugly_Duckling_(1932).webm',
+
+  2:
+    'https://commons.wikimedia.org/wiki/Special:Redirect/file/SPRING_IS_HERE_(1932).webm',
+
+  3:
+    "https://commons.wikimedia.org/wiki/Special:Redirect/file/I_Ain't_Got_Nobody_(1932).webm"
+
+};
 
 
-let movieRunning =
-  false;
+const movieNames = {
 
-let movieRAF =
+  1:
+    '🦆 The Ugly Duckling',
+
+  2:
+    '🌸 Spring Is Here',
+
+  3:
+    "🎵 I Ain't Got Nobody"
+
+};
+
+
+const movieDescriptions = {
+
+  1:
+    'A classic animated short from 1932 about an unusual little duckling.',
+
+  2:
+    'A cheerful animated short from 1932 celebrating spring.',
+
+  3:
+    'A classic musical animated short from 1932.'
+
+};
+
+
+const realMovie =
+  $('realMovie');
+
+
+const movieDescription =
+  $('movieDescription');
+
+
+let currentRealMovie =
   null;
-
-let currentMovie =
-  1;
-
-let movieStart =
-  0;
 
 
 /*
-  Start one of the built-in movies.
+  Start a real movie.
 */
 
-function startMovie(number){
+async function startRealMovie(number){
 
-  currentMovie =
+  currentRealMovie =
     number;
 
-  movieRunning =
-    true;
 
-  movieStart =
-    performance.now();
+  /*
+    Stop the previous movie.
+  */
+
+  realMovie.pause();
+
+
+  /*
+    Set the new movie.
+  */
+
+  realMovie.src =
+    movieURLs[number];
+
+
+  realMovie.load();
+
+
+  movieDescription.textContent =
+    movieDescriptions[number];
 
 
   $('movieStatus').textContent =
-    'Movie playing...';
+    `${movieNames[number]} loading...`;
 
 
-  cancelAnimationFrame(
-    movieRAF
-  );
+  try{
 
+    await realMovie.play();
 
-  movieRAF =
-    requestAnimationFrame(
-      movieFrame
-    );
+    $('movieStatus').textContent =
+      `${movieNames[number]} is playing.`;
+
+  }catch(e){
+
+    /*
+      Browsers sometimes block autoplay.
+      The user can press the Play button.
+    */
+
+    $('movieStatus').textContent =
+      `${movieNames[number]} ready — press Play to watch.`;
+
+  }
 
 }
 
@@ -2809,14 +2830,24 @@ function startMovie(number){
   Stop movie.
 */
 
-function stopMovie(){
+function stopRealMovie(){
 
-  movieRunning =
-    false;
+  realMovie.pause();
 
-  cancelAnimationFrame(
-    movieRAF
+  realMovie.removeAttribute(
+    'src'
   );
+
+  realMovie.load();
+
+
+  currentRealMovie =
+    null;
+
+
+  movieDescription.textContent =
+    'Choose a movie to start watching.';
+
 
   $('movieStatus').textContent =
     'Movie stopped.';
@@ -2825,625 +2856,111 @@ function stopMovie(){
 
 
 /*
-  Draw movie frame.
+  Movie 1.
 */
 
-function movieFrame(time){
-
-  if(!movieRunning){
-    return;
-  }
-
-
-  const elapsed =
-    time - movieStart;
-
-
-  const seconds =
-    elapsed / 1000;
-
-
-  if(currentMovie === 1){
-
-    drawSunsetMovie(
-      seconds
-    );
-
-  }
-
-  if(currentMovie === 2){
-
-    drawSpaceMovie(
-      seconds
-    );
-
-  }
-
-  if(currentMovie === 3){
-
-    drawForestMovie(
-      seconds
-    );
-
-  }
-
-
-  if(
-    elapsed >= 30000
-  ){
-
-    movieRunning =
-      false;
-
-    $('movieStatus').textContent =
-      'Movie finished!';
-
-    return;
-
-  }
-
-
-  $('movieStatus').textContent =
-    `Movie playing: ${
-      Math.floor(seconds)
-    } / 30 seconds`;
-
-
-  movieRAF =
-    requestAnimationFrame(
-      movieFrame
-    );
-
-}
-
-
-/* SUNSET MOVIE */
-
-function drawSunsetMovie(t){
-
-  const W =
-    movieCanvas.width;
-
-  const H =
-    movieCanvas.height;
-
-
-  const gradient =
-    movieCtx.createLinearGradient(
-      0,
-      0,
-      0,
-      H
-    );
-
-
-  gradient.addColorStop(
-    0,
-    '#432371'
-  );
-
-  gradient.addColorStop(
-    .5,
-    '#f45c43'
-  );
-
-  gradient.addColorStop(
-    1,
-    '#ffd166'
-  );
-
-
-  movieCtx.fillStyle =
-    gradient;
-
-  movieCtx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /* SUN */
-
-  const sunX =
-    150 +
-    t * 18;
-
-  const sunY =
-    330 -
-    Math.sin(
-      Math.min(
-        t / 30,
-        1
-      ) * Math.PI
-    ) * 230;
-
-
-  movieCtx.fillStyle =
-    '#fff1a8';
-
-
-  movieCtx.beginPath();
-
-  movieCtx.arc(
-    sunX,
-    sunY,
-    55,
-    0,
-    Math.PI * 2
-  );
-
-  movieCtx.fill();
-
-
-  /* MOUNTAINS */
-
-  movieCtx.fillStyle =
-    '#33264f';
-
-
-  movieCtx.beginPath();
-
-  movieCtx.moveTo(
-    0,
-    420
-  );
-
-  movieCtx.lineTo(
-    180,
-    230
-  );
-
-  movieCtx.lineTo(
-    320,
-    420
-  );
-
-  movieCtx.lineTo(
-    500,
-    190
-  );
-
-  movieCtx.lineTo(
-    700,
-    420
-  );
-
-  movieCtx.lineTo(
-    900,
-    210
-  );
-
-  movieCtx.lineTo(
-    900,
-    500
-  );
-
-  movieCtx.lineTo(
-    0,
-    500
-  );
-
-  movieCtx.fill();
-
-
-  movieCtx.fillStyle =
-    '#182035';
-
-  movieCtx.fillRect(
-    0,
-    420,
-    W,
-    80
-  );
-
-
-  movieCtx.fillStyle =
-    '#fff';
-
-  movieCtx.font =
-    'bold 32px Arial';
-
-  movieCtx.textAlign =
-    'center';
-
-  movieCtx.fillText(
-    'SUNSET ADVENTURE',
-    W / 2,
-    55
-  );
-
-}
-
-
-/* SPACE MOVIE */
-
-function drawSpaceMovie(t){
-
-  const W =
-    movieCanvas.width;
-
-  const H =
-    movieCanvas.height;
-
-
-  movieCtx.fillStyle =
-    '#05051a';
-
-  movieCtx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /* STARS */
-
-  for(
-    let i = 0;
-    i < 100;
-    i++
-  ){
-
-    const x =
-      (i * 97) % W;
-
-    const y =
-      (i * 53) % H;
-
-    const brightness =
-      100 +
-      ((i * 37) % 155);
-
-
-    movieCtx.fillStyle =
-      `rgb(${
-        brightness
-      },${
-        brightness
-      },255)`;
-
-
-    movieCtx.fillRect(
-      x,
-      y,
-      2,
-      2
-    );
-
-  }
-
-
-  /* PLANET */
-
-  movieCtx.fillStyle =
-    '#6c4cff';
-
-  movieCtx.beginPath();
-
-  movieCtx.arc(
-    700,
-    150,
-    90,
-    0,
-    Math.PI * 2
-  );
-
-  movieCtx.fill();
-
-
-  /* ROCKET */
-
-  const rocketX =
-    100 +
-    ((t * 90) % 1000);
-
-  const rocketY =
-    300 -
-    Math.sin(t) * 60;
-
-
-  movieCtx.save();
-
-  movieCtx.translate(
-    rocketX % 1000 - 80,
-    rocketY
-  );
-
-  movieCtx.rotate(
-    -.25
-  );
-
-
-  movieCtx.fillStyle =
-    '#eee';
-
-  movieCtx.fillRect(
-    0,
-    -20,
-    100,
-    40
-  );
-
-
-  movieCtx.fillStyle =
-    '#ff595e';
-
-  movieCtx.beginPath();
-
-  movieCtx.moveTo(
-    100,
-    -20
-  );
-
-  movieCtx.lineTo(
-    130,
-    0
-  );
-
-  movieCtx.lineTo(
-    100,
-    20
-  );
-
-  movieCtx.fill();
-
-
-  movieCtx.fillStyle =
-    '#62c4ed';
-
-  movieCtx.beginPath();
-
-  movieCtx.arc(
-    45,
-    0,
-    13,
-    0,
-    Math.PI * 2
-  );
-
-  movieCtx.fill();
-
-
-  movieCtx.fillStyle =
-    '#ffca3a';
-
-  movieCtx.beginPath();
-
-  movieCtx.moveTo(
-    0,
-    -15
-  );
-
-  movieCtx.lineTo(
-    -50,
-    0
-  );
-
-  movieCtx.lineTo(
-    0,
-    15
-  );
-
-  movieCtx.fill();
-
-
-  movieCtx.restore();
-
-
-  movieCtx.fillStyle =
-    '#fff';
-
-  movieCtx.font =
-    'bold 32px Arial';
-
-  movieCtx.textAlign =
-    'center';
-
-  movieCtx.fillText(
-    'SPACE JOURNEY',
-    W / 2,
-    55
-  );
-
-}
-
-
-/* FOREST MOVIE */
-
-function drawForestMovie(t){
-
-  const W =
-    movieCanvas.width;
-
-  const H =
-    movieCanvas.height;
-
-
-  const gradient =
-    movieCtx.createLinearGradient(
-      0,
-      0,
-      0,
-      H
-    );
-
-
-  gradient.addColorStop(
-    0,
-    '#63c5da'
-  );
-
-  gradient.addColorStop(
-    1,
-    '#d4f7dc'
-  );
-
-
-  movieCtx.fillStyle =
-    gradient;
-
-  movieCtx.fillRect(
-    0,
-    0,
-    W,
-    H
-  );
-
-
-  /* TREES */
-
-  for(
-    let i = 0;
-    i < 9;
-    i++
-  ){
-
-    const x =
-      i * 115;
-
-    const y =
-      300 +
-      Math.sin(
-        t + i
-      ) * 4;
-
-
-    movieCtx.fillStyle =
-      '#654321';
-
-    movieCtx.fillRect(
-      x,
-      y,
-      35,
-      160
-    );
-
-
-    movieCtx.fillStyle =
-      '#218c45';
-
-
-    movieCtx.beginPath();
-
-    movieCtx.arc(
-      x + 18,
-      y - 15,
-      65,
-      0,
-      Math.PI * 2
-    );
-
-    movieCtx.fill();
-
-  }
-
-
-  /* PATH */
-
-  movieCtx.fillStyle =
-    '#d6b77a';
-
-  movieCtx.beginPath();
-
-  movieCtx.moveTo(
-    380,
-    500
-  );
-
-  movieCtx.quadraticCurveTo(
-    430,
-    350,
-    500,
-    280
-  );
-
-  movieCtx.lineTo(
-    590,
-    280
-  );
-
-  movieCtx.quadraticCurveTo(
-    520,
-    390,
-    500,
-    500
-  );
-
-  movieCtx.fill();
-
-
-  /* LITTLE CHARACTER */
-
-  const x =
-    450 +
-    Math.sin(t * 2) * 100;
-
-  const y =
-    270;
-
-
-  movieCtx.fillStyle =
-    '#ffca3a';
-
-  movieCtx.beginPath();
-
-  movieCtx.arc(
-    x,
-    y,
-    25,
-    0,
-    Math.PI * 2
-  );
-
-  movieCtx.fill();
-
-
-  movieCtx.fillStyle =
-    '#29354a';
-
-  movieCtx.fillRect(
-    x - 15,
-    y + 20,
-    30,
-    50
-  );
-
-
-  movieCtx.fillStyle =
-    '#fff';
-
-  movieCtx.font =
-    'bold 32px Arial';
-
-  movieCtx.textAlign =
-    'center';
-
-  movieCtx.fillText(
-    'FOREST ADVENTURE',
-    W / 2,
-    55
-  );
-
-}
-
-
 $('movie1Button').onclick =
-  () => startMovie(1);
+  () => {
 
+    startRealMovie(1);
+
+  };
+
+
+/*
+  Movie 2.
+*/
 
 $('movie2Button').onclick =
-  () => startMovie(2);
+  () => {
 
+    startRealMovie(2);
+
+  };
+
+
+/*
+  Movie 3.
+*/
 
 $('movie3Button').onclick =
-  () => startMovie(3);
+  () => {
 
+    startRealMovie(3);
+
+  };
+
+
+/*
+  Stop movie.
+*/
 
 $('stopMovie').onclick =
-  stopMovie;
+  stopRealMovie;
+
+
+/*
+  Video events.
+*/
+
+realMovie.addEventListener(
+  'play',
+  () => {
+
+    if(currentRealMovie){
+
+      $('movieStatus').textContent =
+        `${movieNames[currentRealMovie]} is playing.`;
+
+    }
+
+  }
+);
+
+
+realMovie.addEventListener(
+  'pause',
+  () => {
+
+    if(
+      currentRealMovie &&
+      !realMovie.ended
+    ){
+
+      $('movieStatus').textContent =
+        `${movieNames[currentRealMovie]} is paused.`;
+
+    }
+
+  }
+);
+
+
+realMovie.addEventListener(
+  'ended',
+  () => {
+
+    if(currentRealMovie){
+
+      $('movieStatus').textContent =
+        `${movieNames[currentRealMovie]} finished!`;
+
+    }
+
+  }
+);
+
+
+realMovie.addEventListener(
+  'error',
+  () => {
+
+    $('movieStatus').textContent =
+      'The movie could not be loaded. Check your internet connection.';
+
+  }
+
+);
 
 
 /* =========================================================
