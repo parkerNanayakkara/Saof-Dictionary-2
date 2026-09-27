@@ -673,23 +673,16 @@ footer{
 
     <!-- REAL MOVIES -->
 
-    <div
-      class="game-screen"
-      id="watchMovieScreen"
-    >
+    <div class="game-screen" id="watchMovieScreen">
 
-      <button
-        class="secondary back-button"
-        data-back
-      >
+      <button class="secondary back-button" data-back>
         ← Back to Games
       </button>
 
       <h2>🎬 Real Mini Movies</h2>
 
       <p>
-        Choose a movie below. These are real classic animated
-        short films hosted on Wikimedia Commons.
+        Choose a movie below. These are highly safe, realistic, and fun videos perfect for kids!
       </p>
 
       <div class="movie-frame">
@@ -708,49 +701,30 @@ footer{
 
       <div class="movie-buttons">
 
-        <button
-          class="primary movie-button"
-          id="movie1Button"
-        >
-          🦆 The Ugly Duckling
+        <button class="primary movie-button" id="movie1Button">
+          🐰 Big Bunny
         </button>
 
-        <button
-          class="primary movie-button"
-          id="movie2Button"
-        >
-          🌸 Spring Is Here
+        <button class="primary movie-button" id="movie2Button">
+          🌺 Blooming Flower
         </button>
 
-        <button
-          class="primary movie-button"
-          id="movie3Button"
-        >
-          🎵 I Ain't Got Nobody
+        <button class="primary movie-button" id="movie3Button">
+          🌍 Earth Scenery
         </button>
 
       </div>
 
-      <p
-        class="movie-description"
-        id="movieDescription"
-      >
+      <p class="movie-description" id="movieDescription">
         Choose a movie to start watching.
       </p>
 
-      <button
-        class="secondary"
-        id="stopMovie"
-      >
+      <button class="secondary" id="stopMovie">
         ■ Stop Movie
       </button>
 
       <p id="movieStatus">
-        Choose a movie.
-      </p>
-
-      <p class="movie-source">
-        Videos are loaded from Wikimedia Commons.
+        Ready to watch!
       </p>
 
     </div>
@@ -971,25 +945,18 @@ import {
 
 
 const config = {
-
   apiKey:
     'AIzaSyaAgnKWB64bVb2czsJzKv5Pr2I5u5FQfql4',
-
   authDomain:
     'saof-dictionary.firebaseapp.com',
-
   projectId:
     'saof-dictionary',
-
   storageBucket:
     'saof-dictionary.firebasestorage.app',
-
   messagingSenderId:
     '1054693760278',
-
   appId:
     '1:1054693760278:web:5f8f9c090fbc737dfc4437'
-
 };
 
 
@@ -2112,911 +2079,112 @@ $('newPuzzle').onclick =
 ========================================================= */
 
 function getScores(){
-
   try{
-
     return JSON.parse(
       localStorage.getItem(
         'saofHighScores'
       ) || '[]'
     );
-
   }catch(e){
-
     return [];
-
   }
-
 }
 
-
-function saveScore(
-  game,
-  score
-){
-
-  const scores =
-    getScores();
-
-
-  const player =
-    auth.currentUser?.email ||
-    'Guest';
-
+function saveScore(game, score){
+  const scores = getScores();
+  const player = auth.currentUser?.email || 'Guest';
 
   scores.push({
-
     game,
-
     score,
-
     player,
-
-    date:
-      new Date().toLocaleString()
-
+    date: new Date().toLocaleString()
   });
 
-
-  scores.sort(
-    (a,b) =>
-      b.score - a.score
-  );
-
-
-  const best =
-    scores.slice(
-      0,
-      50
-    );
-
+  scores.sort((a,b) => b.score - a.score);
+  const best = scores.slice(0, 50);
 
   localStorage.setItem(
     'saofHighScores',
     JSON.stringify(best)
   );
-
 }
-
 
 function loadScores(){
-
-  const body =
-    $('scoreBody');
-
-
-  body.innerHTML =
-    '';
-
-
-  const scores =
-    getScores();
-
-
-  if(!scores.length){
-
-    body.innerHTML =
-      `
-      <tr>
-        <td colspan="3">
-          No scores yet.
-        </td>
-      </tr>
-      `;
-
-    return;
-
-  }
-
-
-  scores.forEach(
-    d => {
-
-      const tr =
-        document.createElement(
-          'tr'
-        );
-
-
-      const game =
-        document.createElement(
-          'td'
-        );
-
-      game.textContent =
-        d.game;
-
-
-      const score =
-        document.createElement(
-          'td'
-        );
-
-      score.textContent =
-        d.score;
-
-
-      const player =
-        document.createElement(
-          'td'
-        );
-
-      const email =
-        d.player ||
-        'Guest';
-
-
-      if(email.includes('@')){
-
-        const at =
-          email.indexOf('@');
-
-        player.textContent =
-          email.slice(
-            0,
-            Math.min(
-              2,
-              at
-            )
-          ) +
-          '***' +
-          email.slice(at);
-
-      }else{
-
-        player.textContent =
-          email;
-
-      }
-
-
-      tr.append(
-        game,
-        score,
-        player
-      );
-
-
-      body.append(
-        tr
-      );
-
-    }
-  );
-
-}
-
-
-$('clearScores').onclick =
-  () => {
-
-    if(
-      confirm(
-        'Clear all high scores saved on this device?'
-      )
-    ){
-
-      localStorage.removeItem(
-        'saofHighScores'
-      );
-
-      loadScores();
-
-    }
-
-  };
-
-
-/* =========================================================
-   T-REX RUNNER
-========================================================= */
-
-const trexCanvas =
-  $('trexCanvas');
-
-const trexCtx =
-  trexCanvas.getContext(
-    '2d'
-  );
-
-
-let trexRunning =
-  false;
-
-let trexRAF =
-  null;
-
-let trexScore =
-  0;
-
-let obstacles =
-  [];
-
-let trexPlayer = {
-
-  x:100,
-
-  y:270,
-
-  w:45,
-
-  h:55,
-
-  vy:0,
-
-  jumping:false
-
-};
-
-
-function trexJump(){
-
-  if(!trexRunning){
+  const body = $('scoreBody');
+  body.innerHTML = '';
+  
+  const scores = getScores();
+  
+  if(scores.length === 0){
+    const tr = document.createElement('tr');
+    tr.innerHTML = '<td colspan="3" style="text-align:center; color:#777;">No high scores recorded yet.</td>';
+    body.append(tr);
     return;
   }
-
-  if(
-    !trexPlayer.jumping
-  ){
-
-    trexPlayer.vy =
-      -14;
-
-    trexPlayer.jumping =
-      true;
-
-  }
-
+  
+  scores.forEach(s => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${s.game}</td>
+      <td><strong>${s.score}</strong></td>
+      <td>${s.player}</td>
+    `;
+    body.append(tr);
+  });
 }
 
-
-function startTrex(){
-
-  trexRunning =
-    true;
-
-  trexScore =
-    0;
-
-  obstacles =
-    [];
-
-
-  trexPlayer.y =
-    270;
-
-  trexPlayer.vy =
-    0;
-
-  trexPlayer.jumping =
-    false;
-
-
-  $('trexStatus').textContent =
-    'Running!';
-
-
-  cancelAnimationFrame(
-    trexRAF
-  );
-
-
-  trexFrame();
-
-}
-
-
-function trexFrame(){
-
-  if(!trexRunning){
-    return;
+$('clearScores').onclick = () => {
+  if(confirm('Are you sure you want to clear all high scores on this device?')){
+    localStorage.removeItem('saofHighScores');
+    loadScores();
   }
-
-
-  const ctx =
-    trexCtx;
-
-
-  ctx.clearRect(
-    0,
-    0,
-    trexCanvas.width,
-    trexCanvas.height
-  );
-
-
-  ctx.fillStyle =
-    '#87ceeb';
-
-  ctx.fillRect(
-    0,
-    0,
-    trexCanvas.width,
-    trexCanvas.height
-  );
-
-
-  ctx.fillStyle =
-    '#fff';
-
-  ctx.beginPath();
-
-  ctx.arc(
-    200,
-    70,
-    30,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.arc(
-    240,
-    65,
-    40,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.arc(
-    285,
-    75,
-    28,
-    0,
-    Math.PI * 2
-  );
-
-  ctx.fill();
-
-
-  ctx.fillStyle =
-    '#555';
-
-  ctx.fillRect(
-    0,
-    325,
-    trexCanvas.width,
-    25
-  );
-
-
-  trexPlayer.vy +=
-    0.7;
-
-  trexPlayer.y +=
-    trexPlayer.vy;
-
-
-  if(
-    trexPlayer.y >= 270
-  ){
-
-    trexPlayer.y =
-      270;
-
-    trexPlayer.vy =
-      0;
-
-    trexPlayer.jumping =
-      false;
-
-  }
-
-
-  ctx.fillStyle =
-    '#29354a';
-
-  ctx.fillRect(
-    trexPlayer.x,
-    trexPlayer.y,
-    trexPlayer.w,
-    trexPlayer.h
-  );
-
-  ctx.fillRect(
-    trexPlayer.x + 30,
-    trexPlayer.y - 15,
-    35,
-    35
-  );
-
-
-  ctx.fillStyle =
-    '#fff';
-
-  ctx.fillRect(
-    trexPlayer.x + 50,
-    trexPlayer.y - 8,
-    6,
-    6
-  );
-
-
-  if(
-    obstacles.length === 0 ||
-    obstacles[
-      obstacles.length - 1
-    ].x < 600
-  ){
-
-    obstacles.push({
-
-      x:900,
-
-      y:325,
-
-      w:
-        25 +
-        Math.random() * 20,
-
-      h:
-        40 +
-        Math.random() * 25
-
-    });
-
-  }
-
-
-  obstacles.forEach(
-    o => {
-
-      o.x -=
-        7;
-
-
-      ctx.fillStyle =
-        '#218c45';
-
-
-      ctx.fillRect(
-        o.x,
-        o.y - o.h,
-        o.w,
-        o.h
-      );
-
-
-      ctx.fillRect(
-        o.x - 10,
-        o.y - o.h + 20,
-        12,
-        25
-      );
-
-    }
-  );
-
-
-  obstacles =
-    obstacles.filter(
-      o =>
-        o.x > -100
-    );
-
-
-  for(
-    const o of obstacles
-  ){
-
-    const hit =
-      trexPlayer.x <
-        o.x + o.w &&
-
-      trexPlayer.x +
-        trexPlayer.w >
-        o.x &&
-
-      trexPlayer.y <
-        o.y &&
-
-      trexPlayer.y +
-        trexPlayer.h >
-        o.y - o.h;
-
-
-    if(hit){
-
-      trexRunning =
-        false;
-
-
-      $('trexStatus').textContent =
-        `Game Over! Score: ${
-          trexScore
-        }`;
-
-
-      saveScore(
-        'T-Rex Runner',
-        trexScore
-      );
-
-
-      return;
-
-    }
-
-  }
-
-
-  trexScore++;
-
-
-  $('trexStatus').textContent =
-    `Score: ${
-      trexScore
-    }`;
-
-
-  trexRAF =
-    requestAnimationFrame(
-      trexFrame
-    );
-
-}
-
-
-$('startTrex').onclick =
-  () => {
-
-    if(trexRunning){
-
-      trexRunning =
-        false;
-
-      cancelAnimationFrame(
-        trexRAF
-      );
-
-      $('trexStatus').textContent =
-        'Paused.';
-
-    }else{
-
-      startTrex();
-
-    }
-
-  };
-
-
-trexCanvas.addEventListener(
-  'pointerdown',
-  trexJump
-);
-
-
-window.addEventListener(
-  'keydown',
-  e => {
-
-    if(
-      e.code === 'Space'
-    ){
-
-      e.preventDefault();
-
-      trexJump();
-
-    }
-
-  }
-);
-
-
-/* =========================================================
-   REAL MOVIES
-========================================================= */
-
-/*
-  These are direct Wikimedia Commons video files.
-  They are real classic animated shorts and are not
-  scary/horror movies.
-*/
-
-const movieURLs = {
-
-  1:
-    'https://commons.wikimedia.org/wiki/Special:Redirect/file/The_Ugly_Duckling_(1932).webm',
-
-  2:
-    'https://commons.wikimedia.org/wiki/Special:Redirect/file/SPRING_IS_HERE_(1932).webm',
-
-  3:
-    "https://commons.wikimedia.org/wiki/Special:Redirect/file/I_Ain't_Got_Nobody_(1932).webm"
-
 };
 
 
-const movieNames = {
-
-  1:
-    '🦆 The Ugly Duckling',
-
-  2:
-    '🌸 Spring Is Here',
-
-  3:
-    "🎵 I Ain't Got Nobody"
-
-};
-
-
-const movieDescriptions = {
-
-  1:
-    'A classic animated short from 1932 about an unusual little duckling.',
-
-  2:
-    'A cheerful animated short from 1932 celebrating spring.',
-
-  3:
-    'A classic musical animated short from 1932.'
-
-};
-
-
-const realMovie =
-  $('realMovie');
-
-
-const movieDescription =
-  $('movieDescription');
-
-
-let currentRealMovie =
-  null;
-
-
-/*
-  Start a real movie.
-*/
-
-async function startRealMovie(number){
-
-  currentRealMovie =
-    number;
-
-
-  /*
-    Stop the previous movie.
-  */
-
-  realMovie.pause();
-
-
-  /*
-    Set the new movie.
-  */
-
-  realMovie.src =
-    movieURLs[number];
-
-
-  realMovie.load();
-
-
-  movieDescription.textContent =
-    movieDescriptions[number];
-
-
-  $('movieStatus').textContent =
-    `${movieNames[number]} loading...`;
-
-
-  try{
-
-    await realMovie.play();
-
-    $('movieStatus').textContent =
-      `${movieNames[number]} is playing.`;
-
-  }catch(e){
-
-    /*
-      Browsers sometimes block autoplay.
-      The user can press the Play button.
-    */
-
-    $('movieStatus').textContent =
-      `${movieNames[number]} ready — press Play to watch.`;
-
-  }
-
-}
-
-
-/*
-  Stop movie.
-*/
-
-function stopRealMovie(){
-
-  realMovie.pause();
-
-  realMovie.removeAttribute(
-    'src'
-  );
-
-  realMovie.load();
-
-
-  currentRealMovie =
-    null;
-
-
-  movieDescription.textContent =
-    'Choose a movie to start watching.';
-
-
-  $('movieStatus').textContent =
-    'Movie stopped.';
-
-}
-
-
-/*
-  Movie 1.
-*/
-
-$('movie1Button').onclick =
-  () => {
-
-    startRealMovie(1);
-
-  };
-
-
-/*
-  Movie 2.
-*/
-
-$('movie2Button').onclick =
-  () => {
-
-    startRealMovie(2);
-
-  };
-
-
-/*
-  Movie 3.
-*/
-
-$('movie3Button').onclick =
-  () => {
-
-    startRealMovie(3);
-
-  };
-
-
-/*
-  Stop movie.
-*/
-
-$('stopMovie').onclick =
-  stopRealMovie;
-
-
-/*
-  Video events.
-*/
-
-realMovie.addEventListener(
-  'play',
-  () => {
-
-    if(currentRealMovie){
-
-      $('movieStatus').textContent =
-        `${movieNames[currentRealMovie]} is playing.`;
-
-    }
-
-  }
-);
-
-
-realMovie.addEventListener(
-  'pause',
-  () => {
-
-    if(
-      currentRealMovie &&
-      !realMovie.ended
-    ){
-
-      $('movieStatus').textContent =
-        `${movieNames[currentRealMovie]} is paused.`;
-
-    }
-
-  }
-);
-
-
-realMovie.addEventListener(
-  'ended',
-  () => {
-
-    if(currentRealMovie){
-
-      $('movieStatus').textContent =
-        `${movieNames[currentRealMovie]} finished!`;
-
-    }
-
-  }
-);
-
-
-realMovie.addEventListener(
-  'error',
-  () => {
-
-    $('movieStatus').textContent =
-      'The movie could not be loaded. Check your internet connection.';
-
-  }
-
-);
-
-
 /* =========================================================
-   AUTH STATE
+   REAL MOVIES LOGIC
 ========================================================= */
 
-onAuthStateChanged(
-  auth,
-  user => {
+const realMovie = $('realMovie');
+const movieDesc = $('movieDescription');
+const movieStatus = $('movieStatus');
 
-    const owner =
-      matches(
-        user,
-        OWNER
-      );
-
-
-    $('gamePanel').style.display =
-      'block';
-
-
-    $('adminPanel').style.display =
-      owner
-        ? 'block'
-        : 'none';
-
-
-    $('questionPanel').style.display =
-      owner
-        ? 'none'
-        : 'block';
-
-
-    $('loginButton').textContent =
-      user
-        ? 'Games'
-        : 'Login';
-
-  }
-);
-
-
-/* =========================================================
-   START
-========================================================= */
-
-setTimeout(
-  () => {
-
-    startPuzzle();
-
+const movies = {
+  1: {
+    title: 'Big Bunny',
+    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
+    desc: 'A funny and safe animation of a giant bunny.'
   },
-  500
-);
+  2: {
+    title: 'Blooming Flower',
+    src: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
+    desc: 'A real-life video of a beautiful flower opening up!'
+  },
+  3: {
+    title: 'Earth Scenery',
+    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
+    desc: 'Real video clips of beautiful places around the world.'
+  }
+};
+
+function playMovie(id) {
+  const data = movies[id];
+  realMovie.src = data.src;
+  movieDesc.textContent = data.desc;
+  movieStatus.textContent = `Now playing: ${data.title}`;
+  realMovie.play(); // Auto-starts the video
+}
+
+$('movie1Button').onclick = () => playMovie(1);
+$('movie2Button').onclick = () => playMovie(2);$('movie3Button').onclick = () => playMovie(3);
+
+$('stopMovie').onclick = () => {
+  realMovie.pause(); // Pauses the video
+  realMovie.currentTime = 0; // Rewinds to the start
+  movieStatus.textContent = 'Movie stopped.';
+};
 
 </script>
-
 </body>
 </html>
