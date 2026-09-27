@@ -142,10 +142,6 @@ h2{
   background:#19a463
 }
 
-.orange{
-  background:#ff9f1c
-}
-
 .game-menu{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -257,22 +253,36 @@ h2{
   background:#f8f8ff
 }
 
+/* The actual puzzle image */
+
+.puzzle-image{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover
+}
+
 .puzzle-target{
   position:absolute;
   border:2px dashed #8c7bd8;
   background:#8c7bd820;
-  border-radius:8px
+  z-index:1
 }
 
 .piece{
   position:absolute;
-  width:70px;
-  height:70px;
+  width:25%;
+  height:25%;
   touch-action:none;
   user-select:none;
   cursor:grab;
   z-index:3;
-  transform-origin:center
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23c9f0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff4a3'/%3E%3Cpath d='M0 500 Q120 390 240 500 T480 500 T720 500 T960 500 V800 H0Z' fill='%236bb35c'/%3E%3Cpath d='M0 590 Q150 510 300 590 T600 590 T900 590 V800 H0Z' fill='%234b944d'/%3E%3Ccircle cx='610' cy='330' r='80' fill='%23ff595e'/%3E%3Cpath d='M610 250 C570 190 520 230 560 270' fill='none' stroke='%2329384a' stroke-width='12'/%3E%3Ccircle cx='630' cy='310' r='10' fill='%2329384a'/%3E%3Cpath d='M580 365 Q610 390 645 365' fill='none' stroke='%2329384a' stroke-width='8'/%3E%3Crect x='180' y='440' width='180' height='160' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='160,440 270,350 380,440' fill='%236c4cff'/%3E%3Crect x='240' y='500' width='55' height='100' fill='%23ffd166'/%3E%3Crect x='200' y='470' width='45' height='45' fill='%2362c4ed'/%3E%3Crect x='310' y='470' width='45' height='45' fill='%2362c4ed'/%3E%3Cpath d='M90 700 Q150 620 210 700' fill='none' stroke='%233b7135' stroke-width='30'/%3E%3Cpath d='M700 700 Q760 620 820 700' fill='none' stroke='%233b7135' stroke-width='30'/%3E%3C/svg%3E");
+  background-size:400% 400%;
+  background-repeat:no-repeat;
+  border:2px solid #202938;
+  box-shadow:0 3px 8px #0004
 }
 
 .piece.selected{
@@ -282,12 +292,8 @@ h2{
 
 .piece.dragging{
   cursor:grabbing;
-  z-index:30
-}
-
-.piece svg{
-  width:100%;
-  height:100%
+  z-index:30;
+  transform:scale(1.04)
 }
 
 .puzzle-status{
@@ -296,16 +302,6 @@ h2{
   font-weight:bold;
   color:#6c4cff;
   margin-top:10px
-}
-
-.rotate-button{
-  background:#ff9f1c;
-  color:#fff;
-  font-size:18px
-}
-
-.rotate-button:disabled{
-  opacity:.5
 }
 
 .puzzle-controls{
@@ -341,7 +337,7 @@ h2{
   touch-action:none
 }
 
-/* MOVIE */
+/* MOVIES */
 
 .movie-frame{
   width:100%;
@@ -356,24 +352,14 @@ h2{
   overflow:hidden
 }
 
-.movie-placeholder{
-  padding:30px
+.movie-frame canvas{
+  width:100%;
+  height:100%;
+  display:block
 }
 
-/* ASHER */
-
-#birthday{
-  display:none;
-  margin:20px auto;
-  width:min(calc(100% - 40px),900px);
-  padding:24px;
-  border:3px solid #f0b429;
-  border-radius:18px;
-  background:#ffd166;
-  color:#704600;
-  text-align:center;
-  font-size:30px;
-  font-weight:bold
+.movie-placeholder{
+  padding:30px
 }
 
 footer{
@@ -419,16 +405,27 @@ footer{
   <input id="searchInput" placeholder="Search a word...">
 </div>
 
-<div id="birthday">🎉 Happy Birthday, Asher! 🎂</div>
-
 <!-- QUESTIONS -->
-<section class="panel" id="questionPanel">
-  <div class="box">
-    <h2>Ask about a word</h2>
-    <p>Send a question or word suggestion to the dictionary owner.</p>
 
-    <input id="questionName" placeholder="Your name (optional)">
-    <textarea id="questionText" placeholder="Your question"></textarea>
+<section class="panel" id="questionPanel">
+
+  <div class="box">
+
+    <h2>Ask about a word</h2>
+
+    <p>
+      Send a question or word suggestion to the dictionary owner.
+    </p>
+
+    <input
+      id="questionName"
+      placeholder="Your name (optional)"
+    >
+
+    <textarea
+      id="questionText"
+      placeholder="Your question"
+    ></textarea>
 
     <button class="primary" id="saveQuestion">
       Save Question
@@ -439,19 +436,36 @@ footer{
     </button>
 
     <div id="questionStatus"></div>
+
   </div>
+
 </section>
 
+
 <!-- ADMIN -->
+
 <section class="panel" id="adminPanel">
+
   <div class="box">
 
     <h2>Add a Word</h2>
 
     <input id="newWord" placeholder="Word">
-    <input id="newPronunciation" placeholder="Pronunciation">
-    <input id="newMeaning" placeholder="Meaning">
-    <input id="newCredits" placeholder="Credits (optional)">
+
+    <input
+      id="newPronunciation"
+      placeholder="Pronunciation"
+    >
+
+    <input
+      id="newMeaning"
+      placeholder="Meaning"
+    >
+
+    <input
+      id="newCredits"
+      placeholder="Credits (optional)"
+    >
 
     <button class="primary" id="addWord">
       Add Word
@@ -462,13 +476,12 @@ footer{
     </button>
 
   </div>
+
 </section>
 
-<!-- GAMES
-     IMPORTANT:
-     This panel is intentionally NOT restricted to logged-in users.
-     Everyone can play.
--->
+
+<!-- GAMES -->
+
 <section class="panel" id="gamePanel">
 
   <div class="box">
@@ -482,57 +495,53 @@ footer{
 
     <div class="game-menu">
 
-      <button class="game-choice" id="mobilePuzzleChoice">
-        🧩 Puzzle
+      <button class="game-choice" id="puzzleChoice">
+
+        🧩 Picture Puzzle
+
         <small>
-          Mobile — drag pieces with touch and rotate them
+          Put the pieces together to complete the picture
         </small>
+
       </button>
 
-      <button class="game-choice" id="desktopPuzzleChoice">
-        🧩 Puzzle
-        <small>
-          Laptop/iMac — drag pieces with your mouse
-        </small>
-      </button>
 
       <button class="game-choice" id="trexChoice">
+
         🦖 T-Rex Runner
+
         <small>
           Run, jump and avoid obstacles
         </small>
+
       </button>
+
 
       <button class="game-choice" id="watchMovieChoice">
-        🎬 Watch Movie
+
+        🎬 Watch Movies
+
         <small>
-          Watch a movie — nothing to do with Asher
+          Choose from three built-in animated movies
         </small>
+
       </button>
+
 
       <button class="game-choice" id="scoresChoice">
-        🏆 High Scores
-        <small>
-          View saved scores
-        </small>
-      </button>
 
-      <!-- ONLY SHOWN TO ASHER -->
-      <button
-        class="game-choice"
-        id="birthdayMovieChoice"
-        style="display:none"
-      >
-        🎂 Asher's Birthday Movie
+        🏆 High Scores
+
         <small>
-          Special birthday movie
+          View scores saved on this device
         </small>
+
       </button>
 
     </div>
 
 
-    <!-- ================= PUZZLE ================= -->
+    <!-- PUZZLE -->
 
     <div class="game-screen" id="puzzleScreen">
 
@@ -540,48 +549,67 @@ footer{
         ← Back to Games
       </button>
 
-      <h2>🧩 Hard Puzzle</h2>
+      <h2>🧩 Picture Puzzle</h2>
 
       <p class="puzzle-info">
-        Drag the pieces into the matching positions.
-        Select a piece and use
-        <b>↻ Rotate Selected Piece</b>
-        whenever the orientation is wrong.
+        Drag each piece onto the matching position.
+        The picture is the same every time.
       </p>
 
       <div class="puzzle-layout">
 
         <div>
+
           <h3>Mixed Pieces</h3>
-          <div class="puzzle-area" id="pieceArea"></div>
+
+          <div
+            class="puzzle-area"
+            id="pieceArea"
+          ></div>
+
         </div>
+
 
         <div>
+
           <h3>Solution Board</h3>
-          <div class="puzzle-area" id="targetArea"></div>
+
+          <div
+            class="puzzle-area"
+            id="targetArea"
+          >
+
+            <div
+              class="puzzle-image"
+              id="solutionImage"
+            ></div>
+
+          </div>
+
         </div>
 
       </div>
 
-      <div class="puzzle-status" id="puzzleStatus">
-        Select a piece to rotate it.
-      </div>
-
-      <button
-        class="primary rotate-button"
-        id="rotatePiece"
-        disabled
+      <div
+        class="puzzle-status"
+        id="puzzleStatus"
       >
-        ↻ Rotate Selected Piece
-      </button>
+        Drag the pieces onto the picture.
+      </div>
 
       <div class="puzzle-controls">
 
-        <button class="primary" id="newPuzzle">
-          New Hard Puzzle
+        <button
+          class="primary"
+          id="newPuzzle"
+        >
+          Restart Puzzle
         </button>
 
-        <button class="secondary" id="checkPuzzle">
+        <button
+          class="secondary"
+          id="checkPuzzle"
+        >
           Check Puzzle
         </button>
 
@@ -590,7 +618,7 @@ footer{
     </div>
 
 
-    <!-- ================= T-REX ================= -->
+    <!-- T-REX -->
 
     <div class="game-screen" id="trexScreen">
 
@@ -610,7 +638,10 @@ footer{
         height="350"
       ></canvas>
 
-      <button class="primary" id="startTrex">
+      <button
+        class="primary"
+        id="startTrex"
+      >
         ▶ Start T-Rex Runner
       </button>
 
@@ -621,115 +652,116 @@ footer{
     </div>
 
 
-    <!-- ================= WATCH MOVIE ================= -->
+    <!-- MOVIES -->
 
-    <div class="game-screen" id="watchMovieScreen">
+    <div
+      class="game-screen"
+      id="watchMovieScreen"
+    >
 
-      <button class="secondary back-button" data-back>
+      <button
+        class="secondary back-button"
+        data-back
+      >
         ← Back to Games
       </button>
 
-      <h2>🎬 Watch Movie</h2>
+      <h2>🎬 Watch Movies</h2>
 
       <p>
-        This is the normal movie section and has nothing
-        to do with Asher.
+        Choose an animated movie below.
       </p>
 
       <select id="movieChoice">
-        <option value="movie1">Movie 1</option>
-        <option value="movie2">Movie 2</option>
-        <option value="movie3">Movie 3</option>
+
+        <option value="movie1">
+          The Little Explorer
+        </option>
+
+        <option value="movie2">
+          Space Adventure
+        </option>
+
+        <option value="movie3">
+          The Magic Forest
+        </option>
+
       </select>
 
-      <div class="movie-frame" id="movieFrame">
+      <div
+        class="movie-frame"
+        id="movieFrame"
+      >
 
-        <div class="movie-placeholder">
-
-          <h2 style="color:white">
-            🎬 Watch Movie
-          </h2>
-
-          <p>
-            Select a movie and press Play.
-          </p>
-
-        </div>
+        <canvas
+          id="movieCanvas"
+          width="900"
+          height="506"
+        ></canvas>
 
       </div>
 
-      <button class="primary" id="playMovie">
+      <button
+        class="primary"
+        id="playMovie"
+      >
         ▶ Play Movie
       </button>
+
+      <p id="movieStatus">
+        Ready!
+      </p>
 
     </div>
 
 
-    <!-- ================= HIGH SCORES ================= -->
+    <!-- SCORES -->
 
-    <div class="game-screen" id="scoresScreen">
+    <div
+      class="game-screen"
+      id="scoresScreen"
+    >
 
-      <button class="secondary back-button" data-back>
+      <button
+        class="secondary back-button"
+        data-back
+      >
         ← Back to Games
       </button>
 
       <h2>🏆 High Scores</h2>
 
-      <p id="scoreMessage">
-        High scores saved to Firebase by logged-in players
-        will appear here.
+      <p>
+        Scores are saved directly in this browser.
+        They are not stored in Firebase.
       </p>
 
       <table class="score-table">
 
         <thead>
+
           <tr>
+
             <th>Game</th>
+
             <th>Score</th>
+
             <th>Player</th>
+
           </tr>
+
         </thead>
 
         <tbody id="scoreBody"></tbody>
 
       </table>
 
-    </div>
-
-
-    <!-- ================= ASHER MOVIE ================= -->
-
-    <div class="game-screen" id="birthdayMovie">
-
-      <button class="secondary back-button" data-back>
-        ← Back to Games
+      <button
+        class="secondary"
+        id="clearScores"
+      >
+        Clear Scores on This Device
       </button>
-
-      <h2>🎂 Asher's Birthday Movie</h2>
-
-      <p>
-        This special movie is only available when
-        Asher's account is logged in.
-      </p>
-
-      <canvas
-        id="birthdayCanvas"
-        width="900"
-        height="420"
-        style="
-          width:100%;
-          border-radius:14px;
-          background:#62c4ed
-        "
-      ></canvas>
-
-      <button class="primary" id="birthdayButton">
-        ▶ Start Birthday Movie
-      </button>
-
-      <p id="birthdayStatus">
-        Ready to play!
-      </p>
 
     </div>
 
@@ -738,64 +770,97 @@ footer{
 </section>
 
 
-<!-- ORIGINAL DICTIONARY WORDS ARE PRESERVED -->
+<!-- DICTIONARY -->
 
-<main class="dictionary" id="dictionary">
+<main
+  class="dictionary"
+  id="dictionary"
+>
 
   <article class="card">
-    <div class="word">Recos</div>
+
+    <div class="word">
+      Recos
+    </div>
 
     <div class="pronunciation">
+
       Pronunciation:
       <strong>reh-coss</strong>
+
     </div>
 
     <div class="meaning">
+
       Meaning:
       <strong>ball</strong>
+
     </div>
 
     <div class="credits">
+
       Credits: No credits
+
     </div>
+
   </article>
 
 
   <article class="card">
-    <div class="word">Saof</div>
+
+    <div class="word">
+      Saof
+    </div>
 
     <div class="pronunciation">
+
       Pronunciation:
       <strong>s-ow-f</strong>
+
     </div>
 
     <div class="meaning">
+
       Meaning:
       <strong>me / and</strong>
+
     </div>
 
     <div class="credits">
+
       Credits: No credits
+
     </div>
+
   </article>
 
 
   <article class="card">
-    <div class="word">Thu</div>
+
+    <div class="word">
+      Thu
+    </div>
 
     <div class="pronunciation">
+
       Pronunciation:
       <strong>th-oo</strong>
+
     </div>
 
     <div class="meaning">
+
       Meaning:
       <strong>Depends on the context.</strong>
+
     </div>
 
     <div class="credits">
+
       Credits: No credits
+
     </div>
+
   </article>
 
 </main>
@@ -806,7 +871,7 @@ footer{
 </footer>
 
 
-<!-- ================= LOGIN ================= -->
+<!-- LOGIN -->
 
 <div id="login">
 
@@ -826,17 +891,29 @@ footer{
       placeholder="Password"
     >
 
-    <button class="primary" id="loginAction">
+    <button
+      class="primary"
+      id="loginAction"
+    >
       Login
     </button>
 
-    <button class="primary green" id="upgradeAction">
+    <button
+      class="primary green"
+      id="upgradeAction"
+    >
       Upgrade for Free
     </button>
 
-    <div class="error" id="loginError"></div>
+    <div
+      class="error"
+      id="loginError"
+    ></div>
 
-    <button class="secondary" id="cancelLogin">
+    <button
+      class="secondary"
+      id="cancelLogin"
+    >
       Cancel
     </button>
 
@@ -872,10 +949,6 @@ import{
   collection,
   addDoc,
   onSnapshot,
-  getDocs,
-  query,
-  orderBy,
-  limit,
   serverTimestamp
 }from
 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
@@ -906,8 +979,6 @@ const config={
 
 const OWNER='parkernanayakkara@icloud.com';
 
-const ASHER='ashernanayakkara@icloud.com';
-
 
 const app=initializeApp(config);
 
@@ -935,32 +1006,51 @@ const matches=(user,email)=>
 
 function addCard(d){
 
-  const c=document.createElement('article');
+  const c=
+    document.createElement('article');
 
-  c.className='card live-card';
+  c.className=
+    'card live-card';
 
   [
     ['word','',d.word],
-    ['pronunciation','Pronunciation: ',d.pronunciation],
-    ['meaning','Meaning: ',d.meaning],
-    ['credits','Credits: ',d.credits?.trim()||'No credits']
-  ].forEach(([cl,label,value])=>{
+    [
+      'pronunciation',
+      'Pronunciation: ',
+      d.pronunciation
+    ],
+    [
+      'meaning',
+      'Meaning: ',
+      d.meaning
+    ],
+    [
+      'credits',
+      'Credits: ',
+      d.credits?.trim()||
+      'No credits'
+    ]
+  ].forEach(
+    ([cl,label,value])=>{
 
-    const e=document.createElement('div');
+      const e=
+        document.createElement('div');
 
-    e.className=cl;
+      e.className=cl;
 
-    e.textContent=label;
+      e.textContent=label;
 
-    const strong=document.createElement('strong');
+      const strong=
+        document.createElement('strong');
 
-    strong.textContent=value;
+      strong.textContent=value;
 
-    e.append(strong);
+      e.append(strong);
 
-    c.append(e);
+      c.append(e);
 
-  });
+    }
+  );
 
   $('dictionary').append(c);
 
@@ -1003,10 +1093,13 @@ $('searchInput').addEventListener(
   'input',
   e=>{
 
-    const q=e.target.value.toLowerCase();
+    const q=
+      e.target.value.toLowerCase();
 
     document
-      .querySelectorAll('#dictionary .card')
+      .querySelectorAll(
+        '#dictionary .card'
+      )
       .forEach(c=>{
 
         c.hidden=
@@ -1048,8 +1141,6 @@ $('cancelLogin').onclick=()=>{
 };
 
 
-/* LOGIN LOADING */
-
 $('loginAction').onclick=async()=>{
 
   const email=
@@ -1067,7 +1158,8 @@ $('loginAction').onclick=async()=>{
 
   }
 
-  const button=$('loginAction');
+  const button=
+    $('loginAction');
 
   button.disabled=true;
 
@@ -1089,7 +1181,10 @@ $('loginAction').onclick=async()=>{
   }catch(e){
 
     $('loginError').textContent=
-      `Login failed: ${e.code||'check your details'}`;
+      `Login failed: ${
+        e.code||
+        'check your details'
+      }`;
 
   }finally{
 
@@ -1103,7 +1198,7 @@ $('loginAction').onclick=async()=>{
 
 
 /* =========================================================
-   UPGRADE FOR FREE
+   CREATE ACCOUNT
 ========================================================= */
 
 $('upgradeAction').onclick=async()=>{
@@ -1132,7 +1227,8 @@ $('upgradeAction').onclick=async()=>{
 
   }
 
-  const button=$('upgradeAction');
+  const button=
+    $('upgradeAction');
 
   button.disabled=true;
 
@@ -1155,14 +1251,16 @@ $('upgradeAction').onclick=async()=>{
 
     $('loginError').textContent=
       `Could not create account: ${
-        e.code||'unknown error'
+        e.code||
+        'unknown error'
       }`;
 
   }finally{
 
     button.disabled=false;
 
-    button.textContent='Upgrade for Free';
+    button.textContent=
+      'Upgrade for Free';
 
   }
 
@@ -1180,7 +1278,9 @@ $('addWord').onclick=async()=>{
 
   if(!matches(auth.currentUser,OWNER)){
 
-    alert('Only the owner can add words.');
+    alert(
+      'Only the owner can add words.'
+    );
 
     return;
 
@@ -1190,12 +1290,18 @@ $('addWord').onclick=async()=>{
     $('newWord').value.trim();
 
   const pronunciation=
-    $('newPronunciation').value.trim();
+    $('newPronunciation')
+      .value
+      .trim();
 
   const meaning=
-    $('newMeaning').value.trim();
+    $('newMeaning')
+      .value
+      .trim();
 
-  if(!word||!pronunciation||!meaning){
+  if(!word||
+     !pronunciation||
+     !meaning){
 
     alert(
       'Fill in word, pronunciation and meaning.'
@@ -1214,7 +1320,9 @@ $('addWord').onclick=async()=>{
       meaning,
 
       credits:
-        $('newCredits').value.trim()||
+        $('newCredits')
+          .value
+          .trim()||
         'No credits',
 
       addedBy:
@@ -1231,9 +1339,13 @@ $('addWord').onclick=async()=>{
     'newPronunciation',
     'newMeaning',
     'newCredits'
-  ].forEach(id=>$(id).value='');
+  ].forEach(
+    id=>$(id).value=''
+  );
 
-  alert('Word added for everyone!');
+  alert(
+    'Word added for everyone!'
+  );
 
 };
 
@@ -1245,7 +1357,9 @@ $('addWord').onclick=async()=>{
 $('saveQuestion').onclick=async()=>{
 
   const text=
-    $('questionText').value.trim();
+    $('questionText')
+      .value
+      .trim();
 
   if(!text){
 
@@ -1263,7 +1377,9 @@ $('saveQuestion').onclick=async()=>{
       {
 
         name:
-          $('questionName').value.trim()||
+          $('questionName')
+            .value
+            .trim()||
           'Anonymous visitor',
 
         question:text,
@@ -1277,6 +1393,7 @@ $('saveQuestion').onclick=async()=>{
     );
 
     $('questionText').value='';
+
     $('questionName').value='';
 
     $('questionStatus').textContent=
@@ -1286,7 +1403,8 @@ $('saveQuestion').onclick=async()=>{
 
     $('questionStatus').textContent=
       `Could not save question: ${
-        e.code||'Firestore error'
+        e.code||
+        'Firestore error'
       }`;
 
   }
@@ -1297,12 +1415,15 @@ $('saveQuestion').onclick=async()=>{
 $('openMessages').onclick=()=>{
 
   const text=
-    $('questionText').value.trim();
+    $('questionText')
+      .value
+      .trim();
 
   location.href=
     `sms:?&body=${encodeURIComponent(
       `Saof Dictionary question:\n${
-        text||'(type your question first)'
+        text||
+        '(type your question first)'
       }`
     )}`;
 
@@ -1311,23 +1432,25 @@ $('openMessages').onclick=()=>{
 
 /* =========================================================
    GAME NAVIGATION
-   GAMES ARE PUBLIC
 ========================================================= */
 
 const screens=[
+
   'puzzleScreen',
   'trexScreen',
   'watchMovieScreen',
-  'scoresScreen',
-  'birthdayMovie'
+  'scoresScreen'
+
 ];
 
 
 function hideScreens(){
 
-  screens.forEach(id=>{
-    $(id).style.display='none';
-  });
+  screens.forEach(
+    id=>{
+      $(id).style.display='none';
+    }
+  );
 
 }
 
@@ -1336,9 +1459,11 @@ function openScreen(id){
 
   hideScreens();
 
-  $('gamePanel').style.display='block';
+  $('gamePanel').style.display=
+    'block';
 
-  $(id).style.display='block';
+  $(id).style.display=
+    'block';
 
   $('gamePanel').scrollIntoView({
     behavior:'smooth'
@@ -1347,48 +1472,42 @@ function openScreen(id){
 }
 
 
-function backToGames(){
-
-  hideScreens();
-
-}
-
-
 document
   .querySelectorAll('[data-back]')
-  .forEach(button=>{
-    button.onclick=backToGames;
-  });
+  .forEach(
+    button=>{
+      button.onclick=()=>{
+        hideScreens();
+      };
+    }
+  );
 
 
-$('mobilePuzzleChoice').onclick=()=>{
-
-  startPuzzle();
-
-  openScreen('puzzleScreen');
-
-};
-
-
-$('desktopPuzzleChoice').onclick=()=>{
+$('puzzleChoice').onclick=()=>{
 
   startPuzzle();
 
-  openScreen('puzzleScreen');
+  openScreen(
+    'puzzleScreen'
+  );
 
 };
 
 
 $('trexChoice').onclick=()=>{
 
-  openScreen('trexScreen');
+  openScreen(
+    'trexScreen'
+  );
 
 };
 
 
 $('watchMovieChoice').onclick=()=>{
 
-  openScreen('watchMovieScreen');
+  openScreen(
+    'watchMovieScreen'
+  );
 
 };
 
@@ -1397,20 +1516,15 @@ $('scoresChoice').onclick=()=>{
 
   loadScores();
 
-  openScreen('scoresScreen');
-
-};
-
-
-$('birthdayMovieChoice').onclick=()=>{
-
-  openScreen('birthdayMovie');
+  openScreen(
+    'scoresScreen'
+  );
 
 };
 
 
 /* =========================================================
-   HARD PUZZLE
+   PICTURE PUZZLE
 ========================================================= */
 
 const pieceArea=
@@ -1423,25 +1537,6 @@ const PUZZLE_SIZE=4;
 
 const PIECE_COUNT=16;
 
-const colors=[
-  '#ff595e',
-  '#ffca3a',
-  '#8ac926',
-  '#1982c4',
-  '#6a4c93',
-  '#ff924c',
-  '#2ec4b6',
-  '#e76f51',
-  '#457b9d',
-  '#f72585',
-  '#7209b7',
-  '#06d6a0',
-  '#118ab2',
-  '#ef476f',
-  '#8338ec',
-  '#3a86ff'
-];
-
 let pieces=[];
 
 let selectedPiece=null;
@@ -1451,89 +1546,24 @@ let puzzleSolved=false;
 let puzzleStartTime=0;
 
 
-function randomInt(max){
+/*
+  This is the same picture used by
+  both the pieces and the solution.
+*/
 
-  return Math.floor(
-    Math.random()*max
-  );
-
-}
-
-
-/* DIFFERENT IRREGULAR SHAPES */
-
-function makePieceSVG(index){
-
-  const color=
-    colors[index%colors.length];
-
-  const shapes=[
-
-    `
-    M8 8
-    L45 8
-    C45 20 65 18 62 30
-    L62 62
-    L35 62
-    C38 48 18 48 21 62
-    L8 62 Z
-    `,
-
-    `
-    M8 8
-    L62 8
-    L62 27
-    C48 24 48 45 62 42
-    L62 62
-    L42 62
-    C45 48 22 48 25 62
-    L8 62 Z
-    `,
-
-    `
-    M8 8
-    L32 8
-    C25 22 47 25 43 8
-    L62 8
-    L62 62
-    L8 62 Z
-    `,
-
-    `
-    M8 8
-    L62 8
-    L62 20
-    C45 16 45 40 62 36
-    L62 62
-    L8 62 Z
-    `
-
-  ];
-
-  return `
-    <svg viewBox="0 0 70 70">
-      <path
-        d="${shapes[index%shapes.length]}"
-        fill="${color}"
-        stroke="#202938"
-        stroke-width="3"
-      />
-      <circle
-        cx="${15+(index*13)%40}"
-        cy="${18+(index*17)%32}"
-        r="3"
-        fill="#ffffff55"
-      />
-    </svg>
-  `;
-
-}
+const PUZZLE_IMAGE=
+  "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23c9f0ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff4a3'/%3E%3Cpath d='M0 500 Q120 390 240 500 T480 500 T720 500 T960 500 V800 H0Z' fill='%236bb35c'/%3E%3Cpath d='M0 590 Q150 510 300 590 T600 590 T900 590 V800 H0Z' fill='%234b944d'/%3E%3Ccircle cx='610' cy='330' r='80' fill='%23ff595e'/%3E%3Cpath d='M610 250 C570 190 520 230 560 270' fill='none' stroke='%2329384a' stroke-width='12'/%3E%3Ccircle cx='630' cy='310' r='10' fill='%2329384a'/%3E%3Cpath d='M580 365 Q610 390 645 365' fill='none' stroke='%2329384a' stroke-width='8'/%3E%3Crect x='180' y='440' width='180' height='160' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='160,440 270,350 380,440' fill='%236c4cff'/%3E%3Crect x='240' y='500' width='55' height='100' fill='%23ffd166'/%3E%3Crect x='200' y='470' width='45' height='45' fill='%2362c4ed'/%3E%3Crect x='310' y='470' width='45' height='45' fill='%2362c4ed'/%3E%3Cpath d='M90 700 Q150 620 210 700' fill='none' stroke='%233b7135' stroke-width='30'/%3E%3Cpath d='M700 700 Q760 620 820 700' fill='none' stroke='%233b7135' stroke-width='30'/%3E%3C/svg%3E";
 
 
 function startPuzzle(){
 
   pieceArea.innerHTML='';
-  targetArea.innerHTML='';
+
+  targetArea
+    .querySelectorAll('.puzzle-target')
+    .forEach(
+      e=>e.remove()
+    );
 
   pieces=[];
 
@@ -1544,51 +1574,42 @@ function startPuzzle(){
   puzzleStartTime=
     performance.now();
 
-  $('rotatePiece').disabled=true;
-
-  $('puzzleStatus').textContent=
-    'Select a piece. Use Rotate when its orientation is wrong.';
-
+  const size=
+    pieceArea.clientWidth;
 
   /*
-    Target board
+    Make 16 target squares.
   */
-
-  const boardWidth=
-    targetArea.clientWidth;
-
-  const cell=
-    Math.floor(
-      (boardWidth-10)/
-      PUZZLE_SIZE
-    );
-
 
   for(let i=0;i<PIECE_COUNT;i++){
 
     const row=
-      Math.floor(i/PUZZLE_SIZE);
+      Math.floor(
+        i/PUZZLE_SIZE
+      );
 
     const col=
       i%PUZZLE_SIZE;
 
     const target=
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
     target.className=
       'puzzle-target';
 
     target.style.width=
-      `${cell}px`;
+      '25%';
 
     target.style.height=
-      `${cell}px`;
+      '25%';
 
     target.style.left=
-      `${5+col*cell}px`;
+      `${col*25}%`;
 
     target.style.top=
-      `${5+row*cell}px`;
+      `${row*25}%`;
 
     targetArea.append(target);
 
@@ -1596,57 +1617,65 @@ function startPuzzle(){
 
 
   /*
-    Pieces begin scattered and randomly rotated.
+    Create every piece.
   */
 
   for(let i=0;i<PIECE_COUNT;i++){
 
     const piece=
-      document.createElement('div');
+      document.createElement(
+        'div'
+      );
 
-    piece.className='piece';
+    piece.className=
+      'piece';
 
     piece.dataset.index=i;
 
-    piece.dataset.rotation=
-      [0,90,180,270][
-        randomInt(4)
-      ];
+    /*
+      Position the correct quarter
+      of the image.
+    */
 
-    piece.innerHTML=
-      makePieceSVG(i);
-
-    const maxX=
-      Math.max(
-        5,
-        pieceArea.clientWidth-78
+    const row=
+      Math.floor(
+        i/PUZZLE_SIZE
       );
 
-    const maxY=
-      Math.max(
-        5,
-        pieceArea.clientHeight-78
-      );
+    const col=
+      i%PUZZLE_SIZE;
+
+    piece.style.backgroundImage=
+      `url("${PUZZLE_IMAGE}")`;
+
+    piece.style.backgroundSize=
+      '400% 400%';
+
+    piece.style.backgroundPosition=
+      `${col*33.3333}% ${row*33.3333}%`;
+
+
+    /*
+      Scatter pieces around the
+      left board.
+    */
+
+    const x=
+      Math.random()*70;
+
+    const y=
+      Math.random()*70;
 
     piece.style.left=
-      `${5+Math.random()*maxX}px`;
+      `${x}%`;
 
     piece.style.top=
-      `${5+Math.random()*maxY}px`;
+      `${y}%`;
 
-    piece.style.transform=
-      `rotate(${piece.dataset.rotation}deg)`;
 
     piece.addEventListener(
       'pointerdown',
-      beginDrag
-    );
-
-    piece.addEventListener(
-      'click',
-      ()=>{
-        selectPiece(piece);
-      }
+      beginPuzzleDrag
     );
 
     pieceArea.append(piece);
@@ -1658,66 +1687,24 @@ function startPuzzle(){
 }
 
 
-function selectPiece(piece){
-
-  pieces.forEach(p=>
-    p.classList.remove('selected')
-  );
-
-  selectedPiece=piece;
-
-  piece.classList.add('selected');
-
-  $('rotatePiece').disabled=false;
-
-  $('puzzleStatus').textContent=
-    `Piece ${
-      Number(piece.dataset.index)+1
-    } selected.`;
-
-}
-
-
-/* DEDICATED ROTATE FUNCTION */
-
-$('rotatePiece').onclick=()=>{
-
-  if(!selectedPiece)return;
-
-  let rotation=
-    Number(
-      selectedPiece.dataset.rotation
-    );
-
-  rotation=
-    (rotation+90)%360;
-
-  selectedPiece.dataset.rotation=
-    rotation;
-
-  selectedPiece.style.transform=
-    `rotate(${rotation}deg)`;
-
-  $('puzzleStatus').textContent=
-    `Piece ${
-      Number(selectedPiece.dataset.index)+1
-    } rotated to ${rotation}°.`;
-
-};
-
-
-/* DRAG */
-
-let dragData=null;
-
-
-function beginDrag(e){
+function beginPuzzleDrag(e){
 
   e.preventDefault();
 
-  const piece=e.currentTarget;
+  const piece=
+    e.currentTarget;
 
-  selectPiece(piece);
+  selectedPiece=piece;
+
+  pieces.forEach(
+    p=>p.classList.remove(
+      'selected'
+    )
+  );
+
+  piece.classList.add(
+    'selected'
+  );
 
   const rect=
     piece.getBoundingClientRect();
@@ -1725,174 +1712,188 @@ function beginDrag(e){
   const area=
     pieceArea.getBoundingClientRect();
 
-  dragData={
+  const offsetX=
+    e.clientX-
+    rect.left;
 
-    piece,
+  const offsetY=
+    e.clientY-
+    rect.top;
 
-    offsetX:
-      e.clientX-rect.left,
-
-    offsetY:
-      e.clientY-rect.top,
-
-    area
-
-  };
-
-  piece.classList.add('dragging');
+  piece.classList.add(
+    'dragging'
+  );
 
   piece.setPointerCapture(
     e.pointerId
   );
 
+
+  function move(ev){
+
+    const x=
+      ev.clientX-
+      area.left-
+      offsetX;
+
+    const y=
+      ev.clientY-
+      area.top-
+      offsetY;
+
+    const maxX=
+      pieceArea.clientWidth-
+      piece.offsetWidth;
+
+    const maxY=
+      pieceArea.clientHeight-
+      piece.offsetHeight;
+
+    piece.style.left=
+      `${Math.max(
+        0,
+        Math.min(
+          maxX,
+          x
+        )
+      )}px`;
+
+    piece.style.top=
+      `${Math.max(
+        0,
+        Math.min(
+          maxY,
+          y
+        )
+      )}px`;
+
+  }
+
+
+  function up(){
+
+    piece.classList.remove(
+      'dragging'
+    );
+
+    piece.removeEventListener(
+      'pointermove',
+      move
+    );
+
+    piece.removeEventListener(
+      'pointerup',
+      up
+    );
+
+  }
+
+
   piece.addEventListener(
     'pointermove',
-    dragMove
+    move
   );
 
   piece.addEventListener(
     'pointerup',
-    endDrag,
-    {once:true}
+    up
   );
 
 }
 
-
-function dragMove(e){
-
-  if(!dragData)return;
-
-  const piece=
-    dragData.piece;
-
-  const area=
-    dragData.area;
-
-  let x=
-    e.clientX-
-    area.left-
-    dragData.offsetX;
-
-  let y=
-    e.clientY-
-    area.top-
-    dragData.offsetY;
-
-  x=Math.max(
-    0,
-    Math.min(
-      pieceArea.clientWidth-
-      piece.offsetWidth,
-      x
-    )
-  );
-
-  y=Math.max(
-    0,
-    Math.min(
-      pieceArea.clientHeight-
-      piece.offsetHeight,
-      y
-    )
-  );
-
-  piece.style.left=
-    `${x}px`;
-
-  piece.style.top=
-    `${y}px`;
-
-}
-
-
-function endDrag(){
-
-  if(!dragData)return;
-
-  dragData.piece
-    .classList
-    .remove('dragging');
-
-  dragData.piece
-    .removeEventListener(
-      'pointermove',
-      dragMove
-    );
-
-  dragData=null;
-
-}
-
-
-/* CHECK */
 
 $('checkPuzzle').onclick=async()=>{
 
   let correct=0;
 
-  const boardWidth=
-    targetArea.clientWidth;
+  const area=
+    targetArea.getBoundingClientRect();
 
-  const boardHeight=
-    targetArea.clientHeight;
-
-  const cell=
-    boardWidth/
-    PUZZLE_SIZE;
-
+  const pieceAreaRect=
+    pieceArea.getBoundingClientRect();
 
   pieces.forEach(piece=>{
 
     const i=
-      Number(piece.dataset.index);
+      Number(
+        piece.dataset.index
+      );
 
     const row=
-      Math.floor(i/PUZZLE_SIZE);
+      Math.floor(
+        i/PUZZLE_SIZE
+      );
 
     const col=
       i%PUZZLE_SIZE;
 
-    const targetX=
-      col*cell+5;
-
-    const targetY=
-      row*cell+5;
-
-    const x=
-      parseFloat(piece.style.left);
-
-    const y=
-      parseFloat(piece.style.top);
-
-    const rotation=
-      Number(
-        piece.dataset.rotation
-      )%360;
 
     /*
-      Correct position + correct rotation.
+      Target position in the
+      solution board.
     */
 
-    const positionCorrect=
-      Math.abs(x-targetX)<32&&
-      Math.abs(y-targetY)<32;
+    const targetX=
+      col*
+      targetArea.clientWidth/
+      PUZZLE_SIZE;
 
-    const rotationCorrect=
-      rotation===0;
+    const targetY=
+      row*
+      targetArea.clientHeight/
+      PUZZLE_SIZE;
 
-    if(
-      positionCorrect&&
-      rotationCorrect
-    ){
+
+    /*
+      Convert the piece's position
+      into a position on the board.
+    */
+
+    const x=
+      parseFloat(
+        piece.style.left
+      );
+
+    const y=
+      parseFloat(
+        piece.style.top
+      );
+
+
+    /*
+      Since pieces are dragged on the
+      left board, checking is based on
+      whether they are close to their
+      matching quarter position there.
+    */
+
+    const expectedX=
+      (col/PUZZLE_SIZE)*
+      pieceArea.clientWidth;
+
+    const expectedY=
+      (row/PUZZLE_SIZE)*
+      pieceArea.clientHeight;
+
+
+    const closeEnough=
+      Math.abs(
+        x-expectedX
+      )<35&&
+      Math.abs(
+        y-expectedY
+      )<35;
+
+
+    if(closeEnough){
 
       correct++;
 
       piece.style.left=
-        `${targetX}px`;
+        `${expectedX}px`;
 
       piece.style.top=
-        `${targetY}px`;
+        `${expectedY}px`;
 
     }
 
@@ -1900,7 +1901,8 @@ $('checkPuzzle').onclick=async()=>{
 
 
   if(
-    correct===PIECE_COUNT&&
+    correct===
+    PIECE_COUNT&&
     !puzzleSolved
   ){
 
@@ -1910,35 +1912,38 @@ $('checkPuzzle').onclick=async()=>{
       Math.max(
         1,
         Math.floor(
-          (performance.now()-
-            puzzleStartTime)/1000
+          (
+            performance.now()-
+            puzzleStartTime
+          )/1000
         )
       );
-
-    /*
-      Faster puzzle = higher score.
-    */
 
     const score=
       Math.max(
         100,
-        5000-seconds*20
+        5000-
+        seconds*20
       );
 
     $('puzzleStatus').textContent=
       `🎉 Puzzle solved in ${
         seconds
-      } seconds! Score: ${score}`;
+      } seconds! Score: ${
+        score
+      }`;
 
-    await saveScore(
-      'Hard Puzzle',
+    saveScore(
+      'Picture Puzzle',
       score
     );
 
   }else{
 
     $('puzzleStatus').textContent=
-      `${correct} / ${PIECE_COUNT} pieces are correctly placed and rotated.`;
+      `${correct} / ${
+        PIECE_COUNT
+      } pieces are in the correct positions.`;
 
   }
 
@@ -1951,107 +1956,135 @@ $('newPuzzle').onclick=
 
 /* =========================================================
    HIGH SCORES
+   NOW SAVED TO LOCALSTORAGE
+   NOT FIREBASE
 ========================================================= */
 
-async function saveScore(
-  game,
-  score
-){
-
-  /*
-    Logged-out users can play,
-    but their score is NOT saved.
-  */
-
-  if(!auth.currentUser){
-
-    return;
-
-  }
+function getLocalScores(){
 
   try{
 
-    await addDoc(
-      collection(db,'highScores'),
-      {
-
-        game,
-
-        score,
-
-        player:
-          auth.currentUser.email,
-
-        uid:
-          auth.currentUser.uid,
-
-        createdAt:
-          serverTimestamp()
-
-      }
+    return JSON.parse(
+      localStorage.getItem(
+        'saofHighScores'
+      )||'[]'
     );
 
   }catch(e){
 
-    console.error(
-      'Could not save score',
-      e
-    );
+    return [];
 
   }
 
 }
 
 
-async function loadScores(){
+function saveLocalScores(scores){
+
+  localStorage.setItem(
+    'saofHighScores',
+    JSON.stringify(scores)
+  );
+
+}
+
+
+function saveScore(
+  game,
+  score
+){
+
+  const scores=
+    getLocalScores();
+
+  const player=
+    auth.currentUser?.email||
+    'Guest';
+
+
+  scores.push({
+
+    game,
+
+    score,
+
+    player,
+
+    date:
+      new Date().toISOString()
+
+  });
+
+
+  /*
+    Keep the best 50 scores.
+  */
+
+  scores.sort(
+    (a,b)=>
+      b.score-a.score
+  );
+
+  saveLocalScores(
+    scores.slice(0,50)
+  );
+
+}
+
+
+function loadScores(){
 
   const body=
     $('scoreBody');
 
-  body.innerHTML=
-    '<tr><td colspan="3">Loading...</td></tr>';
+  const scores=
+    getLocalScores();
 
-  try{
+  body.innerHTML='';
 
-    const q=
-      query(
-        collection(db,'highScores'),
-        orderBy(
-          'score',
-          'desc'
-        ),
-        limit(50)
-      );
 
-    const snap=
-      await getDocs(q);
+  if(!scores.length){
 
-    body.innerHTML='';
+    body.innerHTML=
+      '<tr><td colspan="3">No scores yet.</td></tr>';
 
-    snap.forEach(doc=>{
+    return;
 
-      const d=doc.data();
+  }
+
+
+  scores.forEach(
+    scoreData=>{
 
       const tr=
-        document.createElement('tr');
+        document.createElement(
+          'tr'
+        );
 
       const game=
-        document.createElement('td');
+        document.createElement(
+          'td'
+        );
 
       game.textContent=
-        d.game||'Game';
+        scoreData.game;
 
       const score=
-        document.createElement('td');
+        document.createElement(
+          'td'
+        );
 
       score.textContent=
-        d.score||0;
+        scoreData.score;
 
       const player=
-        document.createElement('td');
+        document.createElement(
+          'td'
+        );
 
       const email=
-        d.player||'Player';
+        scoreData.player||
+        'Guest';
 
       const at=
         email.indexOf('@');
@@ -2061,7 +2094,7 @@ async function loadScores(){
           ? email.slice(0,2)+
             '***'+
             email.slice(at)
-          : 'Player';
+          : email;
 
       tr.append(
         game,
@@ -2071,24 +2104,29 @@ async function loadScores(){
 
       body.append(tr);
 
-    });
-
-
-    if(!body.children.length){
-
-      body.innerHTML=
-        '<tr><td colspan="3">No scores yet.</td></tr>';
-
     }
+  );
 
-  }catch(e){
+}
 
-    body.innerHTML=
-      '<tr><td colspan="3">Could not load scores.</td></tr>';
+
+$('clearScores').onclick=()=>{
+
+  if(
+    confirm(
+      'Delete all high scores saved on this device?'
+    )
+  ){
+
+    localStorage.removeItem(
+      'saofHighScores'
+    );
+
+    loadScores();
 
   }
 
-}
+};
 
 
 /* =========================================================
@@ -2108,12 +2146,14 @@ let trexRAF=null;
 let trexScore=0;
 
 let trexPlayer={
+
   x:100,
   y:270,
   w:45,
   h:55,
   vy:0,
   jumping:false
+
 };
 
 let obstacles=[];
@@ -2164,7 +2204,8 @@ function trexFrame(){
 
   if(!trexRunning)return;
 
-  const ctx=trexCtx;
+  const ctx=
+    trexCtx;
 
   ctx.clearRect(
     0,
@@ -2174,9 +2215,8 @@ function trexFrame(){
   );
 
 
-  /* SKY */
-
-  ctx.fillStyle='#87ceeb';
+  ctx.fillStyle=
+    '#87ceeb';
 
   ctx.fillRect(
     0,
@@ -2254,7 +2294,8 @@ function trexFrame(){
 
   /* DINO */
 
-  ctx.fillStyle='#29354a';
+  ctx.fillStyle=
+    '#29354a';
 
   ctx.fillRect(
     trexPlayer.x,
@@ -2280,7 +2321,7 @@ function trexFrame(){
   );
 
 
-  /* SPAWN OBSTACLES */
+  /* OBSTACLES */
 
   if(
     obstacles.length===0||
@@ -2295,10 +2336,12 @@ function trexFrame(){
 
       y:325,
 
-      w:25+
+      w:
+        25+
         Math.random()*20,
 
-      h:40+
+      h:
+        40+
         Math.random()*25
 
     });
@@ -2306,29 +2349,30 @@ function trexFrame(){
   }
 
 
-  /* MOVE */
+  obstacles.forEach(
+    o=>{
 
-  obstacles.forEach(o=>{
+      o.x-=7;
 
-    o.x-=7;
+      ctx.fillStyle=
+        '#218c45';
 
-    ctx.fillStyle='#218c45';
+      ctx.fillRect(
+        o.x,
+        o.y-o.h,
+        o.w,
+        o.h
+      );
 
-    ctx.fillRect(
-      o.x,
-      o.y-o.h,
-      o.w,
-      o.h
-    );
+      ctx.fillRect(
+        o.x-10,
+        o.y-o.h+20,
+        12,
+        25
+      );
 
-    ctx.fillRect(
-      o.x-10,
-      o.y-o.h+20,
-      12,
-      25
-    );
-
-  });
+    }
+  );
 
 
   obstacles=
@@ -2339,7 +2383,9 @@ function trexFrame(){
 
   /* COLLISION */
 
-  for(const o of obstacles){
+  for(
+    const o of obstacles
+  ){
 
     const hit=
       trexPlayer.x<
@@ -2362,7 +2408,9 @@ function trexFrame(){
       trexRunning=false;
 
       $('trexStatus').textContent=
-        `Game Over! Score: ${trexScore}`;
+        `Game Over! Score: ${
+          trexScore
+        }`;
 
       saveScore(
         'T-Rex Runner',
@@ -2379,7 +2427,10 @@ function trexFrame(){
   trexScore++;
 
   $('trexStatus').textContent=
-    `Score: ${trexScore}`;
+    `Score: ${
+      trexScore
+    }`;
+
 
   trexRAF=
     requestAnimationFrame(
@@ -2421,7 +2472,9 @@ window.addEventListener(
   'keydown',
   e=>{
 
-    if(e.code==='Space'){
+    if(
+      e.code==='Space'
+    ){
 
       e.preventDefault();
 
@@ -2434,125 +2487,41 @@ window.addEventListener(
 
 
 /* =========================================================
-   WATCH MOVIE
+   BUILT-IN MOVIES
 ========================================================= */
 
-/*
-  Add your own movie URLs here.
+const movieCanvas=
+  $('movieCanvas');
 
-  Example:
+const movieCtx=
+  movieCanvas.getContext('2d');
 
-  movie1:
-    'https://example.com/movie.mp4'
+let movieRunning=false;
 
-  This is completely separate from
-  Asher's birthday movie.
-*/
+let movieRAF=null;
 
-const MOVIES={
-
-  movie1:'',
-
-  movie2:'',
-
-  movie3:''
-
-};
+let movieStart=0;
 
 
-$('playMovie').onclick=()=>{
+function drawMovie(
+  type,
+  time
+){
 
-  const selected=
-    $('movieChoice').value;
-
-  const url=
-    MOVIES[selected];
-
-
-  if(!url){
-
-    $('movieFrame').innerHTML=`
-
-      <div class="movie-placeholder">
-
-        <h2 style="color:white">
-          🎬 Movie not added yet
-        </h2>
-
-        <p>
-          Add your movie URL to the
-          MOVIES section in the code.
-        </p>
-
-      </div>
-
-    `;
-
-    return;
-
-  }
-
-
-  $('movieFrame').innerHTML=`
-
-    <video
-      controls
-      autoplay
-      style="
-        width:100%;
-        height:100%;
-        object-fit:contain
-      "
-    >
-
-      <source
-        src="${url}"
-        type="video/mp4"
-      >
-
-      Your browser does not support video playback.
-
-    </video>
-
-  `;
-
-};
-
-
-/* =========================================================
-   ASHER'S SPECIAL BIRTHDAY MOVIE
-========================================================= */
-
-const birthdayCanvas=
-  $('birthdayCanvas');
-
-const bctx=
-  birthdayCanvas.getContext('2d');
-
-let birthdayPlaying=false;
-
-let birthdayStart=0;
-
-let birthdayRAF=null;
-
-
-function birthdayDraw(t){
+  const ctx=
+    movieCtx;
 
   const W=
-    birthdayCanvas.width;
+    movieCanvas.width;
 
   const H=
-    birthdayCanvas.height;
+    movieCanvas.height;
+
+  const t=
+    time/1000;
 
 
-  /* SKY */
-
-  bctx.fillStyle=
-    t%10000<5000
-      ? '#62c4ed'
-      : '#18284c';
-
-  bctx.fillRect(
+  ctx.clearRect(
     0,
     0,
     W,
@@ -2560,225 +2529,526 @@ function birthdayDraw(t){
   );
 
 
-  /* STARS */
+  /* ======================================
+     MOVIE 1
+     THE LITTLE EXPLORER
+  ====================================== */
 
-  if(t%10000>=5000){
+  if(type==='movie1'){
 
-    for(let i=0;i<60;i++){
+    ctx.fillStyle='#75cfff';
 
-      bctx.fillStyle='#fff';
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
 
-      bctx.fillRect(
-        (i*73)%W,
-        (i*47)%220,
+
+    /* SUN */
+
+    ctx.fillStyle='#ffd166';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      760,
+      90,
+      55,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* MOUNTAINS */
+
+    ctx.fillStyle='#477d4d';
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      0,
+      400
+    );
+
+    ctx.lineTo(
+      180,
+      190
+    );
+
+    ctx.lineTo(
+      330,
+      400
+    );
+
+    ctx.lineTo(
+      500,
+      160
+    );
+
+    ctx.lineTo(
+      750,
+      400
+    );
+
+    ctx.lineTo(
+      900,
+      230
+    );
+
+    ctx.lineTo(
+      1000,
+      400
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+
+    /* GROUND */
+
+    ctx.fillStyle='#55a84f';
+
+    ctx.fillRect(
+      0,
+      400,
+      W,
+      106
+    );
+
+
+    /* EXPLORER */
+
+    const x=
+      120+
+      Math.sin(t)*100;
+
+    ctx.fillStyle='#ff595e';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      x,
+      325,
+      25,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle='#29354a';
+
+    ctx.fillRect(
+      x-20,
+      350,
+      40,
+      55
+    );
+
+    ctx.fillRect(
+      x-45,
+      370,
+      25,
+      12
+    );
+
+    ctx.fillRect(
+      x+20,
+      370,
+      25,
+      12
+    );
+
+
+    ctx.fillStyle='#fff';
+
+    ctx.font=
+      'bold 42px Arial';
+
+    ctx.textAlign='center';
+
+    ctx.fillText(
+      'THE LITTLE EXPLORER',
+      W/2,
+      70
+    );
+
+
+    ctx.font=
+      '24px Arial';
+
+    ctx.fillText(
+      'An adventure begins...',
+      W/2,
+      110
+    );
+
+  }
+
+
+  /* ======================================
+     MOVIE 2
+     SPACE ADVENTURE
+  ====================================== */
+
+  if(type==='movie2'){
+
+    ctx.fillStyle='#080d2b';
+
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
+
+
+    /* STARS */
+
+    for(
+      let i=0;
+      i<100;
+      i++
+    ){
+
+      ctx.fillStyle=
+        '#ffffff';
+
+      const sx=
+        (i*97)%W;
+
+      const sy=
+        (i*53)%H;
+
+      ctx.fillRect(
+        sx,
+        sy,
         3,
         3
       );
 
     }
 
+
+    /* PLANET */
+
+    ctx.fillStyle='#6c4cff';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      720,
+      280,
+      120,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    ctx.strokeStyle='#ff9f1c';
+
+    ctx.lineWidth=15;
+
+    ctx.beginPath();
+
+    ctx.ellipse(
+      720,
+      280,
+      170,
+      45,
+      -.2,
+      0,
+      Math.PI*2
+    );
+
+    ctx.stroke();
+
+
+    /* ROCKET */
+
+    const rx=
+      150+
+      (t*70)%650;
+
+    const ry=
+      250+
+      Math.sin(t*2)*60;
+
+    ctx.save();
+
+    ctx.translate(
+      rx,
+      ry
+    );
+
+    ctx.rotate(
+      -.1
+    );
+
+    ctx.fillStyle='#eee';
+
+    ctx.beginPath();
+
+    ctx.moveTo(
+      60,
+      0
+    );
+
+    ctx.lineTo(
+      -35,
+      -30
+    );
+
+    ctx.lineTo(
+      -25,
+      30
+    );
+
+    ctx.closePath();
+
+    ctx.fill();
+
+    ctx.fillStyle='#62c4ed';
+
+    ctx.beginPath();
+
+    ctx.arc(
+      15,
+      0,
+      12,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+    ctx.fillStyle='#ff595e';
+
+    ctx.fillRect(
+      -35,
+      -15,
+      20,
+      30
+    );
+
+    ctx.restore();
+
+
+    ctx.fillStyle='#fff';
+
+    ctx.font=
+      'bold 45px Arial';
+
+    ctx.textAlign='center';
+
+    ctx.fillText(
+      'SPACE ADVENTURE',
+      W/2,
+      70
+    );
+
   }
 
 
-  /* GROUND */
+  /* ======================================
+     MOVIE 3
+     THE MAGIC FOREST
+  ====================================== */
 
-  bctx.fillStyle='#6eae58';
+  if(type==='movie3'){
 
-  bctx.fillRect(
-    0,
-    315,
-    W,
-    105
-  );
+    ctx.fillStyle='#142b24';
 
-
-  /* BALLOONS */
-
-  const balloons=[
-
-    [620,190,'#ef476f'],
-
-    [690,220,'#ffd166'],
-
-    [760,180,'#06d6a0']
-
-  ];
+    ctx.fillRect(
+      0,
+      0,
+      W,
+      H
+    );
 
 
-  balloons.forEach(
-    ([x,y,c])=>{
+    /* MOON */
 
-      bctx.strokeStyle='#555';
+    ctx.fillStyle='#fff4c2';
 
-      bctx.beginPath();
+    ctx.beginPath();
 
-      bctx.moveTo(
-        x,
-        y+25
+    ctx.arc(
+      750,
+      90,
+      55,
+      0,
+      Math.PI*2
+    );
+
+    ctx.fill();
+
+
+    /* TREES */
+
+    for(
+      let i=0;
+      i<10;
+      i++
+    ){
+
+      const x=
+        i*100;
+
+      ctx.fillStyle='#36251b';
+
+      ctx.fillRect(
+        x+35,
+        190,
+        30,
+        260
       );
 
-      bctx.lineTo(
-        x,
-        315
-      );
+      ctx.fillStyle=
+        i%2
+          ? '#27734a'
+          : '#358f57';
 
-      bctx.stroke();
+      ctx.beginPath();
 
-      bctx.fillStyle=c;
-
-      bctx.beginPath();
-
-      bctx.ellipse(
-        x,
-        y,
-        20,
-        28,
-        0,
+      ctx.arc(
+        x+50,
+        180,
+        75,
         0,
         Math.PI*2
       );
 
-      bctx.fill();
+      ctx.fill();
 
     }
-  );
 
 
-  /* DINO */
+    /* MAGIC LIGHT */
 
-  const bob=
-    Math.sin(t/180)*4;
+    for(
+      let i=0;
+      i<15;
+      i++
+    ){
 
-  bctx.fillStyle='#647180';
+      const x=
+        100+
+        ((i*97+
+          t*40)%700);
 
-  bctx.fillRect(
-    160,
-    245+bob,
-    55,
-    70
-  );
+      const y=
+        120+
+        ((i*53)%300);
 
-  bctx.fillRect(
-    205,
-    220+bob,
-    70,
-    55
-  );
+      ctx.fillStyle=
+        i%2
+          ? '#ffd166'
+          : '#06d6a0';
 
-  bctx.fillRect(
-    145,
-    260+bob,
-    30,
-    55
-  );
+      ctx.beginPath();
 
-  bctx.fillRect(
-    190,
-    305+bob,
-    20,
-    30
-  );
+      ctx.arc(
+        x,
+        y,
+        5,
+        0,
+        Math.PI*2
+      );
 
-  bctx.fillRect(
-    235,
-    305+bob,
-    20,
-    30
-  );
+      ctx.fill();
+
+    }
 
 
-  /* EYE */
+    ctx.fillStyle='#fff';
 
-  bctx.fillStyle='#111';
+    ctx.font=
+      'bold 45px Arial';
 
-  bctx.fillRect(
-    250,
-    230+bob,
-    8,
-    8
-  );
+    ctx.textAlign='center';
 
+    ctx.fillText(
+      'THE MAGIC FOREST',
+      W/2,
+      70
+    );
 
-  /* TEXT */
-
-  bctx.fillStyle='#fff';
-
-  bctx.font=
-    'bold 34px Arial';
-
-  bctx.textAlign='center';
-
-  bctx.fillText(
-    'HAPPY BIRTHDAY ASHER!',
-    W/2,
-    65
-  );
-
-  bctx.font=
-    'bold 22px Arial';
-
-  bctx.fillText(
-    '🎂 🎈 🎉',
-    W/2,
-    105
-  );
+  }
 
 }
 
 
-function birthdayFrame(t){
+function movieFrame(){
 
-  if(!birthdayPlaying)return;
+  if(!movieRunning)return;
+
+  const type=
+    $('movieChoice').value;
 
   const elapsed=
-    t-birthdayStart;
+    performance.now()-
+    movieStart;
 
-  birthdayDraw(elapsed);
+  drawMovie(
+    type,
+    elapsed
+  );
 
 
-  if(elapsed>=180000){
+  const seconds=
+    Math.floor(
+      elapsed/1000
+    );
 
-    birthdayPlaying=false;
 
-    $('birthdayButton').textContent=
-      '▶ Start Birthday Movie';
+  $('movieStatus').textContent=
+    `Playing: ${
+      seconds
+    } seconds`;
 
-    $('birthdayStatus').textContent=
-      'Birthday movie finished! 🎉';
 
-    return;
+  /*
+    Each movie loops after 60 seconds.
+  */
+
+  if(elapsed>=60000){
+
+    movieStart=
+      performance.now();
 
   }
 
 
-  $('birthdayStatus').textContent=
-    `Birthday movie playing: ${
-      Math.floor(elapsed/1000)
-    } / 180 seconds`;
-
-
-  birthdayRAF=
+  movieRAF=
     requestAnimationFrame(
-      birthdayFrame
+      movieFrame
     );
 
 }
 
 
-$('birthdayButton').onclick=()=>{
+$('playMovie').onclick=()=>{
 
-  if(birthdayPlaying){
+  if(movieRunning){
 
-    birthdayPlaying=false;
+    movieRunning=false;
 
     cancelAnimationFrame(
-      birthdayRAF
+      movieRAF
     );
 
-    $('birthdayButton').textContent=
-      '▶ Start Birthday Movie';
+    $('playMovie').textContent=
+      '▶ Play Movie';
 
-    $('birthdayStatus').textContent=
+    $('movieStatus').textContent=
       'Movie stopped.';
 
     return;
@@ -2786,17 +3056,20 @@ $('birthdayButton').onclick=()=>{
   }
 
 
-  birthdayPlaying=true;
+  movieRunning=true;
 
-  birthdayStart=
+  movieStart=
     performance.now();
 
-  $('birthdayButton').textContent=
-    '■ Stop Birthday Movie';
+  $('playMovie').textContent=
+    '■ Stop Movie';
 
-  birthdayRAF=
+  $('movieStatus').textContent=
+    'Movie playing...';
+
+  movieRAF=
     requestAnimationFrame(
-      birthdayFrame
+      movieFrame
     );
 
 };
@@ -2811,22 +3084,23 @@ onAuthStateChanged(
   user=>{
 
     const owner=
-      matches(user,OWNER);
-
-    const asher=
-      matches(user,ASHER);
+      matches(
+        user,
+        OWNER
+      );
 
 
     /*
-      IMPORTANT:
-      gamePanel is ALWAYS visible.
-      This means logged-out visitors
-      can play games.
+      Games are always public.
     */
 
     $('gamePanel').style.display=
       'block';
 
+
+    /*
+      Only owner gets admin.
+    */
 
     $('adminPanel').style.display=
       owner
@@ -2834,26 +3108,14 @@ onAuthStateChanged(
         : 'none';
 
 
+    /*
+      Normal visitors get questions.
+    */
+
     $('questionPanel').style.display=
       owner
         ? 'none'
         : 'block';
-
-
-    /*
-      Only Asher sees the birthday movie.
-    */
-
-    $('birthday').style.display=
-      asher
-        ? 'block'
-        : 'none';
-
-
-    $('birthdayMovieChoice').style.display=
-      asher
-        ? 'block'
-        : 'none';
 
 
     $('loginButton').textContent=
@@ -2861,25 +3123,12 @@ onAuthStateChanged(
         ? 'Games'
         : 'Login';
 
-
-    /*
-      If someone logs out while viewing
-      Asher's movie, close that screen.
-    */
-
-    if(!asher){
-
-      $('birthdayMovie').style.display=
-        'none';
-
-    }
-
   }
 );
 
 
 /* =========================================================
-   INITIAL PUZZLE
+   START
 ========================================================= */
 
 setTimeout(
