@@ -50,6 +50,11 @@ button:disabled{
   background:#fff;
   color:#6c4cff;
   font-weight:bold;
+  transition: 0.2s;
+}
+
+.login-button:hover {
+  background: #f0f0f0;
 }
 
 .search{
@@ -170,6 +175,35 @@ h2{
   background:#ff9f1c;
 }
 
+/* ADMIN CONTROLS */
+.admin-controls {
+  display:none;
+  gap:10px;
+  margin-top:15px;
+}
+
+body.is-admin .admin-controls {
+  display:flex;
+}
+
+.btn-edit,
+.btn-delete {
+  padding:8px 14px;
+  border:0;
+  border-radius:6px;
+  font-size:14px;
+  font-weight:bold;
+  color:#fff;
+  transition:0.15s;
+}
+
+.btn-edit { background:#ff9f1c; }
+.btn-edit:hover { background:#e88e15; }
+
+.btn-delete { background:#e63946; }
+.btn-delete:hover { background:#cc313e; }
+
+
 .game-menu{
   display:grid;
   grid-template-columns:repeat(2,1fr);
@@ -230,6 +264,12 @@ h2{
   border-radius:18px;
   background:#fff;
   text-align:center;
+}
+
+.login-hint {
+  font-size: 13px;
+  color: #666;
+  margin-bottom: 15px;
 }
 
 .error{
@@ -344,7 +384,7 @@ h2{
 
 .movie-buttons{
   display:grid;
-  grid-template-columns:repeat(3,1fr);
+  grid-template-columns:repeat(auto-fit, minmax(140px, 1fr));
   gap:10px;
   margin-top:12px;
 }
@@ -382,33 +422,11 @@ footer{
 }
 
 @media(max-width:650px){
-
-  h1{
-    font-size:32px;
-  }
-
-  .panel,
-  .dictionary{
-    width:calc(100% - 24px);
-  }
-
-  .game-menu{
-    grid-template-columns:1fr;
-  }
-
-  .puzzle-layout{
-    grid-template-columns:1fr;
-  }
-
-  .movie-buttons{
-    grid-template-columns:1fr;
-  }
-
-  .login-button{
-    right:10px;
-    top:10px;
-    padding:8px 12px;
-  }
+  h1{ font-size:32px; }
+  .panel, .dictionary{ width:calc(100% - 24px); }
+  .game-menu{ grid-template-columns:1fr; }
+  .puzzle-layout{ grid-template-columns:1fr; }
+  .login-button{ right:10px; top:10px; padding:8px 12px; font-size: 14px; }
 }
 </style>
 </head>
@@ -423,266 +441,123 @@ footer{
 <div class="search">
   <input id="searchInput" placeholder="Search a word...">
   <br>
-  <!-- THE NEW GAMES BUTTON -->
   <button class="games-toggle-btn" id="showGamesBtn">🎮 Open Games</button>
 </div>
 
 
 <!-- QUESTIONS -->
 
-<section class="panel" id="questionPanel">
-
+<section class="panel" id="questionPanel" style="display:block;">
   <div class="box">
-
     <h2>Ask about a word</h2>
-
-    <p>
-      Send a question or word suggestion to the dictionary owner.
-    </p>
-
-    <input
-      id="questionName"
-      placeholder="Your name (optional)"
-    >
-
-    <textarea
-      id="questionText"
-      placeholder="Your question"
-    ></textarea>
-
-    <button class="primary" id="saveQuestion">
-      Save Question
-    </button>
-
-    <button class="primary" id="openMessages">
-      Open Messages
-    </button>
-
+    <p>Send a question or word suggestion to the dictionary owner.</p>
+    <input id="questionName" placeholder="Your name (optional)">
+    <textarea id="questionText" placeholder="Your question"></textarea>
+    <button class="primary" id="saveQuestion">Save Question</button>
+    <button class="primary" id="openMessages">Open Messages</button>
     <div id="questionStatus"></div>
-
   </div>
-
 </section>
 
 
-<!-- ADMIN -->
+<!-- ADMIN PANEL -->
 
 <section class="panel" id="adminPanel">
-
   <div class="box">
-
-    <h2>Add a Word</h2>
-
+    <h2>Manage Dictionary</h2>
     <input id="newWord" placeholder="Word">
-
-    <input
-      id="newPronunciation"
-      placeholder="Pronunciation"
-    >
-
-    <input
-      id="newMeaning"
-      placeholder="Meaning"
-    >
-
-    <input
-      id="newCredits"
-      placeholder="Credits (optional)"
-    >
-
-    <button class="primary" id="addWord">
-      Add Word
-    </button>
-
-    <button class="secondary" id="logout">
-      Logout
-    </button>
-
+    <input id="newPronunciation" placeholder="Pronunciation">
+    <input id="newMeaning" placeholder="Meaning">
+    <input id="newCredits" placeholder="Credits (optional)">
+    <button class="primary" id="addWord">Add Word</button>
   </div>
-
 </section>
 
 
 <!-- GAMES -->
 
 <section class="panel" id="gamePanel">
-
   <div class="box">
-
     <h2>🎮 Games</h2>
-
-    <p>
-      Everyone can play. Log in if you want your high scores saved.
-    </p>
-
+    <p>Everyone can play. Log in if you want your high scores saved.</p>
+    
     <div class="game-menu" id="gameMenu">
-
       <button class="game-choice" id="puzzleChoice">
         🧩 Picture Puzzle
         <small>Put the pieces together to reveal the picture.</small>
       </button>
-
       <button class="game-choice" id="trexChoice">
         🦖 T-Rex Runner
         <small>Run, jump and avoid the obstacles.</small>
       </button>
-
       <button class="game-choice" id="watchMovieChoice">
         🎬 Real Mini Movies
-        <small>Watch real, non-scary animated short films.</small>
+        <small>Watch safe short films including Pokémon!</small>
       </button>
-
       <button class="game-choice" id="scoresChoice">
         🏆 High Scores
         <small>View scores saved on this website.</small>
       </button>
-
     </div>
 
-
     <!-- PUZZLE -->
-
     <div class="game-screen" id="puzzleScreen">
-
-      <button class="secondary back-button" data-back>
-        ← Back to Games
-      </button>
-
+      <button class="secondary back-button" data-back>← Back to Games</button>
       <h2>🧩 Picture Puzzle</h2>
-
-      <p class="puzzle-info">
-        Drag the pieces from the left onto the matching
-        positions on the picture board.
-      </p>
-
+      <p class="puzzle-info">Drag the pieces from the left onto the matching positions.</p>
       <div class="puzzle-layout">
         <div>
           <h3>Mixed Pieces</h3>
           <div class="puzzle-area" id="pieceArea"></div>
         </div>
-
         <div>
           <h3>Solution Board</h3>
           <div class="puzzle-area" id="targetArea"></div>
         </div>
       </div>
-
-      <div class="puzzle-status" id="puzzleStatus">
-        Loading puzzle...
-      </div>
-
+      <div class="puzzle-status" id="puzzleStatus">Loading puzzle...</div>
       <div class="puzzle-controls">
-        <button class="primary" id="newPuzzle">
-          New Puzzle
-        </button>
-
-        <button class="secondary" id="checkPuzzle">
-          Check Puzzle
-        </button>
+        <button class="primary" id="newPuzzle">New Puzzle</button>
+        <button class="secondary" id="checkPuzzle">Check Puzzle</button>
       </div>
-
     </div>
-
 
     <!-- T REX -->
-
     <div class="game-screen" id="trexScreen">
-
-      <button class="secondary back-button" data-back>
-        ← Back to Games
-      </button>
-
+      <button class="secondary back-button" data-back>← Back to Games</button>
       <h2>🦖 T-Rex Runner</h2>
-
-      <p>
-        Press Space, click, or tap to jump.
-      </p>
-
-      <canvas
-        id="trexCanvas"
-        width="900"
-        height="350"
-      ></canvas>
-
-      <button class="primary" id="startTrex">
-        ▶ Start T-Rex Runner
-      </button>
-
-      <p id="trexStatus">
-        Ready!
-      </p>
-
+      <p>Press Space, click, or tap to jump.</p>
+      <canvas id="trexCanvas" width="900" height="350"></canvas>
+      <button class="primary" id="startTrex">▶ Start T-Rex Runner</button>
+      <p id="trexStatus">Ready!</p>
     </div>
-
 
     <!-- REAL MOVIES -->
-
     <div class="game-screen" id="watchMovieScreen">
-
-      <button class="secondary back-button" data-back>
-        ← Back to Games
-      </button>
-
+      <button class="secondary back-button" data-back>← Back to Games</button>
       <h2>🎬 Real Mini Movies</h2>
-
-      <p>
-        Choose a movie below. These are highly safe, realistic, and fun videos perfect for kids!
-      </p>
-
-      <div class="movie-frame">
-        <video
-          class="real-movie"
-          id="realMovie"
-          controls
-          playsinline
-          preload="metadata"
-        >
-          Your browser does not support video playback.
-        </video>
+      <p>Choose a movie below. 100% safe, peaceful, and fun videos!</p>
+      
+      <div class="movie-frame" id="movieFrame">
+        <div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>
       </div>
-
+      
       <div class="movie-buttons">
-        <button class="primary movie-button" id="movie1Button">
-          🐰 Big Bunny
-        </button>
-        <button class="primary movie-button" id="movie2Button">
-          🌺 Blooming Flower
-        </button>
-        <button class="primary movie-button" id="movie3Button">
-          🌍 Earth Scenery
-        </button>
+        <button class="primary movie-button" id="movie3Button" style="background:#ffcc00; color:#333;">⚡ Pokémon Short</button>
+        <button class="primary movie-button" id="movie1Button">🌺 Blooming Flower</button>
+        <button class="primary movie-button" id="movie2Button">🌍 Earth Scenery</button>
       </div>
-
-      <p class="movie-description" id="movieDescription">
-        Choose a movie to start watching.
-      </p>
-
-      <button class="secondary" id="stopMovie">
-        ■ Stop Movie
-      </button>
-
-      <p id="movieStatus">
-        Ready to watch!
-      </p>
-
+      
+      <p class="movie-description" id="movieDescription">Choose a movie to start watching.</p>
+      <button class="secondary" id="stopMovie">■ Stop Movie</button>
+      <p id="movieStatus">Ready to watch!</p>
     </div>
 
-
     <!-- SCORES -->
-
     <div class="game-screen" id="scoresScreen">
-
-      <button class="secondary back-button" data-back>
-        ← Back to Games
-      </button>
-
+      <button class="secondary back-button" data-back>← Back to Games</button>
       <h2>🏆 High Scores</h2>
-
-      <p>
-        Scores are saved directly in this browser using
-        local storage. They are not stored in Firebase.
-      </p>
-
+      <p>Scores are saved directly on this device.</p>
       <table class="score-table">
         <thead>
           <tr>
@@ -693,22 +568,15 @@ footer{
         </thead>
         <tbody id="scoreBody"></tbody>
       </table>
-
-      <button class="secondary" id="clearScores">
-        Clear Scores on This Device
-      </button>
-
+      <button class="secondary" id="clearScores">Clear Scores on This Device</button>
     </div>
-
   </div>
-
 </section>
 
 
 <!-- DICTIONARY -->
 
 <main class="dictionary" id="dictionary">
-
   <article class="card">
     <div class="word">Recos</div>
     <div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div>
@@ -722,27 +590,17 @@ footer{
     <div class="meaning">Meaning: <strong>me / and</strong></div>
     <div class="credits">Credits: No credits</div>
   </article>
-
-  <article class="card">
-    <div class="word">Thu</div>
-    <div class="pronunciation">Pronunciation: <strong>th-oo</strong></div>
-    <div class="meaning">Meaning: <strong>Depends on the context.</strong></div>
-    <div class="credits">Credits: No credits</div>
-  </article>
-
 </main>
-
 
 <footer>
   © 2026 Saof Dictionary
 </footer>
 
-
 <!-- LOGIN -->
-
 <div id="login">
   <div class="login-box">
-    <h2>Login</h2>
+    <h2>Login / Sign Up</h2>
+    <p class="login-hint">If you don't have an account, enter an email and password and click "Upgrade for Free".</p>
     <input id="email" type="email" placeholder="Email">
     <input id="password" type="password" placeholder="Password">
     <button class="primary" id="loginAction">Login</button>
@@ -778,7 +636,10 @@ import {
   collection,
   addDoc,
   onSnapshot,
-  serverTimestamp
+  serverTimestamp,
+  doc,
+  deleteDoc,
+  updateDoc
 } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 
@@ -791,17 +652,42 @@ const config = {
   appId: '1:1054693760278:web:5f8f9c090fbc737dfc4437'
 };
 
-
 const OWNER = 'parkernanayakkara@icloud.com';
 const app = initializeApp(config);
 const auth = getAuth(app);
 const db = getFirestore(app);
 const $ = id => document.getElementById(id);
+let editingId = null;
 
 await setPersistence(auth, inMemoryPersistence);
 
 const matches = (user,email) =>
   user?.email?.toLowerCase() === email.toLowerCase();
+
+function getFirstName(email) {
+  if (!email) return "Friend";
+  let namePart = email.split('@')[0].replace(/[0-9]/g, '').split(/[._-]/)[0];
+  if (!namePart) return "Friend";
+  return namePart.charAt(0).toUpperCase() + namePart.slice(1).toLowerCase();
+}
+
+/* =========================================================
+   AUTH STATE & ADMIN VISIBILITY
+========================================================= */
+
+onAuthStateChanged(auth, user => {
+  const isAdmin = matches(user, OWNER);
+  $('adminPanel').style.display = isAdmin ? 'block' : 'none';
+  if (isAdmin) document.body.classList.add('is-admin');
+  else document.body.classList.remove('is-admin');
+
+  if (user) {
+    const firstName = getFirstName(user.email);
+    $('loginButton').textContent = `Hello, ${firstName} (Logout)`;
+  } else {
+    $('loginButton').textContent = 'Login';
+  }
+});
 
 
 /* =========================================================
@@ -811,13 +697,11 @@ const matches = (user,email) =>
 $('showGamesBtn').onclick = () => {
   const gp = $('gamePanel');
   if (gp.style.display === 'block') {
-    // Hide games
     gp.style.display = 'none';
     $('showGamesBtn').textContent = '🎮 Open Games';
   } else {
-    // Show games
     gp.style.display = 'block';
-    $('gameMenu').style.display = 'grid'; // Ensure menu is visible
+    $('gameMenu').style.display = 'grid'; 
     hideScreens(); 
     $('showGamesBtn').textContent = '❌ Close Games';
     gp.scrollIntoView({ behavior: 'smooth' });
@@ -826,10 +710,10 @@ $('showGamesBtn').onclick = () => {
 
 
 /* =========================================================
-   FIREBASE WORDS
+   FIREBASE WORDS (WITH EDIT & DELETE)
 ========================================================= */
 
-function addCard(d){
+function addCard(d, id){
   const c = document.createElement('article');
   c.className = 'card live-card';
 
@@ -839,31 +723,50 @@ function addCard(d){
 
   const pronunciation = document.createElement('div');
   pronunciation.className = 'pronunciation';
-  pronunciation.innerHTML = 'Pronunciation: ';
-  const pStrong = document.createElement('strong');
-  pStrong.textContent = d.pronunciation;
-  pronunciation.append(pStrong);
+  pronunciation.innerHTML = `Pronunciation: <strong>${d.pronunciation}</strong>`;
 
   const meaning = document.createElement('div');
   meaning.className = 'meaning';
-  meaning.innerHTML = 'Meaning: ';
-  const mStrong = document.createElement('strong');
-  mStrong.textContent = d.meaning;
-  meaning.append(mStrong);
+  meaning.innerHTML = `Meaning: <strong>${d.meaning}</strong>`;
 
   const credits = document.createElement('div');
   credits.className = 'credits';
   credits.textContent = 'Credits: ' + (d.credits?.trim() || 'No credits');
 
-  c.append(word, pronunciation, meaning, credits);
-  $('dictionary').append(c);
+  const adminControls = document.createElement('div');
+  adminControls.className = 'admin-controls';
+
+  const btnEdit = document.createElement('button');
+  btnEdit.className = 'btn-edit';
+  btnEdit.textContent = '✏️ Edit';
+  btnEdit.onclick = () => {
+    $('newWord').value = d.word;
+    $('newPronunciation').value = d.pronunciation;
+    $('newMeaning').value = d.meaning;
+    $('newCredits').value = d.credits === 'No credits' ? '' : (d.credits || '');
+    editingId = id;
+    $('addWord').textContent = 'Update Word';$('adminPanel').scrollIntoView({ behavior: 'smooth' });
+  };
+
+  const btnDelete = document.createElement('button');
+  btnDelete.className = 'btn-delete';
+  btnDelete.textContent = '🗑️ Delete';
+  btnDelete.onclick = async () => {
+    if(confirm(`Are you sure you want to delete "${d.word}"?`)){
+      await deleteDoc(doc(db, 'words', id));
+    }
+  };
+
+  adminControls.append(btnEdit, btnDelete);
+  c.append(word, pronunciation, meaning, credits, adminControls);
+  $('dictionary').prepend(c); 
 }
 
 onSnapshot(collection(db,'words'), snap => {
   document.querySelectorAll('.live-card').forEach(e => e.remove());
   snap.forEach(x => {
     const d = x.data();
-    if(d.word && d.pronunciation && d.meaning) addCard(d);
+    if(d.word && d.pronunciation && d.meaning) addCard(d, x.id);
   });
 });
 
@@ -881,117 +784,72 @@ $('searchInput').addEventListener('input', e => {
 
 
 /* =========================================================
-   LOGIN
+   LOGIN / SIGN UP SYSTEM
 ========================================================= */
 
-$('loginButton').onclick = () => {
-  if(auth.currentUser){
-    // Automatically show games if already logged in
-    $('gamePanel').style.display = 'block';$('gameMenu').style.display = 'grid'; 
-    hideScreens();
-    $('showGamesBtn').textContent = '❌ Close Games';
-    $('gamePanel').scrollIntoView({ behavior:'smooth' });
-  }else{
-    $('login').style.display = 'flex';
+$('loginButton').onclick = async () => {
+  if (auth.currentUser) {
+    if (confirm("Are you sure you want to log out?")) await signOut(auth);
+  } else {
+    $('loginError').textContent = '';$('login').style.display = 'flex';
   }
 };
 
-$('cancelLogin').onclick = () => {$('login').style.display = 'none';
-};
+$('cancelLogin').onclick = () =>$('login').style.display = 'none';
 
 $('loginAction').onclick = async () => {
-  const email = $('email').value.trim();
-  const password = $('password').value;
+  const email = $('email').value.trim(), password =$('password').value;
+  if(!email || !password){ $('loginError').textContent = 'Enter your email and password.'; return; }
 
-  if(!email || !password){
-    $('loginError').textContent = 'Enter your email and password.';
-    return;
-  }
-
-  const button = $('loginAction');
-  button.disabled = true;
-  button.textContent = 'Logging in...';
+  const button = $('loginAction'); button.disabled = true; button.textContent = 'Logging in...';
 
   try{
     await signInWithEmailAndPassword(auth, email, password);
     $('login').style.display = 'none';
   }catch(e){
-    $('loginError').textContent = 'Login failed: ' + (e.code || 'check your details');
+    if (e.code === 'auth/invalid-credential') $('loginError').textContent = "Wrong password, or account doesn't exist.";
+    else $('loginError').textContent = 'Login failed: ' + e.code;
   }finally{
-    button.disabled = false;
-    button.textContent = 'Login';
+    button.disabled = false; button.textContent = 'Login';
   }
 };
 
-
-/* =========================================================
-   CREATE ACCOUNT
-========================================================= */
-
 $('upgradeAction').onclick = async () => {
-  const email = $('email').value.trim();
-  const password = $('password').value;
+  const email = $('email').value.trim(), password =$('password').value;
+  if(!email || !password){ $('loginError').textContent = 'Enter an email and password first.'; return; }
+  if(password.length < 6){ $('loginError').textContent = 'Password must be at least 6 characters.'; return; }
 
-  if(!email || !password){
-    $('loginError').textContent = 'Enter an email and password first.';
-    return;
-  }
-
-  if(password.length < 6){
-    $('loginError').textContent = 'Password must be at least 6 characters.';
-    return;
-  }
-
-  const button = $('upgradeAction');
-  button.disabled = true;
-  button.textContent = 'Creating account...';
+  const button = $('upgradeAction'); button.disabled = true; button.textContent = 'Creating account...';
 
   try{
     await createUserWithEmailAndPassword(auth, email, password);
     $('login').style.display = 'none';
   }catch(e){
-    $('loginError').textContent = 'Could not create account: ' + (e.code || 'unknown error');
+    if (e.code === 'auth/email-already-in-use') $('loginError').textContent = 'Account already exists! Click Login instead.';
+    else $('loginError').textContent = 'Could not create account: ' + e.code;
   }finally{
-    button.disabled = false;
-    button.textContent = 'Upgrade for Free';
+    button.disabled = false; button.textContent = 'Upgrade for Free';
   }
 };
 
 
 /* =========================================================
-   ADMIN
+   ADMIN ADD/EDIT LOGIC
 ========================================================= */
 
-$('logout').onclick = () => signOut(auth);
-
 $('addWord').onclick = async () => {
-  if(!matches(auth.currentUser,OWNER)){
-    alert('Only the owner can add words.');
-    return;
+  if(!matches(auth.currentUser, OWNER)){ alert('Only the owner can manage words.'); return; }
+  const word = $('newWord').value.trim(), pronunciation =$('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(), credits =$('newCredits').value.trim() || 'No credits';
+  if(!word || !pronunciation || !meaning){ alert('Fill in word, pronunciation and meaning.'); return; }
+
+  if(editingId) {
+    await updateDoc(doc(db, 'words', editingId), { word, pronunciation, meaning, credits });
+    alert('Word updated successfully!'); editingId = null; $('addWord').textContent = 'Add Word'; 
+  } else {
+    await addDoc(collection(db,'words'), { word, pronunciation, meaning, credits, addedBy: auth.currentUser.email, createdAt: serverTimestamp() });
+    alert('Word added for everyone!');
   }
-
-  const word = $('newWord').value.trim();
-  const pronunciation = $('newPronunciation').value.trim();
-  const meaning = $('newMeaning').value.trim();
-
-  if(!word || !pronunciation || !meaning){
-    alert('Fill in word, pronunciation and meaning.');
-    return;
-  }
-
-  await addDoc(collection(db,'words'), {
-    word,
-    pronunciation,
-    meaning,
-    credits: $('newCredits').value.trim() || 'No credits',
-    addedBy: auth.currentUser.email,
-    createdAt: serverTimestamp()
-  });
-
-  ['newWord', 'newPronunciation', 'newMeaning', 'newCredits'].forEach(
-    id => $(id).value = ''
-  );
-  alert('Word added for everyone!');
+  ['newWord', 'newPronunciation', 'newMeaning', 'newCredits'].forEach(id => $(id).value = '');
 };
 
 
@@ -1001,30 +859,15 @@ $('addWord').onclick = async () => {
 
 $('saveQuestion').onclick = async () => {
   const text = $('questionText').value.trim();
-  if(!text){
-    $('questionStatus').textContent = 'Type a question first.';
-    return;
-  }
-
+  if(!text){ $('questionStatus').textContent = 'Type a question first.'; return; }
   try{
-    await addDoc(collection(db,'questions'), {
-      name: $('questionName').value.trim() || 'Anonymous visitor',
-      question: text,
-      status: 'new',
-      createdAt: serverTimestamp()
-    });
-    $('questionText').value = '';
-    $('questionName').value = '';$('questionStatus').textContent = 'Question saved for the owner.';
-  }catch(e){
-    $('questionStatus').textContent = 'Could not save question.';
-  }
+    await addDoc(collection(db,'questions'), { name: $('questionName').value.trim() \vert{}\vert{} 'Anonymous visitor', question: text, status: 'new', createdAt: serverTimestamp() });$('questionText').value = ''; $('questionName').value = '';$('questionStatus').textContent = 'Question saved for the owner.';
+  }catch(e){ $('questionStatus').textContent = 'Could not save question.'; }
 };
 
 $('openMessages').onclick = () => {
   const text = $('questionText').value.trim();
-  location.href = `sms:?&body=${encodeURIComponent(
-    `Saof Dictionary question:\n${text || '(type your question first)'}`
-  )}`;
+  location.href = `sms:?&body=${encodeURIComponent(`Saof Dictionary question:\n${text || '(type your question first)'}`)}`;
 };
 
 
@@ -1032,51 +875,26 @@ $('openMessages').onclick = () => {
    GAME NAVIGATION
 ========================================================= */
 
-const screens = [
-  'puzzleScreen',
-  'trexScreen',
-  'watchMovieScreen',
-  'scoresScreen'
-];
+const screens = ['puzzleScreen', 'trexScreen', 'watchMovieScreen', 'scoresScreen'];
 
-function hideScreens(){
-  screens.forEach(id => {
-    $(id).style.display = 'none';
-  });
-}
+function hideScreens(){ screens.forEach(id => { $(id).style.display = 'none'; }); }
 
 function openScreen(id){
-  hideScreens();
-  $('gamePanel').style.display = 'block';$('gameMenu').style.display = 'none'; // Hides main menu so it's not cluttered
+  hideScreens(); $('gamePanel').style.display = 'block';$('gameMenu').style.display = 'none'; 
   $(id).style.display = 'block';$('gamePanel').scrollIntoView({behavior:'smooth'});
 }
 
-function backToMenu() {
-  hideScreens();
-  $('gameMenu').style.display = 'grid'; // Brings main menu back$('gamePanel').scrollIntoView({behavior:'smooth'});
-}
-
 document.querySelectorAll('[data-back]').forEach(button => {
-  button.onclick = backToMenu;
+  button.onclick = () => {
+    hideScreens(); $('gameMenu').style.display = 'grid';$('gamePanel').scrollIntoView({behavior:'smooth'});
+    // Stop movie when hitting back button
+    $('movieFrame').innerHTML = '<div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>';
+    $('movieStatus').textContent = 'Ready to watch!';
+  };
 });
 
-$('puzzleChoice').onclick = () => {
-  startPuzzle();
-  openScreen('puzzleScreen');
-};
-
-$('trexChoice').onclick = () => {
-  openScreen('trexScreen');
-};
-
-$('watchMovieChoice').onclick = () => {
-  openScreen('watchMovieScreen');
-};
-
-$('scoresChoice').onclick = () => {
-  loadScores();
-  openScreen('scoresScreen');
-};
+$('puzzleChoice').onclick = () => { startPuzzle(); openScreen('puzzleScreen'); };$('trexChoice').onclick = () => openScreen('trexScreen');
+$('watchMovieChoice').onclick = () => openScreen('watchMovieScreen');$('scoresChoice').onclick = () => { loadScores(); openScreen('scoresScreen'); };
 
 
 /* =========================================================
@@ -1085,64 +903,33 @@ $('scoresChoice').onclick = () => {
 
 const PUZZLE_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23d9f6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff1a8'/%3E%3Cpath d='M0 510 Q130 390 260 510 T520 510 T780 510 V800 H0Z' fill='%2368b35d'/%3E%3Cpath d='M0 600 Q140 500 280 600 T560 600 T840 600 V800 H0Z' fill='%234b914e'/%3E%3Ccircle cx='610' cy='330' r='82' fill='%23ff595e'/%3E%3Ccircle cx='580' cy='305' r='10' fill='%2329384a'/%3E%3Ccircle cx='640' cy='305' r='10' fill='%2329384a'/%3E%3Cpath d='M580 350 Q610 380 645 350' fill='none' stroke='%2329384a' stroke-width='9'/%3E%3Crect x='170' y='450' width='200' height='170' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='150,450 270,350 390,450' fill='%236c4cff'/%3E%3Crect x='245' y='515' width='55' height='105' fill='%23ffd166'/%3E%3Crect x='195' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Crect x='315' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Cpath d='M450 650 Q500 580 550 650' fill='none' stroke='%23ffffff' stroke-width='18'/%3E%3C/svg%3E";
 
-const pieceArea = $('pieceArea');
-const targetArea = $('targetArea');
-const PUZZLE_SIZE = 4;
-const PIECE_COUNT = 16;
-
-let pieces = [];
-let puzzleSolved = false;
-let puzzleStartTime = 0;
-let activeDrag = null;
+const pieceArea = $('pieceArea'), targetArea =$('targetArea');
+const PUZZLE_SIZE = 4, PIECE_COUNT = 16;
+let pieces = [], puzzleSolved = false, puzzleStartTime = 0, activeDrag = null;
 
 function startPuzzle(){
-  pieceArea.innerHTML = '';
-  targetArea.innerHTML = '';
-  pieces = [];
-  puzzleSolved = false;
-  puzzleStartTime = performance.now();
+  pieceArea.innerHTML = ''; targetArea.innerHTML = '';
+  pieces = []; puzzleSolved = false; puzzleStartTime = performance.now();
   $('puzzleStatus').textContent = 'Drag every piece onto its matching position.';
 
   requestAnimationFrame(() => {
-    const width = pieceArea.clientWidth;
-    const height = pieceArea.clientHeight;
-    const pieceWidth = width / PUZZLE_SIZE;
-    const pieceHeight = height / PUZZLE_SIZE;
+    const width = pieceArea.clientWidth, height = pieceArea.clientHeight;
+    const pieceWidth = width / PUZZLE_SIZE, pieceHeight = height / PUZZLE_SIZE;
 
     for(let i = 0; i < PIECE_COUNT; i++){
-      const row = Math.floor(i / PUZZLE_SIZE);
-      const col = i % PUZZLE_SIZE;
-
+      const row = Math.floor(i / PUZZLE_SIZE), col = i % PUZZLE_SIZE;
       const target = document.createElement('div');
       target.className = 'puzzle-target';
-      target.style.width = `${pieceWidth}px`;
-      target.style.height = `${pieceHeight}px`;
-      target.style.left = `${col * pieceWidth}px`;
-      target.style.top = `${row * pieceHeight}px`;
+      target.style.cssText = `width:${pieceWidth}px;height:${pieceHeight}px;left:${col*pieceWidth}px;top:${row*pieceHeight}px`;
       targetArea.append(target);
-    }
-
-    for(let i = 0; i < PIECE_COUNT; i++){
-      const row = Math.floor(i / PUZZLE_SIZE);
-      const col = i % PUZZLE_SIZE;
 
       const piece = document.createElement('div');
       piece.className = 'puzzle-piece';
       piece.dataset.index = i;
-      piece.style.width = `${pieceWidth}px`;
-      piece.style.height = `${pieceHeight}px`;
-      piece.style.backgroundImage = `url("${PUZZLE_IMAGE}")`;
-      piece.style.backgroundSize = `${width}px ${height}px`;
-      piece.style.backgroundPosition = `-${col * pieceWidth}px -${row * pieceHeight}px`;
-
-      const maxX = Math.max(0, width - pieceWidth);
-      const maxY = Math.max(0, height - pieceHeight);
-      piece.style.left = `${Math.random() * maxX}px`;
-      piece.style.top = `${Math.random() * maxY}px`;
-
+      piece.style.cssText = `width:${pieceWidth}px;height:${pieceHeight}px;background-image:url("${PUZZLE_IMAGE}");background-size:${width}px ${height}px;background-position:-${col*pieceWidth}px -${row*pieceHeight}px;left:${Math.random()*Math.max(0,width-pieceWidth)}px;top:${Math.random()*Math.max(0,height-pieceHeight)}px`;
+      
       piece.addEventListener('pointerdown', beginPieceDrag);
-      pieceArea.append(piece);
-      pieces.push(piece);
+      pieceArea.append(piece); pieces.push(piece);
     }
   });
 }
@@ -1151,23 +938,12 @@ function beginPieceDrag(e){
   e.preventDefault();
   const piece = e.currentTarget;
   pieces.forEach(p => p.classList.remove('selected'));
-  piece.classList.add('selected');
+  piece.classList.add('selected', 'dragging');
 
-  const rect = piece.getBoundingClientRect();
-  const area = pieceArea.getBoundingClientRect();
+  const rect = piece.getBoundingClientRect(), area = pieceArea.getBoundingClientRect();
+  activeDrag = { piece, pointerId: e.pointerId, offsetX: e.clientX - rect.left, offsetY: e.clientY - rect.top, areaLeft: area.left, areaTop: area.top };
 
-  activeDrag = {
-    piece,
-    pointerId: e.pointerId,
-    offsetX: e.clientX - rect.left,
-    offsetY: e.clientY - rect.top,
-    areaLeft: area.left,
-    areaTop: area.top
-  };
-
-  piece.classList.add('dragging');
   piece.setPointerCapture(e.pointerId);
-
   piece.addEventListener('pointermove', movePiece);
   piece.addEventListener('pointerup', endPieceDrag);
   piece.addEventListener('pointercancel', endPieceDrag);
@@ -1176,17 +952,9 @@ function beginPieceDrag(e){
 function movePiece(e){
   if(!activeDrag) return;
   const piece = activeDrag.piece;
-  let x = e.clientX - activeDrag.areaLeft - activeDrag.offsetX;
-  let y = e.clientY - activeDrag.areaTop - activeDrag.offsetY;
-
-  const maxX = pieceArea.clientWidth - piece.offsetWidth;
-  const maxY = pieceArea.clientHeight - piece.offsetHeight;
-
-  x = Math.max(0, Math.min(maxX, x));
-  y = Math.max(0, Math.min(maxY, y));
-
-  piece.style.left = `${x}px`;
-  piece.style.top = `${y}px`;
+  const x = Math.max(0, Math.min(pieceArea.clientWidth - piece.offsetWidth, e.clientX - activeDrag.areaLeft - activeDrag.offsetX));
+  const y = Math.max(0, Math.min(pieceArea.clientHeight - piece.offsetHeight, e.clientY - activeDrag.areaTop - activeDrag.offsetY));
+  piece.style.left = `${x}px`; piece.style.top = `${y}px`;
 }
 
 function endPieceDrag(){
@@ -1200,31 +968,15 @@ function endPieceDrag(){
 }
 
 $('checkPuzzle').onclick = () => {
-  if(!pieces.length){
-    $('puzzleStatus').textContent = 'Start the puzzle first.';
-    return;
-  }
-
-  const width = pieceArea.clientWidth;
-  const height = pieceArea.clientHeight;
-  const pieceWidth = width / PUZZLE_SIZE;
-  const pieceHeight = height / PUZZLE_SIZE;
+  if(!pieces.length) return;
+  const pW = pieceArea.clientWidth / PUZZLE_SIZE, pH = pieceArea.clientHeight / PUZZLE_SIZE;
   let correct = 0;
 
   pieces.forEach(piece => {
-    const index = Number(piece.dataset.index);
-    const row = Math.floor(index / PUZZLE_SIZE);
-    const col = index % PUZZLE_SIZE;
-    const targetX = col * pieceWidth;
-    const targetY = row * pieceHeight;
-    const currentX = parseFloat(piece.style.left);
-    const currentY = parseFloat(piece.style.top);
-    const tolerance = 35;
-
-    if(Math.abs(currentX - targetX) <= tolerance && Math.abs(currentY - targetY) <= tolerance){
-      correct++;
-      piece.style.left = `${targetX}px`;
-      piece.style.top = `${targetY}px`;
+    const idx = Number(piece.dataset.index);
+    const tX = (idx % PUZZLE_SIZE) * pW, tY = Math.floor(idx / PUZZLE_SIZE) * pH;
+    if(Math.abs(parseFloat(piece.style.left) - tX) <= 35 && Math.abs(parseFloat(piece.style.top) - tY) <= 35){
+      correct++; piece.style.left = `${tX}px`; piece.style.top = `${tY}px`;
     }
   });
 
@@ -1235,10 +987,9 @@ $('checkPuzzle').onclick = () => {
     $('puzzleStatus').textContent = `🎉 Puzzle complete! Time: ${seconds} seconds. Score: ${score}`;
     saveScore('Picture Puzzle', score);
   }else{
-    $('puzzleStatus').textContent = `${correct} / ${PIECE_COUNT} pieces are correctly placed.`;
+    $('puzzleStatus').textContent = `${correct} / ${PIECE_COUNT} pieces correctly placed.`;
   }
 };
-
 $('newPuzzle').onclick = startPuzzle;
 
 
@@ -1247,94 +998,59 @@ $('newPuzzle').onclick = startPuzzle;
 ========================================================= */
 
 function getScores(){
-  try{
-    return JSON.parse(localStorage.getItem('saofHighScores') || '[]');
-  }catch(e){
-    return [];
-  }
+  try{ return JSON.parse(localStorage.getItem('saofHighScores') || '[]'); }catch(e){ return []; }
 }
-
 function saveScore(game, score){
   const scores = getScores();
-  const player = auth.currentUser?.email || 'Guest';
+  const player = auth.currentUser ? getFirstName(auth.currentUser.email) : 'Guest';
   scores.push({ game, score, player, date: new Date().toLocaleString() });
   scores.sort((a,b) => b.score - a.score);
-  const best = scores.slice(0, 50);
-  localStorage.setItem('saofHighScores', JSON.stringify(best));
+  localStorage.setItem('saofHighScores', JSON.stringify(scores.slice(0, 50)));
 }
-
 function loadScores(){
-  const body = $('scoreBody');
-  body.innerHTML = '';
+  const body = $('scoreBody'); body.innerHTML = '';
   const scores = getScores();
-  
   if(scores.length === 0){
-    const tr = document.createElement('tr');
-    tr.innerHTML = '<td colspan="3" style="text-align:center; color:#777;">No high scores recorded yet.</td>';
-    body.append(tr);
+    body.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#777;">No high scores recorded yet.</td></tr>';
     return;
   }
-  
   scores.forEach(s => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
-      <td>${s.game}</td>
-      <td><strong>${s.score}</strong></td>
-      <td>${s.player}</td>
-    `;
-    body.append(tr);
+    body.innerHTML += `<tr><td>${s.game}</td><td><strong>${s.score}</strong></td><td>${s.player}</td></tr>`;
   });
 }
-
 $('clearScores').onclick = () => {
-  if(confirm('Are you sure you want to clear all high scores on this device?')){
-    localStorage.removeItem('saofHighScores');
-    loadScores();
-  }
+  if(confirm('Clear all high scores on this device?')){ localStorage.removeItem('saofHighScores'); loadScores(); }
 };
 
 
 /* =========================================================
-   REAL MOVIES LOGIC
+   REAL MOVIES LOGIC (YOUTUBE EMBED UPGRADE)
 ========================================================= */
 
-const realMovie = $('realMovie');
-const movieDesc = $('movieDescription');
-const movieStatus = $('movieStatus');
-
+const movieFrame = $('movieFrame'), movieDesc = $('movieDescription'), movieStatus =$('movieStatus');
 const movies = {
-  1: {
-    title: 'Big Bunny',
-    src: 'https://www.w3schools.com/html/mov_bbb.mp4',
-    desc: 'A funny and safe animation of a giant bunny.'
-  },
-  2: {
-    title: 'Blooming Flower',
-    src: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4',
-    desc: 'A real-life video of a beautiful flower opening up!'
-  },
-  3: {
-    title: 'Earth Scenery',
-    src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4',
-    desc: 'Real video clips of beautiful places around the world.'
-  }
+  1: { type: 'mp4', title: 'Blooming Flower', src: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', desc: 'A real-life video of a beautiful flower opening up!' },
+  2: { type: 'mp4', title: 'Earth Scenery', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', desc: 'Real video clips of beautiful places around the world.' },
+  3: { type: 'youtube', title: 'Pokémon: Bidoof’s Big Stand', src: 'https://www.youtube.com/embed/rg6CiPI6h2g?autoplay=1', desc: 'An official, safe animated short film from the Pokémon YouTube channel!' }
 };
 
 function playMovie(id) {
-  const data = movies[id];
-  realMovie.src = data.src;
-  movieDesc.textContent = data.desc;
-  movieStatus.textContent = `Now playing: ${data.title}`;
-  realMovie.play();
+  const m = movies[id];
+  if (m.type === 'youtube') {
+    movieFrame.innerHTML = `<iframe width="100%" height="100%" style="border:none; border-radius:14px;" src="${m.src}" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+  } else {
+    movieFrame.innerHTML = `<video class="real-movie" controls autoplay playsinline><source src="${m.src}" type="video/mp4">Your browser does not support video.</video>`;
+  }
+  movieDesc.textContent = m.desc;
+  movieStatus.textContent = `Now playing: ${m.title}`;
 }
 
 $('movie1Button').onclick = () => playMovie(1);
-$('movie2Button').onclick = () => playMovie(2);$('movie3Button').onclick = () => playMovie(3);
+$('movie2Button').onclick = () => playMovie(2);$('movie3Button').onclick = () => playMovie(3); // New Pokemon button
 
-$('stopMovie').onclick = () => {
-  realMovie.pause();
-  realMovie.currentTime = 0;
-  movieStatus.textContent = 'Movie stopped.';
+$('stopMovie').onclick = () => { 
+  movieFrame.innerHTML = '<div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>'; 
+  movieStatus.textContent = 'Movie stopped.'; 
 };
 
 </script>
