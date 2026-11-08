@@ -7,14 +7,18 @@
 
 <style>
 *{ box-sizing:border-box; }
-body{ margin:0; font-family:Arial,sans-serif; background:#f4f1ff; color:#222; }
+body{ margin:0; font-family:Arial,sans-serif; background:#f4f1ff; color:#222; transition: background 0.3s; }
 header{ position:relative; padding:35px 20px; text-align:center; color:#fff; background:linear-gradient(135deg,#6c4cff,#8b6cff); }
 h1{ margin:0; font-size:42px; }
 button{ cursor:pointer; font:inherit; }
 button:disabled{ opacity:.6; cursor:not-allowed; }
 
-.login-button{ position:absolute; right:20px; top:20px; padding:10px 18px; border:0; border-radius:10px; background:#fff; color:#6c4cff; font-weight:bold; transition: 0.2s; }
-.login-button:hover { background: #f0f0f0; }
+.login-button{ position:absolute; right:20px; top:20px; padding:10px 18px; border:0; border-radius:10px; background:#fff; color:#6c4cff; font-weight:bold; transition:0.2s; }
+.login-button:hover{ background:#f0f0f0; }
+
+.settings-button{ position:absolute; left:20px; top:20px; padding:10px 18px; border:0; border-radius:10px; background:rgba(255,255,255,0.25); color:#fff; font-weight:bold; backdrop-filter:blur(5px); transition:0.2s; }
+.settings-button:hover{ background:rgba(255,255,255,0.4); }
+
 .search{ text-align:center; padding:25px; }
 .search input, input, textarea, select{ width:100%; padding:12px; margin:7px 0; border:1px solid #ccc; border-radius:8px; font:inherit; }
 .search input{ width:min(80%,500px); border:2px solid #6c4cff; }
@@ -24,7 +28,7 @@ button:disabled{ opacity:.6; cursor:not-allowed; }
 
 .panel, .dictionary{ width:min(calc(100% - 40px),900px); margin:auto; }
 .panel{ display:none; margin-bottom:25px; }
-.box, .card{ padding:22px; border-radius:15px; background:#fff; box-shadow:0 4px 12px #00000014; }
+.box, .card{ padding:22px; border-radius:15px; background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); box-shadow:0 4px 12px #00000014; }
 .card{ margin:15px 0; }
 
 .word{ font-size:28px; font-weight:bold; color:#6c4cff; }
@@ -52,9 +56,9 @@ body.is-admin .admin-controls { display:flex; }
 .game-screen{ display:none; margin-top:20px; }
 .back-button{ width:auto; background:#eee; color:#333; margin-bottom:12px; }
 
-#login{ display:none; position:fixed; inset:0; z-index:100; align-items:center; justify-content:center; padding:20px; background:#0008; }
-.login-box{ width:min(100%,400px); padding:30px; border-radius:18px; background:#fff; text-align:center; }
-.login-hint { font-size: 13px; color: #666; margin-bottom: 15px; }
+#login, #confirmModal{ display:none; position:fixed; inset:0; z-index:100; align-items:center; justify-content:center; padding:20px; background:#0008; }
+.login-box, .confirm-box{ width:min(100%,400px); padding:30px; border-radius:18px; background:#fff; text-align:center; }
+.login-hint { font-size:13px; color:#666; margin-bottom:15px; }
 .error{ min-height:20px; color:#c33; margin-top:8px; }
 
 /* PUZZLE */
@@ -69,13 +73,13 @@ body.is-admin .admin-controls { display:flex; }
 .puzzle-controls{ display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-top:10px; }
 
 /* TREX */
-#trexCanvas{ width:100%; background:#87ceeb; border:4px solid #29354a; border-radius:14px; display:block; touch-action:none; margin-bottom: 15px; cursor: pointer; }
+#trexCanvas{ width:100%; background:#87ceeb; border:4px solid #29354a; border-radius:14px; display:block; touch-action:none; margin-bottom:15px; cursor:pointer; }
 
 /* REAL MOVIES */
 .movie-frame{ width:100%; aspect-ratio:16/9; border-radius:14px; background:#111; display:flex; align-items:center; justify-content:center; overflow:hidden; position:relative; }
 .real-movie{ width:100%; height:100%; display:block; background:#000; border-radius:14px; }
 .movie-buttons{ display:grid; grid-template-columns:repeat(auto-fit, minmax(130px, 1fr)); gap:10px; margin-top:12px; }
-.movie-button{ min-height:70px; font-size: 14px; }
+.movie-button{ min-height:70px; font-size:14px; }
 .movie-description{ margin:10px 0; color:#666; font-size:14px; text-align:center; font-weight:bold; }
 
 /* SCORES */
@@ -89,7 +93,8 @@ footer{ text-align:center; padding:30px; color:#777; }
   .panel, .dictionary{ width:calc(100% - 24px); }
   .game-menu{ grid-template-columns:1fr; }
   .puzzle-layout{ grid-template-columns:1fr; }
-  .login-button{ right:10px; top:10px; padding:8px 12px; font-size: 14px; }
+  .login-button{ right:10px; top:10px; padding:8px 12px; font-size:14px; }
+  .settings-button{ left:10px; top:10px; padding:8px 12px; font-size:14px; }
 }
 </style>
 </head>
@@ -97,6 +102,7 @@ footer{ text-align:center; padding:30px; color:#777; }
 <body>
 
 <header>
+  <button class="settings-button" id="openSettingsBtn">⚙️ Settings</button>
   <h1>Saof Dictionary</h1>
   <button class="login-button" id="loginButton">Login</button>
 </header>
@@ -117,6 +123,52 @@ footer{ text-align:center; padding:30px; color:#777; }
     <button class="primary" id="saveQuestion">Save Question</button>
     <button class="primary" id="openMessages">Open Messages</button>
     <div id="questionStatus"></div>
+  </div>
+</section>
+
+<!-- SETTINGS PANEL -->
+<section class="panel" id="settingsPanel">
+  <div class="box">
+    <h2>⚙️ Website Settings</h2>
+    
+    <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #eee;">
+      <h3>🔔 Reminders & Notifications</h3>
+      <label style="display:flex; align-items:center; gap:10px; font-weight:bold; cursor:pointer;">
+        <input type="checkbox" id="notifyToggle" style="width:auto; transform:scale(1.3);">
+        Enable Daily Word Reminders
+      </label>
+      
+      <div id="notifyTimeOptions" style="margin-top:14px; display:none;">
+        <label style="font-size:14px; color:#555;">Select Reminder Time:</label>
+        <input type="time" id="notifyTime" value="09:00" style="max-width:200px;">
+        <button class="secondary" id="testNotifyBtn" style="margin-top:8px;">🔔 Test Notification Now</button>
+        <p id="notifyStatus" style="font-size:12px; color:#777; margin-top:6px;"></p>
+      </div>
+    </div>
+
+    <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid #eee;">
+      <h3>🎨 Accent Color Theme</h3>
+      <p style="font-size:14px; color:#666;">Choose a primary theme color for buttons and titles:</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;" id="colorPicker">
+        <button data-color="#6c4cff" style="background:#6c4cff; border:3px solid #0002; width:45px; height:45px; border-radius:50%;"></button>
+        <button data-color="#19a463" style="background:#19a463; border:3px solid #0002; width:45px; height:45px; border-radius:50%;"></button>
+        <button data-color="#e63946" style="background:#e63946; border:3px solid #0002; width:45px; height:45px; border-radius:50%;"></button>
+        <button data-color="#ff9f1c" style="background:#ff9f1c; border:3px solid #0002; width:45px; height:45px; border-radius:50%;"></button>
+        <button data-color="#0284c7" style="background:#0284c7; border:3px solid #0002; width:45px; height:45px; border-radius:50%;"></button>
+        <button data-color="#1e293b" style="background:#1e293b; border:3px solid #0002; width:45px; height:45px; border-radius:50%;"></button>
+      </div>
+    </div>
+
+    <div>
+      <h3>🖼️ Background Image</h3>
+      <p style="font-size:14px; color:#666;">Upload an image from your device to set as the background:</p>
+      <input type="file" id="bgUploader" accept="image/*">
+      <div style="display:flex; gap:10px; margin-top:8px;">
+        <button class="secondary" id="resetBgBtn" style="margin-top:0;">Reset to Default Background</button>
+      </div>
+    </div>
+    
+    <button class="primary" id="closeSettingsBtn" style="margin-top:20px;">Done / Save</button>
   </div>
 </section>
 
@@ -207,8 +259,8 @@ footer{ text-align:center; padding:30px; color:#777; }
         <button class="primary movie-button" id="movie2Button">🌍 Earth Scenery</button>
       </div>
       
-      <button class="secondary" id="stopMovie" style="width: 100%; margin-top: 15px;">■ Stop Movie</button>
-      <p id="movieStatus" style="text-align: center; color: #777;">Ready to watch!</p>
+      <button class="secondary" id="stopMovie" style="width:100%; margin-top:15px;">■ Stop Movie</button>
+      <p id="movieStatus" style="text-align:center; color:#777;">Ready to watch!</p>
     </div>
 
     <!-- SCORES -->
@@ -233,14 +285,6 @@ footer{ text-align:center; padding:30px; color:#777; }
 <!-- DICTIONARY -->
 <main class="dictionary" id="dictionary">
 
-  <!-- 
-  =============================================================
-  PASTE YOUR ORIGINAL STATIC WORDS HERE 
-  The new code overwrote your file, which is why your old words 
-  disappeared! Paste them below so they show up again.
-  ============================================================= 
-  -->
-
   <article class="card">
     <div class="word">Recos</div>
     <div class="pronunciation">Pronunciation: <strong>reh-coss</strong></div>
@@ -254,6 +298,14 @@ footer{ text-align:center; padding:30px; color:#777; }
     <div class="meaning">Meaning: <strong>me / and</strong></div>
     <div class="credits">Credits: No credits</div>
   </article>
+
+  <article class="card">
+    <div class="word">Thu</div>
+    <div class="pronunciation">Pronunciation: <strong>th-oo</strong></div>
+    <div class="meaning">Meaning: <strong>Depends on the context.</strong></div>
+    <div class="credits">Credits: No credits</div>
+  </article>
+
 </main>
 
 <footer>
@@ -274,9 +326,18 @@ footer{ text-align:center; padding:30px; color:#777; }
   </div>
 </div>
 
+<!-- CONFIRMATION MODAL -->
+<div id="confirmModal">
+  <div class="confirm-box">
+    <h3 id="confirmMsg" style="margin-top:0;">Are you sure?</h3>
+    <button class="primary" id="confirmYesBtn" style="margin-top:10px;">Yes</button>
+    <button class="secondary" id="confirmNoBtn" style="width:100%;">No</button>
+  </div>
+</div>
+
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js';
-import { getAuth, setPersistence, inMemoryPersistence, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
+import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js';
 import { getFirestore, collection, addDoc, onSnapshot, serverTimestamp, doc, deleteDoc, updateDoc } from 'https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js';
 
 const config = {
@@ -289,13 +350,39 @@ const config = {
 };
 
 const OWNER = 'parkernanayakkara@icloud.com';
-const app = initializeApp(config);
-const auth = getAuth(app);
-const db = getFirestore(app);
 const $ = id => document.getElementById(id);
-let editingId = null;
+let auth, db, editingId = null;
 
-await setPersistence(auth, inMemoryPersistence);
+function customConfirm(msg) {
+  return new Promise(resolve => {
+    $('confirmMsg').textContent = msg;
+    $('confirmModal').style.display = 'flex';
+    $('confirmYesBtn').onclick = () => { $('confirmModal').style.display = 'none'; resolve(true); };
+    $('confirmNoBtn').onclick = () => { $('confirmModal').style.display = 'none'; resolve(false); };
+  });
+}
+
+try {
+  const app = initializeApp(config);
+  auth = getAuth(app);
+  db = getFirestore(app);
+
+  onAuthStateChanged(auth, user => {
+    const isAdmin = matches(user, OWNER);
+    $('adminPanel').style.display = isAdmin ? 'block' : 'none';
+    if (isAdmin) document.body.classList.add('is-admin');
+    else document.body.classList.remove('is-admin');
+    $('loginButton').textContent = user ? `Hello, ${getFirstName(user.email)} (Logout)` : 'Login';
+  });
+
+  onSnapshot(collection(db,'words'), snap => {
+    document.querySelectorAll('.live-card').forEach(e => e.remove());
+    snap.forEach(x => { const d = x.data(); if(d.word) addCard(d, x.id); });
+  });
+
+} catch (e) {
+  console.warn("Firebase offline or domain needs whitelisting.", e);
+}
 
 const matches = (user,email) => user?.email?.toLowerCase() === email.toLowerCase();
 
@@ -305,14 +392,6 @@ function getFirstName(email) {
   if (!namePart) return "Friend";
   return namePart.charAt(0).toUpperCase() + namePart.slice(1).toLowerCase();
 }
-
-onAuthStateChanged(auth, user => {
-  const isAdmin = matches(user, OWNER);
-  $('adminPanel').style.display = isAdmin ? 'block' : 'none';
-  if (isAdmin) document.body.classList.add('is-admin');
-  else document.body.classList.remove('is-admin');
-  $('loginButton').textContent = user ? `Hello, ${getFirstName(user.email)} (Logout)` : 'Login';
-});
 
 $('showGamesBtn').onclick = () => {
   const gp = $('gamePanel');
@@ -345,22 +424,21 @@ function addCard(d, id){
   btnEdit.onclick = () => {
     $('newWord').value = d.word; $('newPronunciation').value = d.pronunciation;
     $('newMeaning').value = d.meaning; $('newCredits').value = d.credits === 'No credits' ? '' : (d.credits || '');
-    editingId = id; $('addWord').textContent = 'Update Word';$('adminPanel').scrollIntoView({ behavior: 'smooth' });
+    editingId = id; $('addWord').textContent = 'Update Word';
+    $('adminPanel').scrollIntoView({ behavior: 'smooth' });
   };
   
   const btnDelete = document.createElement('button');
   btnDelete.className = 'btn-delete'; btnDelete.textContent = '🗑️ Delete';
-  btnDelete.onclick = async () => { if(confirm(`Delete "${d.word}"?`)) await deleteDoc(doc(db, 'words', id)); };
+  btnDelete.onclick = async () => {
+    const ok = await customConfirm(`Delete "${d.word}"?`);
+    if(ok) await deleteDoc(doc(db, 'words', id));
+  };
   
   adminControls.append(btnEdit, btnDelete);
   c.append(adminControls);
   $('dictionary').prepend(c); 
 }
-
-onSnapshot(collection(db,'words'), snap => {
-  document.querySelectorAll('.live-card').forEach(e => e.remove());
-  snap.forEach(x => { const d = x.data(); if(d.word) addCard(d, x.id); });
-});
 
 $('searchInput').addEventListener('input', e => {
   const q = e.target.value.toLowerCase();
@@ -368,13 +446,18 @@ $('searchInput').addEventListener('input', e => {
 });
 
 $('loginButton').onclick = async () => {
-  if (auth.currentUser) { if (confirm("Log out?")) await signOut(auth); } 
-  else { $('loginError').textContent = '';$('login').style.display = 'flex'; }
+  if (!auth) { return; }
+  if (auth.currentUser) {
+    const ok = await customConfirm("Log out?");
+    if (ok) await signOut(auth);
+  } else {
+    $('loginError').textContent = ''; $('login').style.display = 'flex';
+  }
 };
-$('cancelLogin').onclick = () =>$('login').style.display = 'none';
+$('cancelLogin').onclick = () => $('login').style.display = 'none';
 
 $('loginAction').onclick = async () => {
-  const email = $('email').value.trim(), password =$('password').value;
+  const email = $('email').value.trim(), password = $('password').value;
   if(!email || !password) return;
   $('loginAction').disabled = true; $('loginAction').textContent = 'Logging in...';
   try{ await signInWithEmailAndPassword(auth, email, password); $('login').style.display = 'none'; }
@@ -383,7 +466,7 @@ $('loginAction').onclick = async () => {
 };
 
 $('upgradeAction').onclick = async () => {
-  const email = $('email').value.trim(), password =$('password').value;
+  const email = $('email').value.trim(), password = $('password').value;
   if(!email || password.length < 6) return;
   $('upgradeAction').disabled = true; $('upgradeAction').textContent = 'Creating...';
   try{ await createUserWithEmailAndPassword(auth, email, password); $('login').style.display = 'none'; }
@@ -392,8 +475,8 @@ $('upgradeAction').onclick = async () => {
 };
 
 $('addWord').onclick = async () => {
-  if(!matches(auth.currentUser, OWNER)) return;
-  const word = $('newWord').value.trim(), pronunciation =$('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(), credits =$('newCredits').value.trim() || 'No credits';
+  if(!auth || !matches(auth.currentUser, OWNER)) return;
+  const word = $('newWord').value.trim(), pronunciation = $('newPronunciation').value.trim(), meaning = $('newMeaning').value.trim(), credits = $('newCredits').value.trim() || 'No credits';
   if(!word || !pronunciation || !meaning) return;
   if(editingId) {
     await updateDoc(doc(db, 'words', editingId), { word, pronunciation, meaning, credits });
@@ -405,8 +488,10 @@ $('addWord').onclick = async () => {
 };
 
 $('saveQuestion').onclick = async () => {
+  if (!db) { $('questionStatus').textContent = 'Database unavailable.'; return; }
   const text = $('questionText').value.trim(); if(!text) return;
-  await addDoc(collection(db,'questions'), { name: $('questionName').value.trim() \vert{}\vert{} 'Anonymous visitor', question: text, status: 'new', createdAt: serverTimestamp() });$('questionText').value = ''; $('questionName').value = '';$('questionStatus').textContent = 'Question saved!';
+  await addDoc(collection(db,'questions'), { name: $('questionName').value.trim() || 'Anonymous visitor', question: text, status: 'new', createdAt: serverTimestamp() });
+  $('questionText').value = ''; $('questionName').value = ''; $('questionStatus').textContent = 'Question saved!';
 };
 
 $('openMessages').onclick = () => {
@@ -418,23 +503,142 @@ $('openMessages').onclick = () => {
 const screens = ['puzzleScreen', 'trexScreen', 'watchMovieScreen', 'scoresScreen'];
 function hideScreens(){ screens.forEach(id => { $(id).style.display = 'none'; }); }
 function openScreen(id){
-  hideScreens(); $('gamePanel').style.display = 'block';$('gameMenu').style.display = 'none'; 
-  $(id).style.display = 'block';$('gamePanel').scrollIntoView({behavior:'smooth'});
+  hideScreens(); $('gamePanel').style.display = 'block'; $('gameMenu').style.display = 'none'; 
+  $(id).style.display = 'block'; $('gamePanel').scrollIntoView({behavior:'smooth'});
 }
 
 document.querySelectorAll('[data-back]').forEach(button => {
   button.onclick = () => {
-    hideScreens(); $('gameMenu').style.display = 'grid'; $('gamePanel').scrollIntoView({behavior:'smooth'});$('movieFrame').innerHTML = '<div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>';
+    hideScreens(); $('gameMenu').style.display = 'grid'; $('gamePanel').scrollIntoView({behavior:'smooth'});
+    $('movieFrame').innerHTML = '<div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>';
     $('movieStatus').textContent = 'Ready to watch!';
   };
 });
 
-$('puzzleChoice').onclick = () => { startPuzzle(); openScreen('puzzleScreen'); };$('trexChoice').onclick = () => openScreen('trexScreen');
-$('watchMovieChoice').onclick = () => openScreen('watchMovieScreen');$('scoresChoice').onclick = () => { loadScores(); openScreen('scoresScreen'); };
+$('puzzleChoice').onclick = () => { startPuzzle(); openScreen('puzzleScreen'); };
+$('trexChoice').onclick = () => openScreen('trexScreen');
+$('watchMovieChoice').onclick = () => openScreen('watchMovieScreen');
+$('scoresChoice').onclick = () => { loadScores(); openScreen('scoresScreen'); };
+
+/* SETTINGS & THEME ENGINE */
+const openSettingsBtn = $('openSettingsBtn');
+const settingsPanel = $('settingsPanel');
+const closeSettingsBtn = $('closeSettingsBtn');
+
+openSettingsBtn.onclick = () => {
+  const isShown = settingsPanel.style.display === 'block';
+  settingsPanel.style.display = isShown ? 'none' : 'block';
+  if (!isShown) settingsPanel.scrollIntoView({ behavior: 'smooth' });
+};
+closeSettingsBtn.onclick = () => { settingsPanel.style.display = 'none'; };
+
+document.querySelectorAll('#colorPicker button').forEach(btn => {
+  btn.onclick = () => {
+    const color = btn.dataset.color;
+    applyThemeColor(color);
+    try { localStorage.setItem('saofThemeColor', color); } catch(e){}
+  };
+});
+
+function applyThemeColor(color) {
+  document.querySelectorAll('h2, .word').forEach(el => el.style.color = color);
+  document.querySelectorAll('.primary, .games-toggle-btn, .game-choice').forEach(el => el.style.backgroundColor = color);
+  document.querySelector('header').style.background = `linear-gradient(135deg, ${color}, #8b6cff)`;
+}
+
+const bgUploader = $('bgUploader');
+bgUploader.onchange = (e) => {
+  const file = e.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+    reader.onload = function(evt) {
+      const bgUrl = evt.target.result;
+      document.body.style.backgroundImage = `url('${bgUrl}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundAttachment = 'fixed';
+      document.body.style.backgroundPosition = 'center';
+      try { localStorage.setItem('saofCustomBg', bgUrl); } catch(err){}
+    };
+    reader.readAsDataURL(file);
+  }
+};
+
+$('resetBgBtn').onclick = () => {
+  document.body.style.backgroundImage = 'none';
+  document.body.style.backgroundColor = '#f4f1ff';
+  try { localStorage.removeItem('saofCustomBg'); } catch(e){}
+};
+
+const notifyToggle = $('notifyToggle');
+const notifyTimeOptions = $('notifyTimeOptions');
+const notifyTime = $('notifyTime');
+const notifyStatus = $('notifyStatus');
+
+notifyToggle.onchange = async () => {
+  if (notifyToggle.checked) {
+    if ("Notification" in window) {
+      const perm = await Notification.requestPermission();
+      if (perm === "granted") {
+        notifyTimeOptions.style.display = 'block';
+        notifyStatus.textContent = "Notifications enabled!";
+        saveNotificationSettings(true, notifyTime.value);
+      } else {
+        notifyToggle.checked = false;
+        notifyStatus.textContent = "Notification permission denied in browser.";
+      }
+    } else {
+      notifyToggle.checked = false;
+    }
+  } else {
+    notifyTimeOptions.style.display = 'none';
+    saveNotificationSettings(false, notifyTime.value);
+  }
+};
+
+notifyTime.onchange = () => {
+  saveNotificationSettings(notifyToggle.checked, notifyTime.value);
+};
+
+$('testNotifyBtn').onclick = () => {
+  if (Notification.permission === "granted") {
+    new Notification("Saof Dictionary 📖", {
+      body: "Time for your daily word reminder! Check out new words today.",
+      icon: "https://placehold.co/128/6c4cff/ffffff?text=Saof"
+    });
+  }
+};
+
+function saveNotificationSettings(enabled, time) {
+  try {
+    localStorage.setItem('saofNotifySettings', JSON.stringify({ enabled, time }));
+  } catch(e){}
+}
+
+window.addEventListener('load', () => {
+  try {
+    const savedColor = localStorage.getItem('saofThemeColor');
+    if (savedColor) applyThemeColor(savedColor);
+
+    const savedBg = localStorage.getItem('saofCustomBg');
+    if (savedBg) {
+      document.body.style.backgroundImage = `url('${savedBg}')`;
+      document.body.style.backgroundSize = 'cover';
+      document.body.style.backgroundAttachment = 'fixed';
+      document.body.style.backgroundPosition = 'center';
+    }
+
+    const notifyData = JSON.parse(localStorage.getItem('saofNotifySettings') || '{}');
+    if (notifyData.enabled && Notification.permission === "granted") {
+      notifyToggle.checked = true;
+      notifyTimeOptions.style.display = 'block';
+      if (notifyData.time) notifyTime.value = notifyData.time;
+    }
+  } catch(e){}
+});
 
 /* PUZZLE ENGINE */
 const PUZZLE_IMAGE = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='800' height='800'%3E%3Cdefs%3E%3ClinearGradient id='sky' x1='0' y1='0' x2='0' y2='1'%3E%3Cstop stop-color='%2362c4ed'/%3E%3Cstop offset='1' stop-color='%23d9f6ff'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='800' height='800' fill='url(%23sky)'/%3E%3Ccircle cx='120' cy='120' r='65' fill='%23fff1a8'/%3E%3Cpath d='M0 510 Q130 390 260 510 T520 510 T780 510 V800 H0Z' fill='%2368b35d'/%3E%3Cpath d='M0 600 Q140 500 280 600 T560 600 T840 600 V800 H0Z' fill='%234b914e'/%3E%3Ccircle cx='610' cy='330' r='82' fill='%23ff595e'/%3E%3Ccircle cx='580' cy='305' r='10' fill='%2329384a'/%3E%3Ccircle cx='640' cy='305' r='10' fill='%2329384a'/%3E%3Cpath d='M580 350 Q610 380 645 350' fill='none' stroke='%2329384a' stroke-width='9'/%3E%3Crect x='170' y='450' width='200' height='170' rx='20' fill='%238b6cff'/%3E%3Cpolygon points='150,450 270,350 390,450' fill='%236c4cff'/%3E%3Crect x='245' y='515' width='55' height='105' fill='%23ffd166'/%3E%3Crect x='195' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Crect x='315' y='480' width='48' height='48' fill='%2362c4ed'/%3E%3Cpath d='M450 650 Q500 580 550 650' fill='none' stroke='%23ffffff' stroke-width='18'/%3E%3C/svg%3E";
-const pieceArea = $('pieceArea'), targetArea =$('targetArea');
+const pieceArea = $('pieceArea'), targetArea = $('targetArea');
 const PUZZLE_SIZE = 4, PIECE_COUNT = 16;
 let pieces = [], puzzleSolved = false, puzzleStartTime = 0, activeDrag = null;
 
@@ -531,7 +735,8 @@ trexCanvas.addEventListener('pointerdown', (e) => {
 function getScores(){ try{ return JSON.parse(localStorage.getItem('saofHighScores') || '[]'); }catch(e){ return []; } }
 function saveScore(game, score){
   const scores = getScores();
-  scores.push({ game, score, player: auth.currentUser ? getFirstName(auth.currentUser.email) : 'Guest' });
+  const player = (auth && auth.currentUser) ? getFirstName(auth.currentUser.email) : 'Guest';
+  scores.push({ game, score, player });
   scores.sort((a,b) => b.score - a.score); localStorage.setItem('saofHighScores', JSON.stringify(scores.slice(0, 50)));
 }
 function loadScores(){
@@ -539,10 +744,13 @@ function loadScores(){
   if(scores.length === 0){ body.innerHTML = '<tr><td colspan="3" style="text-align:center; color:#777;">No high scores recorded yet.</td></tr>'; return; }
   scores.forEach(s => { body.innerHTML += `<tr><td>${s.game}</td><td><strong>${s.score}</strong></td><td>${s.player}</td></tr>`; });
 }
-$('clearScores').onclick = () => { if(confirm('Clear all high scores?')){ localStorage.removeItem('saofHighScores'); loadScores(); } };
+$('clearScores').onclick = async () => {
+  const ok = await customConfirm('Clear all high scores?');
+  if(ok){ localStorage.removeItem('saofHighScores'); loadScores(); }
+};
 
 /* REAL MOVIES ENGINE */
-const movieFrame = $('movieFrame'), movieDesc = $('movieDescription'), movieStatus =$('movieStatus');
+const movieFrame = $('movieFrame'), movieDesc = $('movieDescription'), movieStatus = $('movieStatus');
 const movies = {
   1: { type: 'mp4', title: 'Blooming Flower', src: 'https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4', desc: 'A real-life video of a beautiful flower opening up!' },
   2: { type: 'mp4', title: 'Earth Scenery', src: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4', desc: 'Real video clips of beautiful places around the world.' },
@@ -558,8 +766,10 @@ function playMovie(id) {
 }
 
 $('movie1Button').onclick = () => playMovie(1);
-$('movie2Button').onclick = () => playMovie(2);$('movie3Button').onclick = () => playMovie(3);
-$('movie4Button').onclick = () => playMovie(4);$('stopMovie').onclick = () => { movieFrame.innerHTML = '<div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>'; movieStatus.textContent = 'Movie stopped.'; };
+$('movie2Button').onclick = () => playMovie(2);
+$('movie3Button').onclick = () => playMovie(3);
+$('movie4Button').onclick = () => playMovie(4);
+$('stopMovie').onclick = () => { movieFrame.innerHTML = '<div style="color:#666; font-size:14px;">Select a movie below to start playing.</div>'; movieStatus.textContent = 'Movie stopped.'; };
 
 </script>
 </body>
